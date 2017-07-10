@@ -16,8 +16,8 @@
 <link href="WebContent/WEB-INF/lib/assets/css/bootstrap.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="WEB-INF/lib/assets/css/style.css" rel="stylesheet">
-<link href="WEB-INF/lib/assets/css/font-awesome.min.css" rel="stylesheet">
+<link href="lib/assets/css/style.css" rel="stylesheet">
+<link href="lib/assets/css/font-awesome.min.css" rel="stylesheet">
 
 
 <!-- Just for debugging purposes. Don't actually copy this line! -->
