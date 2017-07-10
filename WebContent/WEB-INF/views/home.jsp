@@ -13,7 +13,7 @@
 <title>SOLID - Bootstrap 3 Theme</title>
 
 <!-- Bootstrap core CSS -->
-<link href="WebContent/WEB-INF/lib/assets/css/bootstrap.css" rel="stylesheet">
+<link href="lib/assets/css/bootstrap.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
 <link href="lib/assets/css/style.css" rel="stylesheet">
