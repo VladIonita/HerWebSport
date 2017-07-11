@@ -1,35 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html><html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="<c:url value="/resources/ico/favicon.ico" />" >
+<link rel="shortcut icon"
+	href="<c:url value="/resources/ico/favicon.ico" />">
 
 <title>SOLID - Bootstrap 3 Theme</title>
 
 <!-- Bootstrap core CSS -->
-<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/bootstrap.css" />"
+	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="<c:url value="/resources/css/style.css" />"  rel="stylesheet">
-<link href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/font-awesome.min.css" />"
+	rel="stylesheet">
 
 
-<!-- Just for debugging purposes. Don't actually copy this line! -->
-<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-<script src="assets/js/modernizr.js"></script>
+<script src="<c:url value="/resources/js/modernizr.js" />"></script>
 </head>
 <body>
 	<!-- Fixed navbar -->
@@ -42,7 +38,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.html">SOLID.</a>
+				<a class="navbar-brand" href="home" >HUBSPORT</a>
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
 				<ul class="nav navbar-nav">
@@ -64,11 +60,22 @@
 	</div>
 
 
-	<h1>Listing events using Service</h1>
-
-	<h3>this is home jsp</h3>
 
 
+	<!-- *****************************************************************************************************************
+	 HEADERWRAP
+	 ***************************************************************************************************************** -->
+	<div id="headerwrap">
+	    <div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h3>!!!!!!!!!!!this is home jsp!!!!!!!!!!!!!!</h3>
+				</div>
+				<div class="col-lg-8 col-lg-offset-2 himg">
+				</div>
+			</div><!-- /row -->
+	    </div> <!-- /container -->
+	</div><!-- /headerwrap -->
 
 
 
@@ -78,7 +85,41 @@
 
 
 
-
+	<!-- *****************************************************************************************************************
+	 FOOTER
+	 ***************************************************************************************************************** -->
+	 <div id="footerwrap">
+	 	<div class="container">
+		 	<div class="row">
+		 		<div class="col-lg-4">
+		 			<h4>About</h4>
+		 			<div class="hline-w"></div>
+		 			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+		 		</div>
+		 		<div class="col-lg-4">
+		 			<h4>Social Links</h4>
+		 			<div class="hline-w"></div>
+		 			<p>
+		 				<a href="#"><i class="fa fa-dribbble"></i></a>
+		 				<a href="#"><i class="fa fa-facebook"></i></a>
+		 				<a href="#"><i class="fa fa-twitter"></i></a>
+		 				<a href="#"><i class="fa fa-instagram"></i></a>
+		 				<a href="#"><i class="fa fa-tumblr"></i></a>
+		 			</p>
+		 		</div>
+		 		<div class="col-lg-4">
+		 			<h4>Our Bunker</h4>
+		 			<div class="hline-w"></div>
+		 			<p>
+		 				Some Ave, 987,<br/>
+		 				23890, New York,<br/>
+		 				United States.<br/>
+		 			</p>
+		 		</div>
+		 	
+		 	</div><!-- row -->
+	 	</div><!--/container -->
+	 </div> <!--/footerwrap -->
 
 
 
@@ -87,15 +128,14 @@
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/retina-1.1.0.js"></script>
-	<script src="assets/js/jquery.hoverdir.js"></script>
-	<script src="assets/js/jquery.hoverex.min.js"></script>
-	<script src="assets/js/jquery.prettyPhoto.js"></script>
-	<script src="assets/js/jquery.isotope.min.js"></script>
-	<script src="assets/js/custom.js"></script>
-
+		src="<c:url value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"/>"></script>
+	<script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
+	<script src="<c:url value="/resources/js/retina-1.1.0.js"/>"></script>
+	<script src="<c:url value="/resources/js/jquery.hoverdir.js"/>"></script>
+	<script src="<c:url value="/resources/js/jquery.hoverex.min.js"/>"></script>
+	<script src="<c:url value="/resources/js/jquery.prettyPhoto.js"/>"></script>
+	<script src="<c:url value="/resources/js/jquery.isotope.min.js"/>"></script>
+	<script src="<c:url value="/resources/js/custom.js"/>"></script>
 
 	<script>
 		// Portfolio
