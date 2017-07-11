@@ -3,6 +3,7 @@ package com.hubsport.config;
 import java.util.List;
 
 import javax.sql.DataSource;
+import javax.swing.text.html.CSS;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,21 +32,19 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
-
 @Configuration
 @ComponentScan("com.hubsport")
 @EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
-	
-	
-//	@Bean
-//	public DataSource DataSource() {
-//		final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
-//		dsLookup.setResourceRef(true);
-//		DataSource dataSource = dsLookup.getDataSource("jdbc/hubsport");
-//		return dataSource;
-//	}
-	
+
+	// @Bean
+	// public DataSource DataSource() {
+	// final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
+	// dsLookup.setResourceRef(true);
+	// DataSource dataSource = dsLookup.getDataSource("jdbc/hubsport");
+	// return dataSource;
+	// }
+
 	@Bean
 	public RequestMappingHandlerMapping requestMappingHandlerMapping() {
 		RequestMappingHandlerMapping rmhm = new RequestMappingHandlerMapping();
@@ -53,7 +52,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		rmhm.setUseTrailingSlashMatch(true);
 		return rmhm;
 	}
-	
+
 	@Bean
 	public UrlBasedViewResolver urlBasedViewResolver() {
 		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
@@ -63,9 +62,28 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		return resolver;
 	}
 
+//	@Bean
+//	public UrlBasedViewResolver basedViewResolver() {
+//		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
+//		resolver.setPrefix("WEB-INF/views/");
+//		resolver.setSuffix(".css");
+//		resolver.setViewClass(CSS.class);
+//		return resolver;
+//
+//	}
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	    registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+	}
+	
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+	    configurer.enable();
+	}
+
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("home");
 	}
-
 
 }

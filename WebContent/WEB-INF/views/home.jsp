@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html><html>
 <head>
 <meta charset="utf-8">
@@ -7,16 +8,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="shortcut icon" href="WebContent/WEB-INF/lib/assets/ico/favicon.ico">
+<link rel="shortcut icon" href="<c:url value="/resources/ico/favicon.ico" />" >
 
 <title>SOLID - Bootstrap 3 Theme</title>
 
 <!-- Bootstrap core CSS -->
-<link href="/webHubSport/WebContent/WEB-INF/lib/assets/css/bootstrap.css" rel="stylesheet">
+<link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="lib/assets/css/style.css" rel="stylesheet">
-<link href="lib/assets/css/font-awesome.min.css" rel="stylesheet">
+<link href="<c:url value="/resources/css/style.css" />"  rel="stylesheet">
+<link href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
 
 
 <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -28,7 +29,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script src="WebContent/WEB-INF/lib/assets/js/modernizr.js"></script>
+<script src="assets/js/modernizr.js"></script>
 </head>
 <body>
 	<!-- Fixed navbar -->
