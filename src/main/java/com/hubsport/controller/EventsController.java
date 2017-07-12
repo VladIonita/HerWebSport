@@ -1,83 +1,73 @@
 package com.hubsport.controller;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-//import com.hubsport.domain.Events;
-import com.hubsport.service.WebService;
 
 @Controller
 public class EventsController {
 
-	@Autowired
-	private WebService webService;
+     
+	@RequestMapping("/")
+	public String listObjects(Model model) {
+		model.addAttribute("eventsList", new Object());
+		return "home";
+	}
+	
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public String dashboardPage() {
+            return "admin/dashboard";
+	}
 
-//	@RequestMapping
-//	public String listEvents(Model model) {
-//
-//		List<Events> events = placesService.getAllPaginated();
-//		Calendar cl = Calendar.getInstance();
-//		Date currentTime = cl.getTime();
-//		String weekDay = null;
-//		List<Events> newEvents = new ArrayList<>();
-//		for (Events event : events) {
-//			if (event.getTimetable().getDate().compareTo(currentTime) >= 0) {
-//				newEvents.add(event);
-//			}
-//
-//			// ar trebuii sa fac verificare in alta parte ca imi ia doar prima
-//			// citire
-//			cl.setTime(event.getTimetable().getDate());
-//			int daw = cl.get(Calendar.DAY_OF_WEEK);
-//			switch (daw) {
-//			case 1:
-//				weekDay = "Duminica";
-//				break;
-//			case 2:
-//				weekDay = "Luni";
-//				break;
-//			case 3:
-//				weekDay = "Marti";
-//				break;
-//			case 4:
-//				weekDay = "Miercuri";
-//				break;
-//			case 5:
-//				weekDay = "Joi";
-//				break;
-//			case 6:
-//				weekDay = "Vineri";
-//				break;
-//			case 7:
-//				weekDay = "Sambata";
-//				break;
-//			}
-//			model.addAttribute("weekday", weekDay);
-//		}
-//
-//		model.addAttribute("eventsList", newEvents);
-//		return "home";
-//	}
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage() {
+            return "admin/login";
+	}
+	
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String adminPage(ModelMap model) {
+        model.addAttribute("user", getPrincipal());
+        return "admin/admin";
+    }
 
-	// @RequestMapping("/service")
-	// public String listTimetable(Model model) {
-	// List<Timetable> timetables = placesService.getTimetableList();
-	// List<Events> events = placesService.getEventsList();
-	// model.addAttribute("timetableList", timetables);
-	// model.addAttribute("eventsList", events);
-	// return "listEvents2";
-	// }
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logputPage(HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return "home";
+	}
 
-	 @RequestMapping("/")
-	 public String listObjects(Model model) {
-	 model.addAttribute("eventsList", new Object());
-	 return "home";
-	 }
+    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+    public String accessDeniedPage(ModelMap model) {
+        model.addAttribute("user", getPrincipal());
+        return "accessDenied";
+    }
+
+	private String getPrincipal() {
+		String userName = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			userName = ((UserDetails) principal).getUsername();
+		} else {
+			userName = principal.toString();
+		}
+		return userName;
+
+	}
+	
 }

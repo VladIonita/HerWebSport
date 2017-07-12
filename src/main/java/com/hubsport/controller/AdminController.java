@@ -15,10 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdminController {
 
 	
-//	 @RequestMapping(value="/admin")
+//	 @RequestMapping(value="/admin/loginHeader")
 //	 public ModelAndView showLogin() {
-//		 ModelAndView mav = new ModelAndView("admin/login");
-//		 mav.addObject("command", new Users());
+//		 ModelAndView mav = new ModelAndView("admin/loginHeader");
 //		 return mav;
 //	 }
 	 
