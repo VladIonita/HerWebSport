@@ -19,64 +19,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class EventsController {
 
 	// access to home page
-	
+
 	@RequestMapping("/")
 	public String listObjects(Model model) {
 		model.addAttribute("eventsList", new Object());
 		return "home";
 	}
-
-	@RequestMapping(value = "/home" , method = RequestMethod.GET)
-	public String homePage(Model model) {
-		return "home";
-	}
 	
-	// access to dashboard to administrate admin
-	@RequestMapping("/dashboard")
-	public String dashboardPage() {
-		return "dashboard";
-	}
-	
-	
-	
-
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String adminPage(ModelMap model) {
-		model.addAttribute("user", getPrincipal());
-		
-		return "admin";
+	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
+	public String loginPage(Model model) {
+		return "loginPage";
 	}
 
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logputPage(HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null) {
-			new SecurityContextLogoutHandler().logout(request, response, auth);
-		}
-		return "home";
-	}
+//	@RequestMapping(value = "/home", method = RequestMethod.GET)
+//	public String homePage(Model model) {
+//		return "home";
+//	}
 
 	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model) {
-		model.addAttribute("user", getPrincipal());
 		return "accessDenied";
 	}
-
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginPage() {
-		return "login";
+	
+	
+	// access to dashboard to administrate admin
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public String dashboardPage() {
+		return "admin";
 	}
 
-	private String getPrincipal() {
-		String userName = null;
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof UserDetails) {
-			userName = ((UserDetails) principal).getUsername();
-		} else {
-			userName = principal.toString();
-		}
-		return userName;
-
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public String loginPage() {
+		return "home";
 	}
 
 }

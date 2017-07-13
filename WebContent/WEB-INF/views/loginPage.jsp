@@ -12,7 +12,7 @@
 <link rel="shortcut icon"
 	href="<c:url value="/resources/ico/favicon.ico" />">
 
-<title>Dashboard</title>
+<title>Login Page</title>
 
 <!-- Bootstrap core CSS -->
 <link href="<c:url value="/resources/css/bootstrap.css" />"
@@ -25,13 +25,9 @@
 <script src="<c:url value="/resources/js/modernizr.js" />"></script>
 
 </head>
-<body>
+<body onload='document.f.username.focus();'>
 
 	<%@ include file="loginHeader.jsp"%>
-
-
-
-
 
 
 
@@ -42,15 +38,39 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
-					<form>
-					<div class="alert alert-danger">
-						<h1>Welcome to dashboard</h1>
-					</div>
-					<div class="input-group input-sm">
-						Dear <strong>${user}</strong>, Welcome to Admin Page. <a
-							href="<c:url value="/logout" />">Logout</a>
-					</div>
-					</form>
+
+					<c:url var="loginUrl" value="/log" />
+                        <form action="${loginUrl}" method="post" class="form-horizontal">
+                            <c:if test="${param.error != null}">
+                                <div class="alert alert-danger">
+                                    <p>Invalid username and password.</p>
+                                </div>
+                            </c:if>
+                            <c:if test="${param.logout != null}">
+                                <div class="alert alert-success">
+                                    <p>You have been logged out successfully.</p>
+                                </div>
+                            </c:if>
+                            <div class="input-group input-sm">
+                                <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
+                                <input type="text" class="form-control" id="username" name="user" placeholder="Enter Username" required>
+                            </div>
+                            <div class="input-group input-sm">
+                                <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+                            </div>
+                            <div class="input-group input-sm">
+                              <div class="checkbox">
+                                <label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>  
+                              </div>
+                            </div>
+                            <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
+                                 
+                            <div class="form-actions">
+                                <input type="submit"
+                                    class="btn btn-block btn-primary btn-default" value="Log in">
+                            </div>
+                        </form>
 
 
 				</div>
@@ -61,9 +81,6 @@
 		<!-- /container -->
 	</div>
 	<!-- /headerwrap -->
-
-
-
 
 
 
@@ -165,3 +182,6 @@
 	</script>
 </body>
 </html>
+
+
+

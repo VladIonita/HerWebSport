@@ -89,4 +89,5 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		registry.addViewController("/").setViewName("home");
 	}
 
+	
 }
