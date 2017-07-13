@@ -11,12 +11,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	MySimpleUrlAuthenticationSuccessHandler successHandler;
 	
 	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
@@ -30,9 +34,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 		.antMatchers("/","/home","/login").permitAll()
 		.antMatchers("/dashboard/**").access("hasRole('ADMIN')")
-		.and().formLogin().loginPage("/login")
+		.and().formLogin().loginPage("/login").failureUrl("/login.html?error=true").successHandler(successHandler)
 		.loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password")
-		.and().exceptionHandling().accessDeniedPage("/Access_Denied");
+		.and().exceptionHandling().accessDeniedPage("/accessDenied");
 		
 	}
 	

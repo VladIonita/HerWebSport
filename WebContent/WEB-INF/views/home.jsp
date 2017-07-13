@@ -43,7 +43,7 @@
 			<div class="navbar-collapse collapse navbar-right">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="index.html">HOME</a></li>
-					<li><a href="<c:url value="/login"/>">LOGIN</a></li>
+					<li><a href="<c:url value="....."/>">LOGIN</a></li>
 					<li><a href="<c:url value="/dashboard"/>">DASHBOARD</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">PAGES <b class="caret"></b></a>

@@ -1,6 +1,5 @@
 package com.hubsport.controller;
 
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -16,32 +15,37 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 @Controller
 public class EventsController {
 
-     
+	// access to home page
+	
 	@RequestMapping("/")
 	public String listObjects(Model model) {
 		model.addAttribute("eventsList", new Object());
 		return "home";
 	}
-	
-    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-    public String dashboardPage() {
-            return "admin/dashboard";
-	}
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage() {
-            return "admin/login";
+	@RequestMapping(value = "/home" , method = RequestMethod.GET)
+	public String homePage(Model model) {
+		return "home";
 	}
 	
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String adminPage(ModelMap model) {
-        model.addAttribute("user", getPrincipal());
-        return "admin/admin";
-    }
+	// access to dashboard to administrate admin
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public String dashboardPage() {
+		return "admin/dashboard";
+	}
+	
+	
+	
+
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public String adminPage(ModelMap model) {
+		model.addAttribute("user", getPrincipal());
+		
+		return "admin/admin";
+	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logputPage(HttpServletRequest request, HttpServletResponse response) {
@@ -52,11 +56,16 @@ public class EventsController {
 		return "home";
 	}
 
-    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
-    public String accessDeniedPage(ModelMap model) {
-        model.addAttribute("user", getPrincipal());
-        return "accessDenied";
-    }
+	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+	public String accessDeniedPage(ModelMap model) {
+		model.addAttribute("user", getPrincipal());
+		return "admin/accessDenied";
+	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginPage() {
+		return "admin/login";
+	}
 
 	private String getPrincipal() {
 		String userName = null;
@@ -69,5 +78,5 @@ public class EventsController {
 		return userName;
 
 	}
-	
+
 }
