@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 		.antMatchers("/","/home","/login").permitAll()
 		.antMatchers("/dashboard/**").access("hasRole('ADMIN')")
-		.and().formLogin().loginPage("/login").failureUrl("/login.html?error=true").successHandler(successHandler)
+		.and().formLogin().loginPage("/login").failureUrl("/login?error=true").successHandler(successHandler)
 		.loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password")
 		.and().exceptionHandling().accessDeniedPage("/accessDenied");
 		

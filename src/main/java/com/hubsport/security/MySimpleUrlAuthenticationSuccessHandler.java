@@ -65,9 +65,9 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 			}
 		}
 		if(isUser) {
-			return "/home";
+			return "${pageContext.request.contextPath}/home";
 		} else if (isAdmin) {
-			return "/dashboard";
+			return "${pageContext.request.contextPath}/dashboard";
 		} else
 		throw new IllegalStateException();
 	}

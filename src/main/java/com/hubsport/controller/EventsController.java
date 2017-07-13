@@ -32,9 +32,9 @@ public class EventsController {
 	}
 	
 	// access to dashboard to administrate admin
-	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	@RequestMapping("/dashboard")
 	public String dashboardPage() {
-		return "admin/dashboard";
+		return "dashboard";
 	}
 	
 	
@@ -44,7 +44,7 @@ public class EventsController {
 	public String adminPage(ModelMap model) {
 		model.addAttribute("user", getPrincipal());
 		
-		return "admin/admin";
+		return "admin";
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -59,12 +59,12 @@ public class EventsController {
 	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model) {
 		model.addAttribute("user", getPrincipal());
-		return "admin/accessDenied";
+		return "accessDenied";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
-		return "admin/login";
+		return "login";
 	}
 
 	private String getPrincipal() {
