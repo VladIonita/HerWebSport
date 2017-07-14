@@ -18,37 +18,25 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 @Configuration
 @EnableWebSecurity(debug = false)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
-	
-	
-	
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
 	@Autowired
 	MySimpleUrlAuthenticationSuccessHandler successHandler;
 	
 	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-		.withUser("vlad").password("1234").authorities("ROLE_USER")
-		.and()
-		.withUser("admin").password("admin").authorities("ROLE_ADMIN")
-		.and()
-		.withUser("adonis").password("adonis").authorities("ROLE_ADMIN");
+		auth.inMemoryAuthentication().withUser("vlad").password("1234").authorities("ROLE_USER").and().withUser("admin")
+				.password("admin").authorities("ROLE_ADMIN");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-		.antMatchers("/").permitAll()
-		.antMatchers("/home").access("hasRole('ROLE_USER')")
-		.antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
-		.and()
-		.formLogin().loginPage("/log").successHandler(successHandler)
-		.usernameParameter("user").passwordParameter("password")
-		.and()
-		.exceptionHandling().accessDeniedPage("/accessDenied");
+		http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/home").access("hasRole('ROLE_USER')")
+				.antMatchers("/admin").access("hasRole('ROLE_ADMIN')").and().formLogin().loginPage("/log")
+//				.failureHandler(authenticationFailureHandler)
+				.failureUrl("/loginPage?error=true")
+				.successHandler(successHandler).usernameParameter("user").passwordParameter("password").and()
+				.exceptionHandling().accessDeniedPage("/accessDenied");
 	}
 
-	
-	
-	
 }

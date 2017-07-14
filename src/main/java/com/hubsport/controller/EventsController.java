@@ -17,40 +17,43 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class EventsController {
-
+	
 	// access to home page
 
-	@RequestMapping("/")
-	public String listObjects(Model model) {
-		model.addAttribute("eventsList", new Object());
-		return "home";
-	}
-	
-	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
-	public String loginPage(Model model) {
-		return "loginPage";
+		@RequestMapping("/")
+		public String listObjects(Model model) {
+			model.addAttribute("eventsList", new Object());
+			return "home";
+		}
+		
+		@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
+		public String loginPage(Model model) {
+			return "loginPage";
+		}
+
+//		@RequestMapping(value = "/home", method = RequestMethod.GET)
+//		public String homePage(Model model) {
+//			return "home";
+//		}
+
+		@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+		public String accessDeniedPage(ModelMap model) {
+			return "accessDenied";
+		}
+		
+		
+		// access to dashboard to administrate admin
+		@RequestMapping(value = "/admin", method = RequestMethod.GET)
+		public String dashboardPage() {
+			return "admin";
+		}
+
+		@RequestMapping(value = "/user", method = RequestMethod.GET)
+		public String loginPage() {
+			return "home";
 	}
 
-//	@RequestMapping(value = "/home", method = RequestMethod.GET)
-//	public String homePage(Model model) {
-//		return "home";
-//	}
 
-	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
-	public String accessDeniedPage(ModelMap model) {
-		return "accessDenied";
-	}
 	
-	
-	// access to dashboard to administrate admin
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String dashboardPage() {
-		return "admin";
-	}
-
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String loginPage() {
-		return "home";
-	}
 
 }
