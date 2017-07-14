@@ -12,7 +12,7 @@
 <link rel="shortcut icon"
 	href="<c:url value="/resources/ico/favicon.ico" />">
 
-<title>SOLID - Bootstrap 3 Theme</title>
+<title>HUBSPORT</title>
 
 <!-- Bootstrap core CSS -->
 <link href="<c:url value="/resources/css/bootstrap.css" />"
@@ -28,98 +28,37 @@
 <script src="<c:url value="/resources/js/modernizr.js" />"></script>
 </head>
 <body>
-	<!-- Fixed navbar -->
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="home" >HUBSPORT</a>
-			</div>
-			<div class="navbar-collapse collapse navbar-right">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="index.html">HOME</a></li>
-					<li><a href="${pageContext.request.contextPath}/login">LOGIN</a></li>
-					<li><a href="${pageContext.request.contextPath}/dashboard">DASHBOARD</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">PAGES <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="blog.html">BLOG</a></li>
-							<li><a href="single-post.html">SINGLE POST</a></li>
-							<li><a href="portfolio.html">PORTFOLIO</a></li>
-							<li><a href="single-project.html">SINGLE PROJECT</a></li>
-						</ul></li>
-				</ul>
-			</div>
-			<!--/.nav-collapse -->
-		</div>
-	</div>
 
 
+	<%@ include file="loginHeader.jsp"%>
 
 
 	<!-- *****************************************************************************************************************
 	 HEADERWRAP
 	 ***************************************************************************************************************** -->
 	<div id="headerwrap">
-	    <div class="container">
+		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
 					<h3>!!!!!!!!!!!this is home jsp!!!!!!!!!!!!!!</h3>
 				</div>
-				<div class="col-lg-8 col-lg-offset-2 himg">
-				</div>
-			</div><!-- /row -->
-	    </div> <!-- /container -->
-	</div><!-- /headerwrap -->
+				<div class="col-lg-8 col-lg-offset-2 himg"></div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /headerwrap -->
 
 
 
 
 
 
+	<%@ include file="loginFooter.jsp"%>
 
 
 
-	<!-- *****************************************************************************************************************
-	 FOOTER
-	 ***************************************************************************************************************** -->
-	 <div id="footerwrap">
-	 	<div class="container">
-		 	<div class="row">
-		 		<div class="col-lg-4">
-		 			<h4>About</h4>
-		 			<div class="hline-w"></div>
-		 			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-		 		</div>
-		 		<div class="col-lg-4">
-		 			<h4>Social Links</h4>
-		 			<div class="hline-w"></div>
-		 			<p>
-		 				<a href="#"><i class="fa fa-dribbble"></i></a>
-		 				<a href="#"><i class="fa fa-facebook"></i></a>
-		 				<a href="#"><i class="fa fa-twitter"></i></a>
-		 				<a href="#"><i class="fa fa-instagram"></i></a>
-		 				<a href="#"><i class="fa fa-tumblr"></i></a>
-		 			</p>
-		 		</div>
-		 		<div class="col-lg-4">
-		 			<h4>Our Bunker</h4>
-		 			<div class="hline-w"></div>
-		 			<p>
-		 				Some Ave, 987,<br/>
-		 				23890, New York,<br/>
-		 				United States.<br/>
-		 			</p>
-		 		</div>
-		 	
-		 	</div><!-- row -->
-	 	</div><!--/container -->
-	 </div> <!--/footerwrap -->
 
 
 

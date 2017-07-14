@@ -19,19 +19,5 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AdminController {
 
-	
 
-	
-//	 @RequestMapping(value="/admin/loginHeader")
-//	 public ModelAndView showLogin() {
-//		 ModelAndView mav = new ModelAndView("admin/loginHeader");
-//		 return mav;
-//	 }
-	 
-    
-	 
-
-    
-
-    
 }

@@ -12,7 +12,7 @@
 <link rel="shortcut icon"
 	href="<c:url value="/resources/ico/favicon.ico" />">
 
-<title>SOLID - Bootstrap 3 Theme</title>
+<title>Access Denied</title>
 
 <!-- Bootstrap core CSS -->
 <link href="<c:url value="/resources/css/bootstrap.css" />"
@@ -33,13 +33,25 @@
 
 
 
-	Dear
-	<strong>${user}</strong>, You are not authorized to access this page
-	<a href="<c:url value="/logout" />">Logout</a>
 
 
-
-
+	<!-- *****************************************************************************************************************
+	 HEADERWRAP
+	 ***************************************************************************************************************** -->
+	<div id="headerwrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h3>!!!!!!!!!!!You are not authorized to access this
+						page!!!!!!!!!!!!!!</h3>
+				</div>
+				<div class="col-lg-8 col-lg-offset-2 himg"></div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /headerwrap -->
 
 
 	<%@ include file="loginFooter.jsp"%>
