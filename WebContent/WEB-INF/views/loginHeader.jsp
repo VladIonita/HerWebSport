@@ -12,9 +12,9 @@
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="${pageContext.request.contextPath}/home">HOME</a></li>
+					<li class="active"><a href="${pageContext.request.contextPath}/">HOME</a></li>
 					<li><a href="${pageContext.request.contextPath}/loginPage">LOGIN</a></li>
-					<li><a href="${pageContext.request.contextPath}/logout">LOGOUT</a></li>
+					<li><a href="<c:url value="/logout" />">LOGOUT</a></li>
 			<!-- 		<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">PAGES <b class="caret"></b></a>
 						<ul class="dropdown-menu">

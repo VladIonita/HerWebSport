@@ -39,7 +39,7 @@
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
 
-					<c:url var="loginUrl" value="/log" />
+					<c:url var="loginUrl" value="/loginPage" />
                         <form action="${loginUrl}" method="post" class="form-horizontal">
                             <c:if test="${param.error != null}">
                                 <div class="alert alert-danger">
