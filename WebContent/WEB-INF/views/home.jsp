@@ -42,7 +42,7 @@
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand"
-					href="${pageContext.request.contextPath}/home">HUBSPORT</a>
+					href="${pageContext.request.contextPath}/">HUBSPORT</a>
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
 				<ul class="nav navbar-nav">
