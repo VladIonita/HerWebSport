@@ -3,7 +3,6 @@ package com.hubsport.security;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -45,14 +44,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
     private List<GrantedAuthority> getGrantedAuthorities(User user){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-         	int userStatus = user.getStatus();
-            logger.info("UserProfile : {}", userStatus);
-            if(userStatus == 0) {
-            	authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-            } else if(userStatus == 1) {
             	authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-            } 
-            
         logger.info("authorities : {}", authorities);
         return authorities;
     }

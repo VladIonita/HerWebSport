@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 //import com.hubsport.domain.Places;
 //import com.hubsport.domain.Timetable;
 
-@Service
+//@Service
 public class WebService {
 
 //	@Autowired

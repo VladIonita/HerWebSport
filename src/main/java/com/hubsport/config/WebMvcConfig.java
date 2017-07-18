@@ -39,14 +39,6 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-	// @Bean
-	// public DataSource DataSource() {
-	// final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
-	// dsLookup.setResourceRef(true);
-	// DataSource dataSource = dsLookup.getDataSource("jdbc/hubsport");
-	// return dataSource;
-	// }
-
 	@Bean
 	public RequestMappingHandlerMapping requestMappingHandlerMapping() {
 		RequestMappingHandlerMapping rmhm = new RequestMappingHandlerMapping();
@@ -63,40 +55,26 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		resolver.setViewClass(JstlView.class);
 		return resolver;
 	}
-	
-    @Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages");
-        return messageSource;
-    }
-	
 
-//	@Bean
-//	public UrlBasedViewResolver basedViewResolver() {
-//		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
-//		resolver.setPrefix("WEB-INF/views/");
-//		resolver.setSuffix(".css");
-//		resolver.setViewClass(CSS.class);
-//		return resolver;
-//
-//	}
-	
+	@Bean
+	public MessageSource messageSource() {
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setBasename("messages");
+		return messageSource;
+	}
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-	    registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
-	
-	
-	
+
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-	    configurer.enable();
+		configurer.enable();
 	}
 
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("home");
 	}
 
-	
 }

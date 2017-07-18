@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,17 +17,23 @@
 <title>HUBSPORT</title>
 
 <!-- Bootstrap core CSS -->
-<link href="<c:url value="/resources/css/bootstrap.css" />"
+<link href="<c:url value="/resources/css/bootstrap.min.css" />"
+	rel="stylesheet">
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<link
+	href="<c:url value="/resources/css/ie10-viewport-bug-workaround.css" />"
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/font-awesome.min.css" />"
+<link href="<c:url value="/resources/css/sticky-footer-navbar.css" />"
 	rel="stylesheet">
-
-
-
-<script src="<c:url value="/resources/js/modernizr.js" />"></script>
+	
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
 
@@ -41,15 +48,11 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand"
-					href="${pageContext.request.contextPath}/">HUBSPORT</a>
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/">HUBSPORT</a>
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
 				<ul class="nav navbar-nav">
 					<li><a href="${pageContext.request.contextPath}/">HOME</a></li>
-					<li><a href="${pageContext.request.contextPath}/loginPage">LOGIN</a></li>
-					<li><a href="${pageContext.request.contextPath}/admin">DASHBOARD</a></li>
-					<li><a href="${pageContext.request.contextPath}/logout">LOGOUT</a></li>
 					<!-- 		<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">PAGES <b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -69,6 +72,7 @@
 	 HEADERWRAP
 	 ***************************************************************************************************************** -->
 	<div id="headerwrap">
+		<a>Welcome to HubSport <strong>${loggedinuser}</strong></a>
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
@@ -76,38 +80,40 @@
 						<span class="lead">List of Users </span>
 					</div>
 					<table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Email</th>
-                        <th>ID</th>
-                  <!--      <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-                            <th width="100"></th>
-                        </sec:authorize>
-                        <sec:authorize access="hasRole('ADMIN')">
-                            <th width="100"></th>
-                        </sec:authorize>    --> 
-                         
-                    </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${users}" var="user">
-                    <tr>
-                        <td>${user.firstName}</td>
-                        <td>${user.lastName}</td>
-                        <td>${user.email}</td>
-                        <td>${user.id}</td>
-                   <!--     <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-                            <td><a href="<c:url value='/edit-user-${user.Id}' />" class="btn btn-success custom-width">edit</a></td>
-                        </sec:authorize>
-                        <sec:authorize access="hasRole('ADMIN')">
-                            <td><a href="<c:url value='/delete-user-${user.Id}' />" class="btn btn-danger custom-width">delete</a></td>
-                        </sec:authorize>   --> 
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+						<thead>
+							<tr>
+								<th>Firstname</th>
+								<th>Lastname</th>
+								<th>Email</th>
+								<th>ID</th>
+								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+									<th width="100"></th>
+								</sec:authorize>
+								<sec:authorize access="hasRole('ADMIN')">
+									<th width="100"></th>
+								</sec:authorize>
+
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${users}" var="user">
+								<tr>
+									<td>${user.firstName}</td>
+									<td>${user.lastName}</td>
+									<td>${user.email}</td>
+									<td>${user.id}</td>
+									<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+										<td><a href="<c:url value='/edit-user-${user.Id}' />"
+											class="btn btn-success custom-width">edit</a></td>
+									</sec:authorize>
+									<sec:authorize access="hasRole('ADMIN')">
+										<td><a href="<c:url value='/delete-user-${user.Id}' />"
+											class="btn btn-danger custom-width">delete</a></td>
+									</sec:authorize>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 				</div>
 				<div class="col-lg-8 col-lg-offset-2 himg"></div>
 			</div>
