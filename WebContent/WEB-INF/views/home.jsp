@@ -82,12 +82,12 @@
                         <th>Lastname</th>
                         <th>Email</th>
                         <th>ID</th>
-                        <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+                  <!--      <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
                             <th width="100"></th>
                         </sec:authorize>
                         <sec:authorize access="hasRole('ADMIN')">
                             <th width="100"></th>
-                        </sec:authorize>
+                        </sec:authorize>    --> 
                          
                     </tr>
                 </thead>
