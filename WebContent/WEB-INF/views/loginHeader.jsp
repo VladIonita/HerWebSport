@@ -8,13 +8,13 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="${pageContext.request.contextPath}/home" >HUBSPORT</a>
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/" >HUBSPORT</a>
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="${pageContext.request.contextPath}/">HOME</a></li>
 					<li><a href="${pageContext.request.contextPath}/loginPage">LOGIN</a></li>
-					<li><a href="<c:url value="/logout" />">LOGOUT</a></li>
+					<li><a href="${pageContext.request.contextPath}/logout">LOGOUT</a></li>
 			<!-- 		<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">PAGES <b class="caret"></b></a>
 						<ul class="dropdown-menu">

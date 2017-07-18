@@ -49,6 +49,7 @@
 					<li><a href="${pageContext.request.contextPath}/">HOME</a></li>
 					<li><a href="${pageContext.request.contextPath}/loginPage">LOGIN</a></li>
 					<li><a href="${pageContext.request.contextPath}/admin">DASHBOARD</a></li>
+					<li><a href="${pageContext.request.contextPath}/logout">LOGOUT</a></li>
 					<!-- 		<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">PAGES <b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -96,13 +97,13 @@
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
                         <td>${user.email}</td>
-                        <td>${user.Id}</td>
-                        <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+                        <td>${user.id}</td>
+                   <!--     <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
                             <td><a href="<c:url value='/edit-user-${user.Id}' />" class="btn btn-success custom-width">edit</a></td>
                         </sec:authorize>
                         <sec:authorize access="hasRole('ADMIN')">
                             <td><a href="<c:url value='/delete-user-${user.Id}' />" class="btn btn-danger custom-width">delete</a></td>
-                        </sec:authorize>
+                        </sec:authorize>   --> 
                     </tr>
                 </c:forEach>
                 </tbody>
