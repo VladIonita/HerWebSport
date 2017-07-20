@@ -38,7 +38,7 @@
 	<!-- <%@ include file="adminHeader.jsp"%>  -->
 
 
-	<!-- Begin page content -->
+	<!-- Begin page content 
 	<div class="container">
 		<p align="right">
 			Welcome to Admin Page <strong>${user}</strong>, <a
@@ -58,6 +58,35 @@
 		</p>
 
 	</div>
+	-->
+
+
+
+	<div id="headerwrap">
+		<a>Welcome to HubSport <strong>${loggedinuser}</strong></a>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<div class="panel-heading">
+						<span class="lead">List of Users </span>
+					</div>
+					<!-- afisarea e buna -->
+					<c:forEach var="row" items="${userList}">
+						User Id: ${row.id} <br />
+						User first name: ${row.firstName} <br />
+						User last name: ${row.lastName} <br />
+						Email: ${row.email} <br />
+						<br />
+					</c:forEach>
+				</div>
+				<div class="col-lg-8 col-lg-offset-2 himg"></div>
+			</div>
+			<!-- /row -->
+		</div>
+	</div>
+
+
+
 
 	<!-- <%@ include file="adminFooter.jsp"%>  -->
 

@@ -1,13 +1,19 @@
 package com.hubsport.dao;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hubsport.domain.User;
@@ -18,6 +24,9 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 	
 	static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 	
 	//find user by id
 	@Override
@@ -59,13 +68,27 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 
 	
 	// find all users
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAllUsers() {
-		Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); //avoiding duplicate
-		List<User> users =(List<User>) criteria.list();
-		return users;
+		
+		
+		List<User> usersList = new ArrayList<User>(); 
+	    Session session = sessionFactory.openSession();
+	    for (Object oneObject : session.createQuery("FROM User").getResultList()) {
+	    	usersList.add((User)oneObject);
+	    }
+	    session.close();
+	    return usersList;
+	    
+	    
+	    
+//		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+//		
+//		
+//		Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
+//		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); //avoiding duplicate
+//		List<User> users =(List<User>) criteria.list();
+//		return users;
 	}
 
 }

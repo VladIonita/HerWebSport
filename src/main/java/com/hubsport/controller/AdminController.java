@@ -1,8 +1,11 @@
 package com.hubsport.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,8 +16,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.hubsport.domain.User;
+import com.hubsport.service.UserService;
+
 @Controller
 public class AdminController {
+	
+	@Autowired
+  UserService userService;
 	
 	
 	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
@@ -31,7 +40,9 @@ public class AdminController {
 	// access to dashboard to administrate admin
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String adminPage(ModelMap model) {
-        model.addAttribute("user", getPrincipal());
+    	List<User> users = userService.findAllUsers();
+        model.addAttribute("userList", users);
+        model.addAttribute("loggedinuser", getPrincipal());
 		return "admin";
 	}
 	
