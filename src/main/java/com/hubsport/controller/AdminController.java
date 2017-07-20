@@ -46,6 +46,12 @@ public class AdminController {
 		return "admin";
 	}
 	
+	// handling 404 error
+	@RequestMapping(value = "*", method = RequestMethod.GET)
+    public String fallback() {
+		return "fallback";
+	}
+	
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
        Authentication auth = SecurityContextHolder.getContext().getAuthentication();

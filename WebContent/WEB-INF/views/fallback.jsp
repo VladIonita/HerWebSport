@@ -34,8 +34,7 @@
     <![endif]-->
 </head>
 <body>
-
-	<!-- <%@ include file="adminHeader.jsp"%>  -->
+	<%@ include file="adminHeader.jsp"%>
 
 
 	<!-- Begin page content -->
@@ -45,40 +44,13 @@
 				href="<c:url value="/logout" />">Logout</a>
 		</p>
 		<div class="page-header">
-			<h1>In curs de actualizare!!!</h1>
+			<h3>!!!!!!!!!!!Sorry!!!You are trying to access a page that
+				dosn't exist! (Error code 404)!!!!!!!!!!!!!</h3>
 		</div>
 
 	</div>
-	
 
-
-	<!-- Begin page content 
-	<div id="headerwrap">
-		<a>Welcome to HubSport <strong>${loggedinuser}</strong></a>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
-					<div class="panel-heading">
-						<span class="lead">List of Users </span>
-					</div>
-					<c:forEach var="row" items="${userList}">
-						User Id: ${row.id} <br />
-						User first name: ${row.firstName} <br />
-						User last name: ${row.lastName} <br />
-						Email: ${row.email} <br />
-						<br />
-					</c:forEach>
-				</div>
-				<div class="col-lg-8 col-lg-offset-2 himg"></div>
-			</div>
-		</div>
-	</div> 
-
--->
-
-
-	<!-- <%@ include file="adminFooter.jsp"%>  -->
-
+	<%@ include file="adminFooter.jsp"%>
 
 	<!-- Bootstrap core JavaScript
     ================================================== -->
