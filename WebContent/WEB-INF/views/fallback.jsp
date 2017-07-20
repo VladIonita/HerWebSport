@@ -44,8 +44,13 @@
 				href="<c:url value="/logout" />">Logout</a>
 		</p>
 		<div class="page-header">
+<<<<<<< HEAD
 			<h3>Sorry!!!<br/>
 			You are trying to access a page that dosn't exist!   (Error code 404)</h3>
+=======
+			<h3>!!!!!!!!!!!Sorry!!!You are trying to access a page that
+				dosn't exist! (Error code 404)!!!!!!!!!!!!!</h3>
+>>>>>>> ddb119a4f7f18c65183f32df599aa85ddf4e7c9d
 		</div>
 
 	</div>

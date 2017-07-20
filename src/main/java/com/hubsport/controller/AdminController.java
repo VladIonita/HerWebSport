@@ -1,14 +1,20 @@
 package com.hubsport.controller;
 
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Locale;
+=======
+>>>>>>> ddb119a4f7f18c65183f32df599aa85ddf4e7c9d
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.context.MessageSource;
+=======
+>>>>>>> ddb119a4f7f18c65183f32df599aa85ddf4e7c9d
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +32,7 @@ import com.hubsport.service.UserService;
 
 @Controller
 public class AdminController {
+<<<<<<< HEAD
 
 	@Autowired
 	UserService userService;
@@ -33,6 +40,13 @@ public class AdminController {
 	@Autowired
 	MessageSource messageSource;
 
+=======
+	
+	@Autowired
+  UserService userService;
+	
+	
+>>>>>>> ddb119a4f7f18c65183f32df599aa85ddf4e7c9d
 	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
 	public String loginPage(Model model) {
 		return "loginPage";
@@ -98,6 +112,7 @@ public class AdminController {
 
 	// access to dashboard to administrate admin
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+<<<<<<< HEAD
 	public String adminPage(ModelMap model) {
 		List<User> users = userService.findAllUsers();
 		model.addAttribute("userList", users);
@@ -131,4 +146,40 @@ public class AdminController {
 		}
 		return userName;
 	}
+=======
+    public String adminPage(ModelMap model) {
+    	List<User> users = userService.findAllUsers();
+        model.addAttribute("userList", users);
+        model.addAttribute("loggedinuser", getPrincipal());
+		return "admin";
+	}
+	
+	// handling 404 error
+	@RequestMapping(value = "*", method = RequestMethod.GET)
+    public String fallback() {
+		return "fallback";
+	}
+	
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+       if (auth != null){    
+          new SecurityContextLogoutHandler().logout(request, response, auth);
+       }
+       return "loginPage";
+    }
+    
+    
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+ 
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
+>>>>>>> ddb119a4f7f18c65183f32df599aa85ddf4e7c9d
 }
