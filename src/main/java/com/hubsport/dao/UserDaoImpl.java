@@ -3,19 +3,11 @@ package com.hubsport.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
-=======
-import javax.persistence.criteria.CriteriaBuilder;
->>>>>>> ddb119a4f7f18c65183f32df599aa85ddf4e7c9d
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-<<<<<<< HEAD
-=======
-import org.hibernate.criterion.Order;
->>>>>>> ddb119a4f7f18c65183f32df599aa85ddf4e7c9d
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,11 +68,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 	// find all users
 	@Override
 	public List<User> findAllUsers() {
-<<<<<<< HEAD
-=======
-		
-		
->>>>>>> ddb119a4f7f18c65183f32df599aa85ddf4e7c9d
 		List<User> usersList = new ArrayList<User>(); 
 	    Session session = sessionFactory.openSession();
 	    for (Object oneObject : session.createQuery("FROM User").getResultList()) {
@@ -88,19 +75,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 	    }
 	    session.close();
 	    return usersList;
-<<<<<<< HEAD
-=======
-	    
-	    
-	    
-//		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-//		
-//		
-//		Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
-//		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); //avoiding duplicate
-//		List<User> users =(List<User>) criteria.list();
-//		return users;
->>>>>>> ddb119a4f7f18c65183f32df599aa85ddf4e7c9d
 	}
 
 }
