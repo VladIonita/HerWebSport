@@ -40,8 +40,7 @@
 	<!-- Begin page content -->
 	<div class="container">
 		<div class="page-header">
-			<h3>!!!!!!!!!!!You are not authorized to access this
-				page!!!!!!!!!!!!!!</h3>
+			<h3>!!!!!!!!!!!Sorry!!!You are not authorize to access this page!!!!!!!!!!!!!</h3>
 		</div>
 	</div>
 

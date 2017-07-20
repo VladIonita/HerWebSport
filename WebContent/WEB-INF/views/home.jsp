@@ -68,69 +68,6 @@
 	</div>
 
 
-	<!-- *****************************************************************************************************************
-	 HEADERWRAP
-	 ***************************************************************************************************************** -->
-	<div id="headerwrap">
-		<a>Welcome to HubSport <strong>${loggedinuser}</strong></a>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
-					<div class="panel-heading">
-						<span class="lead">List of Users </span>
-					</div>
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Firstname</th>
-								<th>Lastname</th>
-								<th>Email</th>
-								<th>ID</th>
-								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-									<th width="100"></th>
-								</sec:authorize>
-								<sec:authorize access="hasRole('ADMIN')">
-									<th width="100"></th>
-								</sec:authorize>
-
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${users}" var="user">
-								<tr>
-									<td>${user.firstName}</td>
-									<td>${user.lastName}</td>
-									<td>${user.email}</td>
-									<td>${user.id}</td>
-									<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-										<td><a href="<c:url value='/edit-user-${user.Id}' />"
-											class="btn btn-success custom-width">edit</a></td>
-									</sec:authorize>
-									<sec:authorize access="hasRole('ADMIN')">
-										<td><a href="<c:url value='/delete-user-${user.Id}' />"
-											class="btn btn-danger custom-width">delete</a></td>
-									</sec:authorize>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-				<div class="col-lg-8 col-lg-offset-2 himg"></div>
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /headerwrap -->
-
-
-
-
-
-
-
-
-
 
 
 	<!-- Bootstrap core JavaScript

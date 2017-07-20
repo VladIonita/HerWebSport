@@ -28,8 +28,7 @@ public class EventsController {
 
 	
 	
-//	@Autowired
-//    UserService userService;
+
 	
 	
 	

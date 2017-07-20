@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
 
 	public void saveUser(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userDao.save(user);
 	}
 
 	public void updateUser(User user) {

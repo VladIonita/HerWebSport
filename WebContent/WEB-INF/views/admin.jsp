@@ -41,23 +41,41 @@
 	<!-- Begin page content -->
 	<div class="container">
 		<p align="right">
-			Welcome to Admin Page <strong>${user}</strong>, <a
+			Welcome to Admin Page <strong>${loggedinuser}</strong>, <a
 				href="<c:url value="/logout" />">Logout</a>
 		</p>
 		<div class="page-header">
-			<h1>Sticky footer with fixed navbar</h1>
+			<h1>In curs de actualizare!!!</h1>
 		</div>
-		<p class="lead">
-			Pin a fixed-height footer to the bottom of the viewport in desktop
-			browsers with this custom HTML and CSS. A fixed navbar has been added
-			with
-			<code>padding-top: 60px;</code>
-			on the
-			<code>body &gt; .container</code>
-			.
-		</p>
 
 	</div>
+	
+
+
+	<!-- Begin page content 
+	<div id="headerwrap">
+		<a>Welcome to HubSport <strong>${loggedinuser}</strong></a>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<div class="panel-heading">
+						<span class="lead">List of Users </span>
+					</div>
+					<c:forEach var="row" items="${userList}">
+						User Id: ${row.id} <br />
+						User first name: ${row.firstName} <br />
+						User last name: ${row.lastName} <br />
+						Email: ${row.email} <br />
+						<br />
+					</c:forEach>
+				</div>
+				<div class="col-lg-8 col-lg-offset-2 himg"></div>
+			</div>
+		</div>
+	</div> 
+
+-->
+
 
 	<!-- <%@ include file="adminFooter.jsp"%>  -->
 
