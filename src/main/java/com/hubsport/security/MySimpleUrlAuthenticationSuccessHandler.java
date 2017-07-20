@@ -29,25 +29,13 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		authorities.forEach(authority -> {
-			if (authority.getAuthority().equals("ROLE_USER")) {
-				try {
-					redirectStrategy.sendRedirect(request, response, "/user");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+			 if (authority.getAuthority().equals("ROLE_ADMIN")) {
 				try {
 					redirectStrategy.sendRedirect(request, response, "/admin");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} else {
-				try {
-					redirectStrategy.sendRedirect(request, response, "/accessDenied");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+			} 
 			
 		});
 		clearAuthenticationAttributes(request);

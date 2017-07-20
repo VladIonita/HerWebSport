@@ -16,6 +16,7 @@ public class WebMvcInitializer implements WebApplicationInitializer {
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 		rootContext.register(WebMvcConfig.class);
 		
+		
 		ServletRegistration.Dynamic registration = servletContext.addServlet("dispatcher", new DispatcherServlet(rootContext));
 		registration.addMapping("/");
 		registration.setLoadOnStartup(1);

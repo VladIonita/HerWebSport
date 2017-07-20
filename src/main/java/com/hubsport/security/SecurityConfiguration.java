@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 @Configuration
-@EnableWebSecurity(debug = false)
+@EnableWebSecurity(debug = false)// to show logger
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
     @Autowired
@@ -30,12 +30,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	MySimpleUrlAuthenticationSuccessHandler successHandler;
 	
-    @Autowired
-    PersistentTokenRepository tokenRepository;
+//    @Autowired
+//    PersistentTokenRepository tokenRepository;
 	
 	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication().withUser("vlad").password("1234").authorities("ROLE_USER").and().withUser("admin")
+//		auth.inMemoryAuthentication().withUser("vlad").password("1234").authorities("ROLE_ADMIN").and().withUser("admin")
 //				.password("admin").authorities("ROLE_ADMIN");
 		
 		auth.userDetailsService(userDetailsService);
@@ -43,28 +43,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 	}
 
+	
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/home").access("hasRole('ROLE_USER')")
-				.antMatchers("/admin").access("hasRole('ROLE_ADMIN')").and().formLogin().loginPage("/log")
-//				.failureHandler(authenticationFailureHandler)
+		http.authorizeRequests().antMatchers("/").permitAll()
+				.antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
+				.and().formLogin().loginPage("/loginPage")
 				.failureUrl("/loginPage?error=true")
 				.successHandler(successHandler).usernameParameter("user").passwordParameter("password")
-				.and()
-				.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
-				.tokenValiditySeconds(86400)
-				.and().csrf()
+//				.and()
+//				.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
+//				.tokenValiditySeconds(86400)
+//				.and().csrf()
 				.and().exceptionHandling().accessDeniedPage("/accessDenied");
 	}
 	
 	
-    @Bean
-    public PersistentTokenBasedRememberMeServices getPersistentTokenBasedRememberMeServices() {
-        PersistentTokenBasedRememberMeServices tokenBasedservice = new PersistentTokenBasedRememberMeServices(
-                "remember-me", userDetailsService, tokenRepository);
-        return tokenBasedservice;
-    }
-    
+//    @Bean
+//    public PersistentTokenBasedRememberMeServices getPersistentTokenBasedRememberMeServices() {
+//        PersistentTokenBasedRememberMeServices tokenBasedservice = new PersistentTokenBasedRememberMeServices(
+//                "remember-me", userDetailsService, tokenRepository);
+//        return tokenBasedservice;
+//    }
+//    
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -72,14 +74,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
-
+//
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
     
-    @Bean
-    public AuthenticationTrustResolver getAuthenticationTrustResolver() {
-        return new AuthenticationTrustResolverImpl();
-    }
+//    @Bean
+//    public AuthenticationTrustResolver getAuthenticationTrustResolver() {
+//        return new AuthenticationTrustResolverImpl();
+//    }
 }
