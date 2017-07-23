@@ -23,7 +23,9 @@ public abstract class AbstractDao<PK extends Serializable, T>  {
 	protected Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
+	
 
+	@SuppressWarnings("unchecked")
 	public T getByKey(PK key) {
 		return (T) getSession().get(persistentClass, key);
 	}
@@ -32,6 +34,7 @@ public abstract class AbstractDao<PK extends Serializable, T>  {
 		getSession().persist(entity);
 	}
 
+	
 	public void update(T entity) {
 		getSession().update(entity);
 	}
@@ -39,9 +42,8 @@ public abstract class AbstractDao<PK extends Serializable, T>  {
 	public void delete(T entity) {
 		getSession().delete(entity);
 	}
+	protected Criteria createEntityCriteria(){
+        return getSession().createCriteria(persistentClass);
+    }
 
-	@SuppressWarnings("deprecation")
-	protected Criteria createEntityCriteria() {
-		return getSession().createCriteria(persistentClass);
-	}
 }

@@ -18,15 +18,24 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.hubsport.dao.FormValidationGroup;
+import com.hubsport.dao.PersistenceValidationGroup;
 import com.hubsport.domain.User;
 import com.hubsport.service.UserService;
 
 @Controller
 public class AdminController {
+	
+	// pt a afisa direct pe prima pagina punem sus @SesionAtributes cu nume gen roles si jos un @ModelAtribute cu listarea in sine
 
+	// treb sa creez o verificare pt dublarea de parola
+	
+	// treb sa creez o verificare ca fiecare din username, email, sa fie unique si daca nu e unique sa imi afiseze o eroare
 	@Autowired
 	UserService userService;
 
@@ -38,7 +47,7 @@ public class AdminController {
 		return "loginPage";
 	}
 
-	@RequestMapping(value = { "/newuser" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/registration" }, method = RequestMethod.GET)
 	public String newUser(ModelMap model) {
 		User user = new User();
 		model.addAttribute("user", user);
@@ -49,38 +58,67 @@ public class AdminController {
 
 	// This method will be called on form submission, handling POST request for
 	// saving user in database. It also validates the user input
-	@RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
-	public String saveUser(@Valid User user, BindingResult result, ModelMap model) {
+	@RequestMapping(value = { "/registration" }, method = RequestMethod.POST)
+	public String saveUser(@Validated(FormValidationGroup.class) User user, BindingResult result, ModelMap model) {
 
 		if (result.hasErrors()) {
 			return "registration";
 		}
-
-		/*
-		 * Preferred way to achieve uniqueness of field [sso] should be
-		 * implementing custom @Unique annotation and applying it on field [sso]
-		 * of Model class [User].
-		 * 
-		 * Below mentioned peace of code [if block] is to demonstrate that you
-		 * can fill custom errors outside the validation framework as well while
-		 * still using internationalized messages.
-		 * 
-		 */
-		if (!userService.isUserEmailUnique(user.getId(), user.getEmail())) {
-			FieldError emailError = new FieldError("user", "email", messageSource.getMessage("non.unique.email",
-					new String[] { String.valueOf(user.getId()) }, Locale.getDefault()));
-			result.addError(emailError);
-			return "registration";
-		}
-
+		if(!userService.isUserUnique(user.getUsername())){
+			result.rejectValue("username", "DuplicateKey.user.username");
+//            FieldError usernameError =new FieldError("user","username",messageSource.getMessage("non.unique.username", new String[]{user.getUsername()}, Locale.getDefault()));
+//            result.addError(usernameError);
+            return "registration";
+        }else if(!userService.isUserEmailUnique(user.getEmail())){
+            FieldError emailError =new FieldError("user","email",messageSource.getMessage("non.unique.email", new String[]{user.getEmail()}, Locale.getDefault()));
+            result.addError(emailError);
+            return "registration";
+        } 
+		
 		userService.saveUser(user);
 
 		model.addAttribute("success",
-				"User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
+				"User " + user.getUsername() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		// return "success";
 		return "registrationsuccess";
 	}
+	
+     //This method will delete an user by it's username value.
+    @RequestMapping(value = { "/delete-user-{username}" }, method = RequestMethod.GET)
+    public String deleteUser(@PathVariable String username) {
+        userService.deleteUserByUsername(username);
+        return "redirect:/users";
+    }
+    
+//   This method will be called on form submission, handling POST request for updating user in database. It also validates the user input
+    @RequestMapping(value = { "/edit-user-{username}" }, method = RequestMethod.POST)
+    public String updateUser(@Valid User user, BindingResult result,
+            ModelMap model, @PathVariable String username) {
+ 
+        if (result.hasErrors()) {
+            return "registration";
+        }
+ 
+        userService.updateUser(user);
+ 
+        model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " updated successfully");
+        model.addAttribute("loggedinuser", getPrincipal());
+        return "registrationsuccess";
+    } 
+    
+    
+     // This method will provide the medium to update an existing user.
+    @RequestMapping(value = { "/edit-user-{username}" }, method = RequestMethod.GET)
+    public String editUser(@PathVariable String username, ModelMap model) {
+        User user = userService.findByUsername(username);
+        model.addAttribute("user", user);
+        model.addAttribute("edit", true);
+        model.addAttribute("loggedinuser", getPrincipal());
+        return "registration";
+    }
+    
+    
 
 	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model) {

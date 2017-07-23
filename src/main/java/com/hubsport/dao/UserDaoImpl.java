@@ -1,13 +1,15 @@
-package com.hubsport.dao;
+ package com.hubsport.dao;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,32 +23,29 @@ import com.hubsport.domain.User;
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 	
 	static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
-
-	
-	@Autowired
-	private SessionFactory sessionFactory;
 	
 	//find user by id
-	@Override
 	public User findById(int id) {
-		User user = findById(id);
-		if(user!= null){
-			Hibernate.initialize(user.getStatus());
-		}
-		return user;
+		User user = getByKey(id);
+        return user;
 	}
 
 	//find user by email
-	@Override
 	public User findByEmail(String email) {
-		logger.info("Email : {}", email);
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("email", email));
-		User user = (User)criteria.uniqueResult();
-		if(user!=null) {
-			Hibernate.initialize(user.getStatus());
-		}
-		return user;
+		logger.info("email : {}", email);
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("email", email));
+        User user = (User)crit.uniqueResult();
+        return user;
+	}
+	
+	@Override
+	public User findBUsername(String username) {
+		logger.info("username : {}", username);
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("username", username));
+        User user = (User)crit.uniqueResult();
+        return user;
 	}
 
 	//save user
@@ -57,24 +56,22 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 
 	//deleting user by email
 	@Override
-	public void deleteByEmail(String email) {
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("email", email));
-		User user = (User)criteria.uniqueResult();
-		delete(user);
+	public void deleteByUsername(String username) {
+		Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("username", username));
+        User user = (User)crit.uniqueResult();
+        delete(user);
 	}
 
 	
 	// find all users
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAllUsers() {
-		List<User> usersList = new ArrayList<User>(); 
-	    Session session = sessionFactory.openSession();
-	    for (Object oneObject : session.createQuery("FROM User").getResultList()) {
-	    	usersList.add((User)oneObject);
-	    }
-	    session.close();
-	    return usersList;
+		Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<User> users = (List<User>) criteria.list();
+        return users;
 	}
 
 }

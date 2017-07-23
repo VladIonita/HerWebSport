@@ -27,10 +27,11 @@
 <link href="<c:url value="/resources/css/sticky-footer-navbar.css" />"
 	rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
-    
-    
+<!-- Custom styles for this template -->
+<link href="<c:url value="/resources/css/signin.css" />"
+	rel="stylesheet">
+
+
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -54,45 +55,43 @@
 	</nav>
 
 
-
-
-
-
-
-
 	<div class="container">
-			<c:url var="loginUrl" value="/loginPage" />
-                        <form action="${loginUrl}" method="post" class="form-signin">
-                            <c:if test="${param.error != null}">
-                                <div class="alert alert-danger">
-                                    <p>Invalid username and password.</p>
-                                </div>
-                            </c:if>
-                            <c:if test="${param.logout != null}">
-                                <div class="alert alert-success">
-                                    <p>You have been logged out successfully.</p>
-                                </div>
-                            </c:if>
-                            <div class="input-group input-sm">
-                                <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
-                                <input type="text" class="form-control" id="username" name="user" placeholder="Enter Username" required>
-                            </div>
-                            <div class="input-group input-sm">
-                                <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
-                            </div>
-                            <div class="input-group input-sm">
-                              <div class="checkbox">
-                                <label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>  
-                              </div>
-                            </div>
-                            <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
-                                 
-                            <div class="form-actions">
-                                <input type="submit"
-                                    class="btn btn-lg btn-block btn-primary" value="Log in">
-                            </div>
-</form>
+		<c:url var="loginUrl" value="/loginPage" />
+		<form action="${loginUrl}" method="post" class="form-signin">
+			<c:if test="${param.error != null}">
+				<div class="alert alert-danger">
+					<p>Invalid username and password.</p>
+				</div>
+			</c:if>
+			<c:if test="${param.logout != null}">
+				<div class="alert alert-success">
+					<p>You have been logged out successfully.</p>
+				</div>
+			</c:if>
+			<div class="input-group input-sm">
+				<label class="input-group-addon" for="username"><i
+					class="fa fa-user"></i></label> <input type="text" class="form-control"
+					id="username" name="user" placeholder="Enter Username" required>
+			</div>
+			<div class="input-group input-sm">
+				<label class="input-group-addon" for="password"><i
+					class="fa fa-lock"></i></label> <input type="password" class="form-control"
+					id="password" name="password" placeholder="Enter Password" required>
+			</div>
+			<div class="input-group input-sm">
+				<div class="checkbox">
+					<label><input type="checkbox" id="rememberme"
+						name="remember-me"> Remember Me</label>
+				</div>
+			</div>
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
+
+			<div class="form-actions">
+				<input type="submit" class="btn btn-lg btn-block btn-primary"
+					value="Log in">
+			</div>
+		</form>
 
 	</div>
 	<!-- /container -->

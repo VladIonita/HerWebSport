@@ -27,6 +27,11 @@ public class UserServiceImpl implements UserService {
 	public User findByEmail(String email) {
 		return userDao.findByEmail(email);
 	}
+	
+	@Override
+	public User findByUsername(String username) {
+		return userDao.findBUsername(username);
+	}
 
 	public void saveUser(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -46,8 +51,8 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	public void deleteUserByEmail(String email) {
-		userDao.deleteByEmail(email);
+	public void deleteUserByUsername(String username) {
+		userDao.deleteByUsername(username);
 	}
 
 	public List<User> findAllUsers() {
@@ -56,9 +61,18 @@ public class UserServiceImpl implements UserService {
 
 	
 	@Override
-	public boolean isUserEmailUnique(Integer id, String email) {
-		User user = findByEmail(email);
-		return (user == null || ((id != null) && (user.getId() == id)));
+	public boolean isUserEmailUnique(String email) {
+		User user = userDao.findByEmail(email);
+		return (user == null);
 	}
+
+
+
+	@Override
+	public boolean isUserUnique(String username) {
+        User user = userDao.findBUsername(username);
+		return ( user == null);
+	}
+
 
 }

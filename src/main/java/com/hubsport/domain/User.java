@@ -1,20 +1,22 @@
 package com.hubsport.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
+import javax.annotation.MatchesPattern;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.hubsport.dao.FormValidationGroup;
+import com.hubsport.dao.PersistenceValidationGroup;
 
 @Entity
 @Table(name = "USER")
@@ -28,51 +30,29 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	@Column(name = "USERNAME", unique = true, nullable = false)
+	@Size(min=5, max = 15, groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	private String username;
 
-	@NotEmpty
-	@Column(name = "STATUS", nullable = false)
-	private int status;
-
-	@NotEmpty
+	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	@Column(name = "EMAIL", unique = true, nullable = false)
+	// treb sa fie de un anumit stil gen bla@yahoo.com....
 	private String email;
 
-	@NotEmpty
+	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	@Column(name = "PASSWORD", nullable = false)
+	@Size(min=5, max = 15,groups={FormValidationGroup.class})
 	private String password;
 
-	@NotEmpty
+	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	@Column(name = "FIRST_NAME", nullable = false)
 	private String firstName;
 
-	@NotEmpty
+	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
-
-	// @NotEmpty
-	// @ManyToMany(fetch = FetchType.LAZY)
-	// @JoinTable(name = "APP_USER_USER_PROFILE",
-	// joinColumns = { @JoinColumn(name = "USER_ID") },
-	// inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
-	// private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
-
-	// public User() {
-	// }
-	//
-	// public User(int status, String email, String password, String firstName,
-	// String lastName) {
-	// this.status = status;
-	// this.email = email;
-	// this.password = password;
-	// this.firstName = firstName;
-	// this.lastName = lastName;
-	// }
-
-	// public User(String email, String password2, boolean b, boolean c, boolean
-	// d, boolean e,
-	// Object grantedAuthorities) {
-	// // TODO Auto-generated constructor stub
-	// }
 
 	public int getId() {
 		return id;
@@ -81,14 +61,6 @@ public class User implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public int getStatus() {
-		return status;
-	}
-
-	// public void setStatus(int status) {
-	// this.status = status;
-	// }
 
 	public String getEmail() {
 		return email;
@@ -121,17 +93,27 @@ public class User implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	
+	
 
 	// made for comparing two objects
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == 0) ? 0 : id.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		return result;
+	public String getUsername() {
+		return username;
 	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	 @Override
+	    public int hashCode() {
+	        final int prime = 31;
+	        int result = 1;
+	        result = prime * result + ((id == null) ? 0 : id.hashCode());
+	        result = prime * result + ((username == null) ? 0 : username.hashCode());
+	        return result;
+	    }
 
 	@Override
 	public boolean equals(Object obj) {
@@ -157,16 +139,9 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", status=" + status + ", email=" + email + ", firstName=" + firstName + ", lastName="
-				+ lastName + "]";
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", firstName=" + firstName
+				+ ", lastName=" + lastName + "]";
 	}
 
-	// public Set<UserProfile> getUserProfiles() {
-	// return userProfiles;
-	// }
-	//
-	// public void setUserProfiles(Set<UserProfile> userProfiles) {
-	// this.userProfiles = userProfiles;
-	// }
 
 }
