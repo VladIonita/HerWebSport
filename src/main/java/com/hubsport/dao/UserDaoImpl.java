@@ -10,6 +10,8 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +49,8 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
         User user = (User)crit.uniqueResult();
         return user;
 	}
+	
+	
 
 	//save user
 	@Override
@@ -70,6 +74,19 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 	public List<User> findAllUsers() {
 		Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        List<User> users = (List<User>) criteria.list();
+        return users;
+	}
+	
+	
+	// find all users
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findAllUsersPerPage(int page, int recordePerPage) {
+		Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        criteria.setFirstResult((page - 1) * recordePerPage);
+        criteria.setMaxResults(recordePerPage);
         List<User> users = (List<User>) criteria.list();
         return users;
 	}

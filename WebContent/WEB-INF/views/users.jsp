@@ -37,35 +37,24 @@
 </head>
 <body>
 
-	<!-- <%@ include file="adminHeader.jsp"%>  -->
-
-
+	<div class="container">
+		<%@ include file="adminHeader.jsp"%>
+	</div>
 	<!-- Begin page content -->
 	<div class="container">
 		<sec:authorize access="hasRole('ADMIN')">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<td><p>
-									<a href="<c:url value="/registration" />">Add New User</a>
-								<p /></td>
-							<td><p align="right">
-										 <strong>${loggedinuser}</strong>, <a
-										href="<c:url value="/logout" />">Logout</a>
-								</p></td>
-						</tr>
-					</thead>
-				</table>
+							<p style="text-align: right">
+								<a href="<c:url value="/registration" />" class="btn btn-primary" role="button">Adauga</a>
+							</p>
 		</sec:authorize>
 
 		<div class="page-header">
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Username</th>	
+						<th>Username</th>
 						<th>Firstname</th>
 						<th>Lastname</th>
-						<th>Email</th>
 						<sec:authorize access="hasRole('ADMIN')">
 							<th width="100"></th>
 						</sec:authorize>
@@ -80,13 +69,13 @@
 							<td>${user.username}</td>
 							<td>${user.firstName}</td>
 							<td>${user.lastName}</td>
-							<td>${user.email}</td>
 							<sec:authorize access="hasRole('ADMIN')">
 								<td><a href="<c:url value='/edit-user-${user.username}' />"
 									class="btn btn-success custom-width">edit</a></td>
 							</sec:authorize>
 							<sec:authorize access="hasRole('ADMIN')">
-								<td><a href="<c:url value='/delete-user-${user.username}' />"
+								<td><a
+									href="<c:url value='/delete-user-${user.username}' />"
 									class="btn btn-danger custom-width">delete</a></td>
 							</sec:authorize>
 						</tr>
@@ -105,6 +94,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
+	
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script>

@@ -17,7 +17,7 @@
 
 <title>Registration</title>
 
-<!-- Bootstrap core CSS -->
+
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
 	rel="stylesheet">
 
@@ -35,15 +35,36 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript">
+	function onLoad() {
+		$("#confirmPassword").keyup(checkPasswordMatch);
+	}
+
+	function checkPasswordMatch() {
+		var password = $("#password").val();
+		var confirmPassword = $("#password_confirm").val();
+
+		if (password != confirmPassword)
+			$("#divCheckPasswordMatch").text("Passwords do not match!");
+		else
+			$("#divCheckPasswordMatch").text(" ");
+	}
+
+	$(document).ready(onLoad);
+</script>
+
+
+
+
 </head>
 <body>
-
-	<!-- <%@ include file="adminHeader.jsp"%>  -->
-<body>
 	<div class="container">
-		<p align="right">
-			<strong>${loggedinuser}</strong>, <a href="<c:url value="/logout" />">Logout</a>
-		</p>
+		<%@ include file="adminHeader.jsp"%>
+	</div>
+	<div class="container">
 		<div class="well lead">User Registration Form</div>
 		<form:form method="POST" modelAttribute="user" class="form-horizontal">
 			<fieldset>
@@ -51,7 +72,7 @@
 					<!-- Username -->
 					<label class="control-label" for="username">Username</label>
 					<div class="controls">
-						<input type="text" id="username" name="username"
+						<input type="text" id="username" name="username" value="${user_username}"
 							class="input-xlarge">
 						<p class="help-block">Username can contain any letters or
 							numbers, without spaces</p>
@@ -65,7 +86,7 @@
 					<!-- First Name -->
 					<label class="control-label" for="firstName">First name</label>
 					<div class="controls">
-						<input type="text" id="firstName" name="firstName"
+						<input type="text" id="firstName" name="firstName" value="${user_username}"
 							class="input-xlarge">
 						<p class="help-block">Please provide your First name</p>
 						<div style="color: red;" class="has-error">
@@ -78,7 +99,7 @@
 					<!-- Last Name -->
 					<label class="control-label" for="lastName">Last name</label>
 					<div class="controls">
-						<input type="text" id="lastName" name="lastName"
+						<input type="text" id="lastName" name="lastName" value="${user_firsName}"
 							class="input-xlarge">
 						<p class="help-block">Please provide your Last name</p>
 						<div style="color: red;" class="has-error">
@@ -91,7 +112,7 @@
 					<!-- E-mail -->
 					<label class="control-label" for="email">E-mail</label>
 					<div class="controls">
-						<input type="text" id="email" name="email" placeholder=""
+						<input type="text" id="email" name="email" value="${user_email}"
 							class="input-xlarge">
 						<p class="help-block">Please provide your E-mail</p>
 						<div style="color: red;" class="has-error">
@@ -119,13 +140,19 @@
 						(Confirm)</label>
 					<div class="controls">
 						<input type="password" id="password_confirm"
-							name="password_confirm" placeholder="" class="input-xlarge">
+							onkeyup="checkPasswordMatch();" name="password_confirm"
+							placeholder="" class="input-xlarge">
 						<p class="help-block">Please confirm password</p>
+						<div id="divCheckPasswordMatch" style="color: red;">
+					</div>
 						<div style="color: red;" class="has-error">
 							<form:errors path="password" class="help-inline" />
 						</div>
+						
 					</div>
+					
 				</div>
+
 
 				<div class="control-group">
 					<div class="form-actions floatRight">
@@ -156,6 +183,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
+
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script>

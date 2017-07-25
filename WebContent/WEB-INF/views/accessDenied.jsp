@@ -34,13 +34,15 @@
     <![endif]-->
 </head>
 <body>
-	<%@ include file="adminHeader.jsp"%>
-
+	<div class="container">
+		<%@ include file="adminHeader.jsp"%>
+	</div>
 
 	<!-- Begin page content -->
 	<div class="container">
 		<div class="page-header">
-			<h3>!!!!!!!!!!!Sorry!!!You are not authorize to access this page!!!!!!!!!!!!!</h3>
+			<h3>!!!!!!!!!!!Sorry!!!You are not authorize to access this
+				page!!!!!!!!!!!!!</h3>
 		</div>
 	</div>
 
@@ -58,6 +60,7 @@
 	</script>
 	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="<c:url value="/resources/js/ie10-viewport-bug-workaround.js" />"></script>
+	<script
+		src="<c:url value="/resources/js/ie10-viewport-bug-workaround.js" />"></script>
 </body>
 </html>

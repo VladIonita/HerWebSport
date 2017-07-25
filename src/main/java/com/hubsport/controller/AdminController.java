@@ -1,13 +1,17 @@
 package com.hubsport.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,13 +23,16 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.hubsport.dao.FormValidationGroup;
-import com.hubsport.dao.PersistenceValidationGroup;
 import com.hubsport.domain.User;
+import com.hubsport.service.CurrentTimeFormated;
 import com.hubsport.service.UserService;
 
 @Controller
@@ -33,11 +40,11 @@ public class AdminController {
 	
 	// pt a afisa direct pe prima pagina punem sus @SesionAtributes cu nume gen roles si jos un @ModelAtribute cu listarea in sine
 
-	// treb sa creez o verificare pt dublarea de parola
-	
-	// treb sa creez o verificare ca fiecare din username, email, sa fie unique si daca nu e unique sa imi afiseze o eroare
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	CurrentTimeFormated timeService;
 
 	@Autowired
 	MessageSource messageSource;
@@ -52,6 +59,7 @@ public class AdminController {
 		User user = new User();
 		model.addAttribute("user", user);
 		model.addAttribute("edit", false);
+		model.addAttribute("date_week",timeService.time());
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "registration";
 	}
@@ -60,7 +68,8 @@ public class AdminController {
 	// saving user in database. It also validates the user input
 	@RequestMapping(value = { "/registration" }, method = RequestMethod.POST)
 	public String saveUser(@Validated(FormValidationGroup.class) User user, BindingResult result, ModelMap model) {
-
+		model.addAttribute("date_week",timeService.time());
+		model.addAttribute("loggedinuser", getPrincipal());
 		if (result.hasErrors()) {
 			return "registration";
 		}
@@ -90,53 +99,57 @@ public class AdminController {
         userService.deleteUserByUsername(username);
         return "redirect:/users";
     }
-    
 //   This method will be called on form submission, handling POST request for updating user in database. It also validates the user input
     @RequestMapping(value = { "/edit-user-{username}" }, method = RequestMethod.POST)
     public String updateUser(@Valid User user, BindingResult result,
             ModelMap model, @PathVariable String username) {
- 
+		model.addAttribute("date_week",timeService.time());
         if (result.hasErrors()) {
             return "registration";
         }
- 
         userService.updateUser(user);
- 
         model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " updated successfully");
         model.addAttribute("loggedinuser", getPrincipal());
         return "registrationsuccess";
     } 
     
-    
      // This method will provide the medium to update an existing user.
     @RequestMapping(value = { "/edit-user-{username}" }, method = RequestMethod.GET)
     public String editUser(@PathVariable String username, ModelMap model) {
+		model.addAttribute("date_week",timeService.time());
         User user = userService.findByUsername(username);
+        model.addAttribute("user_username", user.getUsername());
+        model.addAttribute("user_firsName", user.getFirstName());
+        model.addAttribute("user_lastName", user.getLastName());
+        model.addAttribute("user_email", user.getEmail());
         model.addAttribute("user", user);
         model.addAttribute("edit", true);
         model.addAttribute("loggedinuser", getPrincipal());
         return "registration";
     }
     
-    
-
-	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
-	public String accessDeniedPage(ModelMap model) {
-		return "accessDenied";
-	}
-
 	// access to users
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public String usersPage(ModelMap model) {
-		List<User> users = userService.findAllUsers();
-		model.addAttribute("userList", users);
+	@RequestMapping(value = "/users2", method = RequestMethod.GET)
+	public String usersPage(ModelMap model, HttpServletRequest request) {
+		PagedListHolder<User> pagedList = new PagedListHolder<>(userService.findAllUsers());
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedList.setPage(page);
+		pagedList.setPageSize(10);
+		model.put("pagedList", pagedList);
+		
+		model.addAttribute("date_week",timeService.time());
+//		List<User> users = userService.findAllUsers();
+//		model.addAttribute("userList", users);
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "users";
+		return "users2";
 	}
+	
+	
 
 	// access to dashboard to administrate admin
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	@RequestMapping(value="/admin" , method = RequestMethod.GET)
 	public String adminPage(ModelMap model) {
+		model.addAttribute("date_week",timeService.time());
 		List<User> users = userService.findAllUsers();
 		model.addAttribute("userList", users);
 		model.addAttribute("loggedinuser", getPrincipal());
@@ -145,10 +158,14 @@ public class AdminController {
 
 	// handling 404 error
 	@RequestMapping(value = "*", method = RequestMethod.GET)
-	public String fallback() {
+	public String fallback(ModelMap model) {
+		model.addAttribute("date_week",timeService.time());
+		model.addAttribute("loggedinuser", getPrincipal());
 		return "fallback";
 	}
 
+	
+	// handling logout
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -158,6 +175,7 @@ public class AdminController {
 		return "loginPage";
 	}
 
+	//returning current user
 	private String getPrincipal() {
 		String userName = null;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -169,4 +187,9 @@ public class AdminController {
 		}
 		return userName;
 	}
+	
+	
+	
+	
+	
 }

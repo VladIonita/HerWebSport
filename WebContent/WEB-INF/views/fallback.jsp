@@ -12,7 +12,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Admin</title>
+<title>Fallback</title>
 
 <!-- Bootstrap core CSS -->
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
@@ -34,15 +34,11 @@
     <![endif]-->
 </head>
 <body>
-	<%@ include file="adminHeader.jsp"%>
-
-
+	<div class="container">
+		<%@ include file="adminHeader.jsp"%>
+	</div>
 	<!-- Begin page content -->
 	<div class="container">
-		<p align="right">
-			Welcome to Admin Page <strong>${loggedinuser}</strong>, <a
-				href="<c:url value="/logout" />">Logout</a>
-		</p>
 		<div class="page-header">
 			<h3>Sorry!!!<br/>
 			You are trying to access a page that dosn't exist!   (Error code 404)</h3>

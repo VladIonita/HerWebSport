@@ -38,8 +38,9 @@
 </head>
 <body>
 
-	<!-- <%@ include file="adminHeader.jsp"%>  -->
-<body>
+	<div class="container">
+		<%@ include file="adminHeader.jsp"%>
+	</div>
 	<div class="generic-container">
 		<strong>${loggedinuser}</strong>, <a href="<c:url value="/logout" />">Logout</a>
 
