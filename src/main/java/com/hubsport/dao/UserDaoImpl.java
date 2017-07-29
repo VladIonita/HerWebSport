@@ -84,8 +84,12 @@ public class UserDaoImpl implements UserDao{
 	public List<User> findAllUsers() {
 		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class).addOrder(Order.asc("firstName"));
+		
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+        criteria.setFirstResult(0);
+        criteria.setMaxResults(15);
         List<User> users = (List<User>) criteria.list();
+
         return users;
 	}
 	
