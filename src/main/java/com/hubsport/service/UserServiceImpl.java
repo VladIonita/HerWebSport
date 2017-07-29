@@ -21,16 +21,19 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder passwordEncoder;
 	
 	public User findById(int id) {
-		return userDao.findById(id);
+		return userDao.findbyid(id); //aici e prob
+		
 	}
 
 	public User findByEmail(String email) {
-		return userDao.findByEmail(email);
+		User user = userDao.findbyemail(email);
+		return user;
 	}
 	
 	@Override
 	public User findByUsername(String username) {
-		return userDao.findBUsername(username);
+		User user = userDao.findbyusername(username);
+		return user;
 	}
 
 	public void saveUser(User user) {
@@ -39,9 +42,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void updateUser(User user) {
-		User entity = userDao.findById(user.getId());
+		User entity = userDao.findbyusername(user.getUsername());
 		if(entity!=null) {
-			entity.setId(user.getId());
+			entity.setUsername(user.getUsername());
 			if(!user.getPassword().equals(entity.getPassword())) {
 				entity.setPassword(passwordEncoder.encode(user.getPassword()));
 			}
@@ -61,17 +64,17 @@ public class UserServiceImpl implements UserService {
 
 	
 	@Override
-	public boolean isUserEmailUnique(String email) {
-		User user = userDao.findByEmail(email);
-		return (user == null);
+	public boolean isUserEmailUnique(Integer id, String email) {
+		User user = userDao.findbyemail(email);
+		return ( user == null || ((id != null) && (user.getId() == id)));
 	}
 
 
 
 	@Override
-	public boolean isUserUnique(String username) {
-        User user = userDao.findBUsername(username);
-		return ( user == null);
+	public boolean isUserUnique(Integer id, String username) {
+		User user = userDao.findbyusername(username);
+		return ( user == null || ((id != null) && (user.getId() == id)));
 	}
 
 

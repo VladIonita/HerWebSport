@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,13 +25,21 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hubsport.domain.User;
+import com.hubsport.service.CurrentTimeFormated;
 import com.hubsport.service.UserService;
 
 @Controller
 @RequestMapping("/")
 public class EventsController {
 
+	@Autowired
+	UserService userService;
 
+	@Autowired
+	CurrentTimeFormated timeService;
+
+	@Autowired
+	MessageSource messageSource;
 
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String listUsers(ModelMap model) {
@@ -41,15 +50,25 @@ public class EventsController {
 		return "home";
 	}
 
-	// @ModelAttribute("roles")
-	// public List<User> initializeUsers() {
-	// return userService.findAllUsers();
-	// }
+	// access to events
+	@RequestMapping(value = "/events", method = RequestMethod.GET)
+	public String usersPage(ModelMap model) {
+		model.addAttribute("date_week", timeService.time());
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "events";
+	}
 
-	// @RequestMapping(value = "/home", method = RequestMethod.GET)
-	// public String homePage(Model model) {
-	// return "home";
-	// }
+	// returning current user
+	private String getPrincipal() {
+		String userName = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-	
+		if (principal instanceof UserDetails) {
+			userName = ((UserDetails) principal).getUsername();
+		} else {
+			userName = principal.toString();
+		}
+		return userName;
+	}
+
 }

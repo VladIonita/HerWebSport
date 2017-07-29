@@ -14,7 +14,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Users</title>
+<title>Places</title>
 
 <!-- Bootstrap core CSS -->
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
@@ -44,8 +44,8 @@
 	<div class="container">
 		<sec:authorize access="hasRole('ADMIN')">
 			<p style="text-align: right">
-				<a href="<c:url value="/newuser" />" class="btn btn-primary"
-					role="button">New User</a>
+				<a href="<c:url value="/newplace" />" class="btn btn-primary"
+					role="button">New Place</a>
 			</p>
 		</sec:authorize>
 
@@ -53,9 +53,9 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Username</th>
-						<th>Firstname</th>
-						<th>Lastname</th>
+						<th>Place Name</th>
+						<th>Address</th>
+						<th>Town</th>
 						<sec:authorize access="hasRole('ADMIN')">
 							<th width="100"></th>
 						</sec:authorize>
@@ -65,18 +65,18 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${userList}" var="user">
+					<c:forEach items="${placesList}" var="place">
 						<tr>
-							<td>${user.username}</td>
-							<td>${user.firstName}</td>
-							<td>${user.lastName}</td>
+							<td>${place.placeName}</td>
+							<td>${place.placeAddress}</td>
+							<td>${place.townName}(${place.district})</td>
 							<sec:authorize access="hasRole('ADMIN')">
-								<td><a href="<c:url value='/edit-user-${user.username}' />"
+								<td><a href="<c:url value='/edit-user-${user.id}' />"
 									class="btn btn-success custom-width">edit</a></td>
 							</sec:authorize>
 							<sec:authorize access="hasRole('ADMIN')">
 								<td><a
-									href="<c:url value='/delete-user-${user.username}' />"
+									href="<c:url value='/delete-user-${user.id}' />"
 									class="btn btn-danger custom-width">delete</a></td>
 							</sec:authorize>
 						</tr>

@@ -20,7 +20,7 @@ public interface UserService {
  
     List<User> findAllUsers(); 
      
-    boolean isUserUnique(String username);
+    boolean isUserUnique(Integer id,String username);
     
-    boolean isUserEmailUnique(String email);
+    boolean isUserEmailUnique(Integer id,String email);
 }

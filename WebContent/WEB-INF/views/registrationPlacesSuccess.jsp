@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +15,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Admin</title>
+<title>Registration Successful</title>
 
 <!-- Bootstrap core CSS -->
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
@@ -34,19 +37,24 @@
     <![endif]-->
 </head>
 <body>
+
 	<div class="container">
 		<%@ include file="adminHeader.jsp"%>
 	</div>
+	<div class="generic-container">
+		<strong>${loggedinuser}</strong>, <a href="<c:url value="/logout" />">Logout</a>
 
-	<!-- Begin page content -->
-	<div class="container">
-		<div class="page-header">
-			<h3>!!!!!!!!!!!Sorry!!!You are not authorize to access this
-				page!!!!!!!!!!!!!</h3>
-		</div>
+
+		<div class="alert alert-success lead">${success}</div>
+
+		<span class="well floatRight"> Go to <a
+			href="<c:url value='/places' />">Places List</a>
+		</span>
 	</div>
 
-	<%@ include file="adminFooter.jsp"%>
+
+	<!-- <%@ include file="adminFooter.jsp"%>  -->
+
 
 	<!-- Bootstrap core JavaScript
     ================================================== -->

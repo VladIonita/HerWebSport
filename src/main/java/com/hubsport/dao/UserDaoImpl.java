@@ -1,17 +1,12 @@
  package com.hubsport.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,33 +15,47 @@ import org.springframework.stereotype.Repository;
 
 import com.hubsport.domain.User;
 
-//implements 2 interface
 @Repository("userDao")
-public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
+public class UserDaoImpl implements UserDao{
 	
 	static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 	
+	
+    @Autowired
+    private SessionFactory sessionFactory;
+	
 	//find user by id
-	public User findById(int id) {
-		User user = getByKey(id);
+	public User findbyid(Integer id) {
+		
+		User user = (User)sessionFactory.getCurrentSession().get(User.class, id);
+		if(user!=null){
+			Hibernate.initialize(user);
+		}
         return user;
 	}
 
 	//find user by email
-	public User findByEmail(String email) {
+	public User findbyemail(String email) {
 		logger.info("email : {}", email);
-        Criteria crit = createEntityCriteria();
+        Criteria crit =sessionFactory.getCurrentSession().createCriteria(User.class);
         crit.add(Restrictions.eq("email", email));
         User user = (User)crit.uniqueResult();
+        if(user!=null){
+			Hibernate.initialize(user);
+		}
         return user;
 	}
 	
 	@Override
-	public User findBUsername(String username) {
+	public User findbyusername(String username) {
 		logger.info("username : {}", username);
-        Criteria crit = createEntityCriteria();
+		
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(User.class);
         crit.add(Restrictions.eq("username", username));
         User user = (User)crit.uniqueResult();
+        if(user!=null){
+			Hibernate.initialize(user);
+		}
         return user;
 	}
 	
@@ -55,16 +64,17 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 	//save user
 	@Override
 	public void save(User user) {
-		persist(user);
+		logger.info("user : {}", user);
+		sessionFactory.getCurrentSession().persist(user);
 	}
 
 	//deleting user by email
 	@Override
 	public void deleteByUsername(String username) {
-		Criteria crit = createEntityCriteria();
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(User.class);
         crit.add(Restrictions.eq("username", username));
         User user = (User)crit.uniqueResult();
-        delete(user);
+        sessionFactory.getCurrentSession().delete(user);
 	}
 
 	
@@ -72,23 +82,11 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAllUsers() {
-		Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
+		
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class).addOrder(Order.asc("firstName"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
         List<User> users = (List<User>) criteria.list();
         return users;
 	}
 	
-	
-	// find all users
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<User> findAllUsersPerPage(int page, int recordePerPage) {
-		Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
-        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
-        criteria.setFirstResult((page - 1) * recordePerPage);
-        criteria.setMaxResults(recordePerPage);
-        List<User> users = (List<User>) criteria.list();
-        return users;
-	}
-
 }

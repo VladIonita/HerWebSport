@@ -1,21 +1,37 @@
 package com.hubsport.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+@Entity
+@Table(name = "TOWNS")
 public class Towns {
 
+	@Id
+	@Column(name = "ID")
+	@GeneratedValue
 	private int id;
-	private String name;
-	private Districts districts;
 
+	@NotEmpty
+	@Column(name = "NAME")
+	private String name;
+
+	@OneToOne
+	@JoinColumn(name = "DISTRICTS_ID")
+	private Districts districts;
+	
 	public Towns() {
 	}
-	
-	public Towns(int id) {
+
+	public Towns(int id, String name) {
 		this.id = id;
-	}
-
-
-
-	public Towns(String name) {
 		this.name = name;
 	}
 
@@ -41,11 +57,6 @@ public class Towns {
 
 	public void setDistricts(Districts districts) {
 		this.districts = districts;
-	}
-
-	@Override
-	public String toString() {
-		return "Towns [id=" + id + ", name=" + name + ", districts=" + districts + "]";
 	}
 
 }

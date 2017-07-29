@@ -16,8 +16,9 @@
 			<ul class="nav navbar-nav">
 				<li><a href="${pageContext.request.contextPath}/">Home</a></li>
 				<li><a href="${pageContext.request.contextPath}/admin">Admin</a></li>
-				<li><a href="${pageContext.request.contextPath}/users">Utilizatori</a></li>
-				<li><a href="${pageContext.request.contextPath}/events">Evenimente</a></li>
+				<li><a href="${pageContext.request.contextPath}/users">Users</a></li>
+				<li><a href="${pageContext.request.contextPath}/events">Events</a></li>
+				<li><a href="${pageContext.request.contextPath}/places">Places</a></li>
 				<!--  <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">

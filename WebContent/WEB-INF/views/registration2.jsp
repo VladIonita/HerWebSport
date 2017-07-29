@@ -1,7 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,17 +42,14 @@
 	function onLoad() {
 		$("#confirmPassword").keyup(checkPasswordMatch);
 	}
-
 	function checkPasswordMatch() {
 		var password = $("#password").val();
 		var confirmPassword = $("#password_confirm").val();
-
 		if (password != confirmPassword)
 			$("#divCheckPasswordMatch").text("Passwords do not match!");
 		else
 			$("#divCheckPasswordMatch").text(" ");
 	}
-
 	$(document).ready(onLoad);
 </script>
 
@@ -66,122 +65,109 @@
 		<div class="well lead">User Registration Form</div>
 		<form:form method="POST" modelAttribute="user" class="form-horizontal">
 			<form:input type="hidden" path="username" id="username" />
+			<fieldset>
+				<div class="control-group">
+					<!-- Username -->
+					<label class="control-label" for="username">Username</label>
+					<div class="controls">
+						<input type="text" id="username" name="username"
+							value="${user_username}" class="input-xlarge">
+						<p class="help-block">Username can contain any letters or
+							numbers, without spaces</p>
+						<div style="color: red;" class="has-error">
+							<form:errors path="username" class="help-inline" />
+						</div>
+					</div>
+				</div>
 
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="firstName">First
-						Name</label>
-					<div class="col-md-7">
-						<form:input type="text" path="firstName" id="firstName" 
-							class="form-control input-sm" />
+				<div class="control-group">
+					<!-- First Name -->
+					<label class="control-label" for="firstName">First name</label>
+					<div class="controls">
+						<input type="text" id="firstName" name="firstName"
+							value="${firstName}" class="input-xlarge">
 						<p class="help-block">Please provide your First name</p>
 						<div style="color: red;" class="has-error">
 							<form:errors path="firstName" class="help-inline" />
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="lastName">Last
-						Name</label>
-					<div class="col-md-7">
-						<form:input type="text" path="lastName" id="lastName"
-							class="form-control input-sm" />
+				<div class="control-group">
+					<!-- Last Name -->
+					<label class="control-label" for="lastName">Last name</label>
+					<div class="controls">
+						<input type="text" id="lastName" name="lastName"
+							value="${user_lastName}" class="input-xlarge">
 						<p class="help-block">Please provide your Last name</p>
 						<div style="color: red;" class="has-error">
 							<form:errors path="lastName" class="help-inline" />
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="username">Username</label>
-					<div class="col-md-7">
-						<c:choose>
-							<c:when test="${edit}">
-								<form:input type="text" path="username" id="username" name="username" value="${username}"
-									class="form-control input-sm" disabled="true" />
-							</c:when>
-							<c:otherwise>
-								<form:input type="text" path="username" id="username"
-									class="form-control input-sm" />
-								<p class="help-block">Username can contain any letters or
-									numbers, without spaces</p>
-								<div style="color: red;" class="has-error">
-									<form:errors path="username" class="help-inline" />
-								</div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="password">Password</label>
-					<div class="col-md-7">
-						<form:input type="password" path="password" id="password"
-							class="form-control input-sm" />
-						<p class="help-block">Password should be at least 4 characters</p>
-						<div style="color: red;" class="has-error">
-							<form:errors path="password" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="password_confirm">Password(Confirm)</label>
-					<div class="col-md-7">
-						<form:input type="password" path="password" id="password_confirm"
-							onkeyup="checkPasswordMatch();" class="form-control input-sm" />
-						<p class="help-block">Please confirm password</p>
-						<div id="divCheckPasswordMatch" style="color: red;"></div>
-						<div style="color: red;" class="has-error">
-							<form:errors path="password" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="email">Email</label>
-					<div class="col-md-7">
-						<form:input type="text" path="email" id="email"
-							class="form-control input-sm" />
+				<div class="control-group">
+					<!-- E-mail -->
+					<label class="control-label" for="email">E-mail</label>
+					<div class="controls">
+						<input type="text" id="email" name="email" value="${user_email}"
+							class="input-xlarge">
 						<p class="help-block">Please provide your E-mail</p>
 						<div style="color: red;" class="has-error">
 							<form:errors path="email" class="help-inline" />
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="form-actions floatRight">
-					<c:choose>
-						<c:when test="${edit}">
-							<input type="submit" value="Update"
-								class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/newuser' />">Cancel</a>
-						</c:when>
-						<c:otherwise>
-							<input type="submit" value="Register"
-								class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/newuser' />">Cancel</a>
-						</c:otherwise>
-					</c:choose>
+				<div class="control-group">
+					<!-- Password-->
+					<label class="control-label" for="password">Password</label>
+					<div class="controls">
+						<input type="password" id="password" name="password"
+							placeholder="" class="input-xlarge">
+						<p class="help-block">Password should be at least 4 characters</p>
+						<div style="color: red;" class="has-error">
+							<form:errors path="password" class="help-inline" />
+						</div>
+					</div>
 				</div>
-			</div>
+
+				<div class="control-group">
+					<!-- Password -->
+					<label class="control-label" for="password_confirm">Password
+						(Confirm)</label>
+					<div class="controls">
+						<input type="password" id="password_confirm"
+							onkeyup="checkPasswordMatch();" name="password_confirm"
+							placeholder="" class="input-xlarge">
+						<p class="help-block">Please confirm password</p>
+						<div id="divCheckPasswordMatch" style="color: red;"></div>
+						<div style="color: red;" class="has-error">
+							<form:errors path="password" class="help-inline" />
+						</div>
+
+					</div>
+
+				</div>
+
+
+				<div class="control-group">
+					<div class="form-actions floatRight">
+						<c:choose>
+							<c:when test="${edit}">
+								<input type="submit" value="Update"
+									class="btn btn-primary btn-sm" /> or <a
+									href="<c:url value='/users' />">Cancel</a>
+							</c:when>
+							<c:otherwise>
+								<input type="submit" value="Register"
+									class="btn btn-primary btn-sm" /> or <a
+									href="<c:url value='/users' />">Cancel</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</fieldset>
 		</form:form>
 	</div>
 

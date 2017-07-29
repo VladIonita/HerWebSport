@@ -81,5 +81,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("home");
 	}
+	
+	   @Override
+	    public void configurePathMatch(PathMatchConfigurer matcher) {
+	        matcher.setUseRegisteredSuffixPatternMatch(true);
+	    }
 
 }
