@@ -24,8 +24,9 @@ public class AdminController {
 	CurrentTimeFormated timeService;
 
 	@RequestMapping("/")
-	public String defaultPage() {
-		return "bash";
+	public String defaultPage(Model model) {
+        model.addAttribute("partial","bash");
+		return "index";
 	}
 	
 	// handling 404 error
