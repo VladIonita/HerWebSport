@@ -34,9 +34,6 @@
     <![endif]-->
 </head>
 <body>
-	<div class="container">
-		<%@ include file="adminHeader.jsp"%>
-	</div>
 	<!-- Begin page content -->
 	<div class="container">
 		<div class="page-header">
@@ -45,8 +42,6 @@
 		</div>
 
 	</div>
-
-	<%@ include file="adminFooter.jsp"%>
 
 	<!-- Bootstrap core JavaScript
     ================================================== -->

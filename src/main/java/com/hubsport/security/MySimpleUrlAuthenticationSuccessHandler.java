@@ -31,7 +31,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 		authorities.forEach(authority -> {
 			 if (authority.getAuthority().equals("ROLE_ADMIN")) {
 				try {
-					redirectStrategy.sendRedirect(request, response, "/admin");
+					redirectStrategy.sendRedirect(request, response, "/admin/");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,12 +41,13 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 		clearAuthenticationAttributes(request);
 
 	}
-    protected void clearAuthenticationAttributes(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return;
-        }
-        session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-}
+
+	protected void clearAuthenticationAttributes(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			return;
+		}
+		session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+	}
 
 }

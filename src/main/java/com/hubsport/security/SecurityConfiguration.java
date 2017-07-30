@@ -38,10 +38,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/").permitAll()
-				.antMatchers("/admin","/events","fallback","/places","/registration","/registrationsuccess","/users")
+				.antMatchers("/admin/**")
 				.access("hasRole('ROLE_ADMIN')")
-				.and().formLogin().loginPage("/loginPage")
-				.failureUrl("/loginPage?error=true")
+				.and().formLogin().loginPage("/login")
+				.failureUrl("/login?error=true")
 				.successHandler(successHandler).usernameParameter("user").passwordParameter("password")
 //				.and()
 //				.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)

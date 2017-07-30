@@ -56,7 +56,7 @@
 
 
 	<div class="container">
-		<c:url var="loginUrl" value="/loginPage" />
+		<c:url var="loginUrl" value="/login" />
 		<form action="${loginUrl}" method="post" class="form-signin">
 			<c:if test="${param.error != null}">
 				<div class="alert alert-danger">
