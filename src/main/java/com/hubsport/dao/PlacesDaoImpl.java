@@ -1,7 +1,8 @@
  package com.hubsport.dao;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -27,6 +28,7 @@ public class PlacesDaoImpl implements PlacesDao{
 	
 	//find Places by id
 	public Places findbyid(Integer id) {
+		
 		
 		Places places = (Places)sessionFactory.getCurrentSession().get(Places.class, id);
 		if(places!=null){

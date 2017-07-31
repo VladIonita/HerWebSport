@@ -8,18 +8,16 @@ public interface UserService {
 	
     User findById(int id);
     
+    User findByEmail(String email);
+    
     User findByUsername(String username);
     
-    User findByEmail(String email);
-     
-    void saveUser(User user);
-     
-    void updateUser(User user);
-     
-    void deleteUserByUsername(String username);
- 
     List<User> findAllUsers(); 
+    
+    void saveOrUpdate(User user);
      
+    void delete(Integer id);
+ 
     boolean isUserUnique(Integer id,String username);
     
     boolean isUserEmailUnique(Integer id,String email);
