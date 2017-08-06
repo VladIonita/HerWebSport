@@ -55,4 +55,10 @@ public class AdminController {
     	return time;
     }
     
+	// handling 404 error
+	@RequestMapping(value = "/admin/*", method = {RequestMethod.GET, RequestMethod.POST})
+	public String fallback() {
+		return "fallback";
+	}
+    
 }
