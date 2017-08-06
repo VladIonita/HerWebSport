@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.access("hasRole('ROLE_ADMIN')")
 				.and().formLogin().loginPage("/login")
 				.failureUrl("/login?error=true")
-				.successHandler(successHandler).usernameParameter("user").passwordParameter("password")
+				.successHandler(successHandler).usernameParameter("username").passwordParameter("password")
 //				.and()
 //				.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
 //				.tokenValiditySeconds(86400)

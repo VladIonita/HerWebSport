@@ -6,7 +6,7 @@ import com.hubsport.domain.User;
 
 public interface UserService {
 	
-    User findById(int id);
+    User findById(Integer id);
     
     User findByEmail(String email);
     
@@ -14,9 +14,11 @@ public interface UserService {
     
     List<User> findAllUsers(); 
     
-    void saveOrUpdate(User user);
+    void saveUser(User user);
+    
+    void updateUser(User user);
      
-    void delete(Integer id);
+    void deleteBID(Integer id);
  
     boolean isUserUnique(Integer id,String username);
     

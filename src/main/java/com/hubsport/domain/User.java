@@ -1,5 +1,6 @@
 package com.hubsport.domain;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.hubsport.dao.FormValidationGroup;
@@ -16,6 +19,7 @@ import com.hubsport.dao.PersistenceValidationGroup;
 @Entity
 @Table(name = "USER")
 public class User {
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +32,7 @@ public class User {
 
 	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	@Column(name = "EMAIL", unique = true, nullable = false)
-	// treb sa fie de un anumit stil gen bla@yahoo.com....
+	@Email
 	private String email;
 
 	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
@@ -43,9 +47,8 @@ public class User {
 	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
-
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -85,8 +88,6 @@ public class User {
 		this.lastName = lastName;
 	}
 	
-	
-
 	// made for comparing two objects
 
 	public String getUsername() {
@@ -95,6 +96,11 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	
+	public boolean isNew() {
+		return (this.id == null);
 	}
 
 	 @Override

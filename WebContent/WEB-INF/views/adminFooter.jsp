@@ -19,5 +19,16 @@
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script
 		src="<c:url value="/resources/js/ie10-viewport-bug-workaround.js" />"></script>
+		
+		
+			<script src="<c:url value="/resources/js/jquery.js" />"></script>
+	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+	<script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
+	<script
+		src="<c:url value="/resources/js/dataTables.bootstrap.min.js" />"></script>
+		
+			<script type="text/javascript">
+		$('#mydata').dataTable();
+	</script>
 </body>
 </html>

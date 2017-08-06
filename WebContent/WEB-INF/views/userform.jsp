@@ -1,9 +1,8 @@
+<%@ page session="false"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-
 
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -25,19 +24,19 @@
 	$(document).ready(onLoad);
 </script>
 
-
-
 <div class="container">
+
 	<c:choose>
-		<c:when test="${edit}">
+		<c:when test="${userForm['new']}">
 			<h1>Add User</h1>
 		</c:when>
 		<c:otherwise>
 			<h1>Update User</h1>
 		</c:otherwise>
 	</c:choose>
-	<br/>
-	<spring:url value="/s" var="userActionUrl" />
+	<br />
+
+	<spring:url value="/admin/users/users" var="userActionUrl" />
 
 	<form:form class="form-horizontal" method="post"
 		modelAttribute="userForm" action="${userActionUrl}">
@@ -48,7 +47,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">First Name</label>
 				<div class="col-sm-10">
-					<form:input path="firstName" type="text" class="form-control "
+					<form:input path="firstName" type="text" class="form-control"
 						id="firstName" placeholder="First Name" />
 					<form:errors path="firstName" class="control-label" />
 				</div>
@@ -59,9 +58,20 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Last Name</label>
 				<div class="col-sm-10">
-					<form:input path="lastName" type="text" class="form-control "
+					<form:input path="lastName" type="text" class="form-control"
 						id="lastName" placeholder="Last Name" />
 					<form:errors path="lastName" class="control-label" />
+				</div>
+			</div>
+		</spring:bind>
+
+		<spring:bind path="username">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<label class="col-sm-2 control-label">User Name</label>
+				<div class="col-sm-10">
+					<form:input path="username" type="text" class="form-control"
+						id="username" placeholder="Username" />
+					<form:errors path="username" class="control-label" />
 				</div>
 			</div>
 		</spring:bind>
@@ -82,37 +92,33 @@
 				<label class="col-sm-2 control-label">Password</label>
 				<div class="col-sm-10">
 					<form:password path="password" class="form-control" id="password"
-						placeholder="password" />
+						placeholder="Password" />
 					<form:errors path="password" class="control-label" />
 				</div>
 			</div>
 		</spring:bind>
-
-		<spring:bind path="password">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">confirm Password</label>
+				<label class="col-sm-2 control-label">Confirm Password</label>
 				<div class="col-sm-10">
-					<form:password path="password" class="form-control" onkeyup="checkPasswordMatch();"
-						id="password_confirm" placeholder="password" />
+					<input type="password" class="form-control"
+						onkeyup="checkPasswordMatch();" id="password_confirm"
+						placeholder="Password Confirmation" />
 					<div id="divCheckPasswordMatch" style="color: red;"></div>
-					<form:errors path="password" class="control-label" />
 				</div>
 			</div>
-		</spring:bind>
-
-
-
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<c:choose>
 					<c:when test="${userForm['new']}">
-						<button type="submit" class="btn-lg btn-primary pull-right">Add</button>
+						<input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/admin/users/list' />">Cancel</a>
 					</c:when>
 					<c:otherwise>
-						<button type="submit" class="btn-lg btn-primary pull-right">Update</button>
+						<input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/admin/users/list' />">Cancel</a>
 					</c:otherwise>
 				</c:choose>
 			</div>
 		</div>
 	</form:form>
-	</div>
+
+</div>
+

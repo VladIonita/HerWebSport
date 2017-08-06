@@ -12,3 +12,6 @@
 <jsp:include page="${partial}.jsp" />
 
 <%@ include file="adminFooter.jsp"%>
+
+
+

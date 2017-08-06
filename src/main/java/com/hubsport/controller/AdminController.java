@@ -2,9 +2,14 @@ package com.hubsport.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,11 +34,6 @@ public class AdminController {
 		return "index";
 	}
 	
-	// handling 404 error
-	@RequestMapping(value = "*", method = {RequestMethod.GET, RequestMethod.POST})
-	public String fallback() {
-		return "fallback";
-	}
 	
 	//returning current user
     @ModelAttribute("loggedinuser")
@@ -54,4 +54,5 @@ public class AdminController {
     	String time = timeService.time();
     	return time;
     }
+    
 }

@@ -3,12 +3,9 @@ package com.hubsport.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.hubsport.dao.UserDao;
 import com.hubsport.domain.User;
@@ -19,11 +16,11 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	public User findById(int id) {
+	public User findById(Integer id) {
 		return userDao.findbyid(id);
 	}
 	
@@ -39,22 +36,24 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void saveUser(User user) {
-		userDao.save(user);
-	}
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userDao.save(user);
+    }
+	
+	public void updateUser(User user) {
+        User entity = userDao.findbyid(user.getId());
+        if(entity!=null){
+            entity.setId(user.getId());
+            if(!user.getPassword().equals(entity.getPassword())){
+                entity.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
+            entity.setFirstName(user.getFirstName());
+            entity.setLastName(user.getLastName());
+            entity.setEmail(user.getEmail());
+        }
+    }
 
-	@Override
-	public void saveOrUpdate(User user) {
-
-		if (findById(user.getId())==null) {
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			userDao.save(user);
-		} else {
-			userDao.update(user);
-		}
-	}
-
-	@Override
-	public void delete(Integer id) {
+	public void deleteBID(Integer id) {
 		userDao.deleteId(id);
 	}
 	

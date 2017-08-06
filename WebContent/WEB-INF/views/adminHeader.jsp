@@ -24,6 +24,8 @@
 <!-- Custom styles for this template -->
 <link href="<c:url value="/resources/css/sticky-footer-navbar.css" />"
 	rel="stylesheet">
+	
+<link href="<c:url value="/resources/css/dataTables.bootstrap.min.css"/>" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -49,7 +51,7 @@
 				<ul class="nav navbar-nav">
 					<li><a href="${pageContext.request.contextPath}/">Home</a></li>
 					<li><a href="${pageContext.request.contextPath}/admin/">Admin</a></li>
-					<li><a href="${pageContext.request.contextPath}/admin/users/">Users</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/users/list">Users</a></li>
 					<li><a href="${pageContext.request.contextPath}/admin/events/">Events</a></li>
 					<li><a href="${pageContext.request.contextPath}admin/places/">Places</a></li>
 					<!--  <li><a href="#about">About</a></li>
