@@ -1,11 +1,14 @@
 package com.hubsport.domain;
 
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -17,37 +20,36 @@ import com.hubsport.dao.FormValidationGroup;
 import com.hubsport.dao.PersistenceValidationGroup;
 
 @Entity
-@Table(name = "USER")
-public class User {
-
+@Table(name = "USERS")
+public class Users {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+
+	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
 	@Column(name = "USERNAME", unique = true, nullable = false)
-	@Size(min=5, max = 15, groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	@Size(min = 5, max = 15, groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
 	private String username;
 
-	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
 	@Column(name = "EMAIL", unique = true, nullable = false)
 	@Email
 	private String email;
 
-	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
 	@Column(name = "PASSWORD", nullable = false)
-	@Size(min=5, max = 15,groups={FormValidationGroup.class})
+	@Size(min = 5, max = 15, groups = { FormValidationGroup.class })
 	private String password;
 
-	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
 	@Column(name = "FIRST_NAME", nullable = false)
 	private String firstName;
 
-	@NotEmpty(groups={PersistenceValidationGroup.class, FormValidationGroup.class})
+	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -87,7 +89,7 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
+
 	// made for comparing two objects
 
 	public String getUsername() {
@@ -97,20 +99,19 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-	
+
 	public boolean isNew() {
 		return (this.id == null);
 	}
 
-	 @Override
-	    public int hashCode() {
-	        final int prime = 31;
-	        int result = 1;
-	        result = prime * result + ((id == null) ? 0 : id.hashCode());
-	        result = prime * result + ((username == null) ? 0 : username.hashCode());
-	        return result;
-	    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -118,9 +119,9 @@ public class User {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof User))
+		if (!(obj instanceof Users))
 			return false;
-		User other = (User) obj;
+		Users other = (Users) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -139,6 +140,5 @@ public class User {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", firstName=" + firstName
 				+ ", lastName=" + lastName + "]";
 	}
-
 
 }

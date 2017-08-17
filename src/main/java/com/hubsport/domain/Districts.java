@@ -1,40 +1,55 @@
 package com.hubsport.domain;
 
+import java.io.Serializable;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "DISTRICTS")
-public class Districts {
+public class Districts implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "ID")
 	@GeneratedValue
-	private int id;
+	private Integer id;
 
-	@NotEmpty
 	@Column(name = "NAME")
-	private String name;
+	private String nameDistrict;
+	
+	@OneToMany(mappedBy = "districts", cascade = CascadeType.ALL)
+	private Set<Towns> towns;
 
-	public int getId() {
+	public Integer getid() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setid(Integer id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNameDistrict() {
+		return nameDistrict;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNameDistrict(String nameDistrict) {
+		this.nameDistrict = nameDistrict;
 	}
+
+	public Set<Towns> getTowns() {
+		return towns;
+	}
+
+	public void setTowns(Set<Towns> towns) {
+		this.towns = towns;
+	}
+
 
 }

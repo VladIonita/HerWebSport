@@ -16,8 +16,5 @@ public interface PlacesDao {
 
 	List<Places> findAllPlaces();
 	
-	List<Towns> findAllTowns();
-	
-	List<Districts> findAllDistricts();
-	
+	List<Places> findAllPlacesHibernate();
 }

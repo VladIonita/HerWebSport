@@ -1,35 +1,43 @@
 package com.hubsport.domain;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "BROADCASTERS")
 public class Broadcasters {
-	private int id;
-	private String name;
 
-	public Broadcasters() {
-	}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-	public Broadcasters(String name) {
-		this.name = name;
-	}
+	@Column(name = "NAME")
+	private String nameBroad;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+
+	public String getNameBroad() {
+		return nameBroad;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNameBroad(String nameBroad) {
+		this.nameBroad = nameBroad;
 	}
 
-	@Override
-	public String toString() {
-		return "Broadcasters [id=" + id + ", name=" + name + "]";
-	}
 
 }

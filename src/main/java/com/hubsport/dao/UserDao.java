@@ -2,21 +2,21 @@ package com.hubsport.dao;
 
 import java.util.List;
 
-import com.hubsport.domain.User;
+import com.hubsport.domain.Users;
 
 public interface UserDao {
 
-	User findbyid(Integer id);
+	Users findbyid(Integer id);
 	
-	User findbyusername(String username);
+	Users findbyusername(String username);
 
-	User findbyemail(String email);
+	Users findbyemail(String email);
 	
-	List<User> findAllUsers();
+	List<Users> findAllUsers();
 	
-	void save(User user);
+	void save(Users users);
 	
-	void update(User user);
+	void update(Users users);
 	
 	void deleteId(Integer id);
 

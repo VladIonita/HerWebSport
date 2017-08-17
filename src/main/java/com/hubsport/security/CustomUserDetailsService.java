@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hubsport.domain.User;
+import com.hubsport.domain.Users;
 import com.hubsport.service.UserService;
 
 
@@ -33,16 +33,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Transactional(readOnly=true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userService.findByUsername(username);
+		Users users = userService.findByUsername(username);
 		logger.info("Username : {}",username);
-		if(user==null) {
+		if(users==null) {
 			logger.info("Usere de negasit");
 			throw new UsernameNotFoundException("Username not found poate ca [plm");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),true, true, true, true, getGrantedAuthorities(user));
+		return new org.springframework.security.core.userdetails.User(users.getUsername(), users.getPassword(),true, true, true, true, getGrantedAuthorities(users));
 	}
 	
-    private List<GrantedAuthority> getGrantedAuthorities(User user){
+    private List<GrantedAuthority> getGrantedAuthorities(Users users){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
             	authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         logger.info("authorities : {}", authorities);

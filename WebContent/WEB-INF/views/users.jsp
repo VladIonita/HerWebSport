@@ -12,7 +12,6 @@
 				class="btn btn-primary btn-sm" role="button">New User</a>
 		</p>
 	</sec:authorize>
-
 	<div class="container">
 		<table class="table table-striped table-bordered table-hover" id="mydata">
 			<thead>
@@ -31,16 +30,6 @@
 						<td>${user.username}</td>
 						<td>${user.firstName}</td>
 						<td>${user.lastName}</td>
-			<!-- <sec:authorize access="hasRole('ADMIN')">
-							<td><spring:url value="/admin/users/users/${user.id}/update"
-									var="updateUrl" />
-								<button class="btn btn-primary btn-sm"
-									onclick="location.href='${updateUrl}'">Update</button>
-							<spring:url value="/admin/users/users/${user.id}/delete"
-									var="deleteUrl" />
-								<button class="btn btn-danger btn-sm"
-									onclick="this.disabled=true;post('${deleteUrl}')">Delete</button></td>
-						</sec:authorize> -->			
 						<sec:authorize access="hasRole('ADMIN')">
 						 <td><a href="<c:url value='/admin/users/users/${user.id}/update' />" class="btn btn-success btn-sm">edit</a>
                           <a href="<c:url value='/admin/users/users/${user.id}/delete' />" class="btn btn-danger btn-sm">delete</a></td>

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hubsport.dao.UserDao;
-import com.hubsport.domain.User;
+import com.hubsport.domain.Users;
 
 @Service("userService")
 @Transactional
@@ -20,36 +20,36 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	public User findById(Integer id) {
+	public Users findById(Integer id) {
 		return userDao.findbyid(id);
 	}
 	
-	public User findByEmail(String email) {
-		User user = userDao.findbyemail(email);
-		return user;
+	public Users findByEmail(String email) {
+		Users users = userDao.findbyemail(email);
+		return users;
 	}
 	
 	@Override
-	public User findByUsername(String username) {
-		User user = userDao.findbyusername(username);
-		return user;
+	public Users findByUsername(String username) {
+		Users users = userDao.findbyusername(username);
+		return users;
 	}
 
-	public void saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.save(user);
+	public void saveUser(Users users) {
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
+        userDao.save(users);
     }
 	
-	public void updateUser(User user) {
-        User entity = userDao.findbyid(user.getId());
+	public void updateUser(Users users) {
+        Users entity = userDao.findbyid(users.getId());
         if(entity!=null){
-            entity.setId(user.getId());
-            if(!user.getPassword().equals(entity.getPassword())){
-                entity.setPassword(passwordEncoder.encode(user.getPassword()));
+            entity.setId(users.getId());
+            if(!users.getPassword().equals(entity.getPassword())){
+                entity.setPassword(passwordEncoder.encode(users.getPassword()));
             }
-            entity.setFirstName(user.getFirstName());
-            entity.setLastName(user.getLastName());
-            entity.setEmail(user.getEmail());
+            entity.setFirstName(users.getFirstName());
+            entity.setLastName(users.getLastName());
+            entity.setEmail(users.getEmail());
         }
     }
 
@@ -59,18 +59,18 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean isUserEmailUnique(Integer id, String email) {
-		User user = userDao.findbyemail(email);
-		return ( user == null || ((id != null) && (user.getId() == id)));
+		Users users = userDao.findbyemail(email);
+		return ( users == null || ((id != null) && (users.getId() == id)));
 	}
 
 	@Override
 	public boolean isUserUnique(Integer id, String username) {
-		User user = userDao.findbyusername(username);
-		return ( user == null || ((id != null) && (user.getId() == id)));
+		Users users = userDao.findbyusername(username);
+		return ( users == null || ((id != null) && (users.getId() == id)));
 	}
 
 	@Override
-	public List<User> findAllUsers() {
+	public List<Users> findAllUsers() {
 		return userDao.findAllUsers();
 	}
 }

@@ -2,21 +2,21 @@ package com.hubsport.service;
 
 import java.util.List;
 
-import com.hubsport.domain.User;
+import com.hubsport.domain.Users;
 
 public interface UserService {
 	
-    User findById(Integer id);
+    Users findById(Integer id);
     
-    User findByEmail(String email);
+    Users findByEmail(String email);
     
-    User findByUsername(String username);
+    Users findByUsername(String username);
     
-    List<User> findAllUsers(); 
+    List<Users> findAllUsers(); 
     
-    void saveUser(User user);
+    void saveUser(Users users);
     
-    void updateUser(User user);
+    void updateUser(Users users);
      
     void deleteBID(Integer id);
  

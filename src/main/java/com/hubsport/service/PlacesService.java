@@ -7,7 +7,7 @@ import com.hubsport.domain.Towns;
 
 public interface PlacesService {
 	
-    Places findById(int id);
+    Places findById(Integer id);
     
     void savePlace(Places places);
      
@@ -17,7 +17,4 @@ public interface PlacesService {
  
     List<Places> findAllPlaces();
     
-    List<Towns> findAllTowns();
-    
-
 }

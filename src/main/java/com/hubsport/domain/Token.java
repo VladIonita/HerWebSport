@@ -5,13 +5,13 @@ public class Token {
 	private String token;
 	private int status;
 	private String created;
-	private User users;
+	private Users users;
 
-	public User getUsers() {
+	public Users getUsers() {
 		return users;
 	}
 
-	public void setUsers(User users) {
+	public void setUsers(Users users) {
 		this.users = users;
 	}
 

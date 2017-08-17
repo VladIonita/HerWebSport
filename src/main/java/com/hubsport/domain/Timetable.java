@@ -1,31 +1,45 @@
 package com.hubsport.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Time;
 
-public class Timetable {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-	private int id;
+@Entity
+@Table(name = "TIMETABLE")
+public class Timetable implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name = "TIME", nullable = false)
 	private Date date;
-	private int fullday;
-	private Events events;
-	private Time time;
 
-	
+	private int fullday = 0;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "EVENTS_ID", nullable = false)
+	private Events events;
+
 	public Timetable() {
 	}
 
-	public Timetable(Date date, Time time, int fullday) {
-		this.date = date;
-		this.time = time;
-		this.fullday = fullday;
-	}
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -53,18 +67,7 @@ public class Timetable {
 		this.events = events;
 	}
 
-	public Time getTime() {
-		return time;
+	public boolean isNew() {
+		return (this.id == null);
 	}
-
-	public void setTime(Time time) {
-		this.time = time;
-	}
-
-	@Override
-	public String toString() {
-		return "Timetable [id=" + id + ", date=" + date + ", fullday=" + fullday + ", events=" + events + ", time="
-				+ time + "]";
-	}
-
 }

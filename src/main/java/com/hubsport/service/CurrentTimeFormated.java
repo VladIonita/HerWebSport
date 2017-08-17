@@ -24,4 +24,9 @@ public class CurrentTimeFormated {
 		return timeStamp;
 	}
 
+	
+	public String getTime(Date date) {
+		String timeStamp = new SimpleDateFormat("EEEE , dd MM YYYY").format(date);
+		return timeStamp;
+	}
 }

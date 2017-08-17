@@ -1,52 +1,56 @@
 package com.hubsport.domain;
 
+import java.io.Serializable;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "PLACES")
-public class Places {
+public class Places implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "ID")
-	@GeneratedValue
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-	@NotEmpty
-	@Column(name = "NAME")
-	private String name;
+	@Column(name = "NAME", nullable = false)
+	private String namePlaces;
 
-	@NotEmpty
-	@Column(name = "ADDRESS")
+	@Column(name = "ADDRESS", nullable = false)
 	private String address;
 
-	@OneToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "TOWNS_ID")
-	private Towns town;
+	private Towns towns;
 	
-	
+	@OneToMany(mappedBy = "places", cascade = CascadeType.ALL)
+	private Set<Events> events;
 
-	public int getId() {
+	public Integer getid() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setid(Integer id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNamePlaces() {
+		return namePlaces;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNamePlaces(String namePlaces) {
+		this.namePlaces = namePlaces;
 	}
 
 	public String getAddress() {
@@ -58,18 +62,23 @@ public class Places {
 	}
 
 	public Towns getTowns() {
-		return town;
+		return towns;
 	}
 
 	public void setTowns(Towns towns) {
-		this.town = towns;
+		this.towns = towns;
 	}
 
-	@Override
-	public String toString() {
-		return "Places [name=" + name + ", address=" + address + ", towns=" + town.getName() + "]";
+	public Set<Events> getEvents() {
+		return events;
 	}
 
-	
-	
+	public void setEvents(Set<Events> events) {
+		this.events = events;
+	}
+
+	public boolean isNew() {
+		return (this.id == null);
+	}
+
 }

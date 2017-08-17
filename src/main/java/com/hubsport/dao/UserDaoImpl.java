@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import com.hubsport.domain.User;
+import com.hubsport.domain.Users;
 
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {
@@ -24,69 +24,71 @@ public class UserDaoImpl implements UserDao {
 	private SessionFactory sessionFactory;
 
 	// find user by id
-	public User findbyid(Integer id) {
+	public Users findbyid(Integer id) {
 		logger.info("id : {}", id);
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(User.class);
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Users.class);
 		crit.add(Restrictions.eq("id", id));
-		User user = (User) crit.uniqueResult();
-		if (user != null) {
-			Hibernate.initialize(user.getUsername());
+		Users users = (Users) crit.uniqueResult();
+		if (users != null) {
+			Hibernate.initialize(users.getUsername());
 		}
-		return user;
+		return users;
 	}
 
 	// find user by email
-	public User findbyemail(String email) {
+	public Users findbyemail(String email) {
 		logger.info("email : {}", email);
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(User.class);
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Users.class);
 		crit.add(Restrictions.eq("email", email));
-		User user = (User) crit.uniqueResult();
-		if (user != null) {
-			Hibernate.initialize(user.getUsername());
+		Users users = (Users) crit.uniqueResult();
+		if (users != null) {
+			Hibernate.initialize(users.getUsername());
 		}
-		return user;
+		return users;
 	}
 
 	@Override
-	public User findbyusername(String username) {
+	public Users findbyusername(String username) {
 		logger.info("username : {}", username);
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(User.class);
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Users.class);
 		crit.add(Restrictions.eq("username", username));
-		User user = (User) crit.uniqueResult();
-		if (user != null) {
-			Hibernate.initialize(user.getUsername());
+		Users users = (Users) crit.uniqueResult();
+		if (users != null) {
+			Hibernate.initialize(users.getUsername());
 		}
-		return user;
+		return users;
 	}
 
 	// find all users
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> findAllUsers() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class)
+	public List<Users> findAllUsers() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Users.class)
 				.addOrder(Order.asc("firstName"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
 																		// duplicates.
-		List<User> users = (List<User>) criteria.list();
+		List<Users> users = (List<Users>) criteria.list();
 		return users;
 	}
 
 	// save user
 	@Override
-	public void save(User user) {
-		logger.info("user : {}", user);
-		sessionFactory.getCurrentSession().save(user);
+	public void save(Users users) {
+		logger.info("user : {}", users);
+		sessionFactory.getCurrentSession().save(users);
 	}
-
-	public void update(User user) {
-		sessionFactory.getCurrentSession().update(user);
+	
+	
+	//update user
+	public void update(Users users) {
+		sessionFactory.getCurrentSession().update(users);
 	}
 
 	@Override
 	public void deleteId(Integer id) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(User.class);
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Users.class);
 		crit.add(Restrictions.eq("id", id));
-		User user = (User) crit.uniqueResult();
-		sessionFactory.getCurrentSession().delete(user);
+		Users users = (Users) crit.uniqueResult();
+		sessionFactory.getCurrentSession().delete(users);
 	}
 }

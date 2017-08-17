@@ -1,70 +1,79 @@
 package com.hubsport.domain;
 
-public class Events {
+import java.io.Serializable;
+import java.util.Set;
 
-	private int id;
-	private int status;
-	private String name;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "EVENTS")
+public class Events implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	private Integer status = 0;
+
+	@Column(name = "NAME", nullable = false)
+	private String nameEvents;
+
+	@OneToMany(mappedBy = "events", cascade = CascadeType.ALL)
+	private Set<Timetable> timetable;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "PLACES_ID", nullable = false)
 	private Places places;
-	private User users;
-	private Categories categories;
-	private Broadcasters broadcasters;
-	private Timetable timetable;
-	private Towns towns;
-	private Districts districts;
-	
-	
-	public Events() {
-	}
-	public Events(int id) {
-		this.id = id;
-	}
 
-	public Events(int status, String name) {
-		this.status = status;
-		this.name = name;
-	}
-	public Events(String name) {
-		this.name = name;
-	}
-	public int getId() {
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "CATEGORIES_ID", nullable = false)
+	private Categories categories;
+	
+	// @ManyToOne(cascade = CascadeType.ALL)
+	// @JoinColumn(name = "BROADCASTERS_ID")
+	// private Broadcasters broadcasters;
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
-	public String getName() {
-		return name;
+	public String getNameEvents() {
+		return nameEvents;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNameEvents(String nameEvents) {
+		this.nameEvents = nameEvents;
 	}
 
-	public Places getPlaces() {
-		return places;
+	public Set<Timetable> getTimetable() {
+		return timetable;
 	}
 
-	public void setPlaces(Places places) {
-		this.places = places;
-	}
-
-	public User getUsers() {
-		return users;
-	}
-
-	public void setUsers(User users) {
-		this.users = users;
+	public void setTimetable(Set<Timetable> timetable) {
+		this.timetable = timetable;
 	}
 
 	public Categories getCategories() {
@@ -75,38 +84,12 @@ public class Events {
 		this.categories = categories;
 	}
 
-	public Broadcasters getBroadcasters() {
-		return broadcasters;
+	public Places getPlaces() {
+		return places;
 	}
 
-	public void setBroadcasters(Broadcasters broadcasters) {
-		this.broadcasters = broadcasters;
+	public void setPlaces(Places places) {
+		this.places = places;
 	}
-	public Timetable getTimetable() {
-		return timetable;
-	}
-	public void setTimetable(Timetable timetable) {
-		this.timetable = timetable;
-	}
-	public Towns getTowns() {
-		return towns;
-	}
-	public void setTowns(Towns towns) {
-		this.towns = towns;
-	}
-	public Districts getDistricts() {
-		return districts;
-	}
-	public void setDistricts(Districts districts) {
-		this.districts = districts;
-	}
-	@Override
-	public String toString() {
-		return "Events [id=" + id + ", status=" + status + ", name=" + name + ", places=" + places + ", users=" + users
-				+ ", categories=" + categories + ", broadcasters=" + broadcasters + ", timetable=" + timetable
-				+ ", towns=" + towns + ", districts=" + districts + "]";
-	}
-
-
-
+	
 }

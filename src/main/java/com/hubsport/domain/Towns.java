@@ -1,54 +1,61 @@
 package com.hubsport.domain;
 
+import java.io.Serializable;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "TOWNS")
-public class Towns {
+public class Towns implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "ID")
-	@GeneratedValue
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-	@NotEmpty
 	@Column(name = "NAME")
-	private String name;
+	private String nameTowns;
 
-	@OneToOne
+	@OneToMany(mappedBy = "towns", cascade = CascadeType.ALL)
+	private Set<Places> places;
+
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "DISTRICTS_ID")
 	private Districts districts;
-	
-	public Towns() {
-	}
 
-	public Towns(int id, String name) {
-		this.id = id;
-		this.name = name;
-	}
-
-	public int getId() {
+	public Integer getid() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setid(Integer id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNameTowns() {
+		return nameTowns;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNameTowns(String nameTowns) {
+		this.nameTowns = nameTowns;
+	}
+
+	public Set<Places> getPlaces() {
+		return places;
+	}
+
+	public void setPlaces(Set<Places> places) {
+		this.places = places;
 	}
 
 	public Districts getDistricts() {
