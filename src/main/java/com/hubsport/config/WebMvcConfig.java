@@ -55,6 +55,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
 
+	String engValueGmailUSer = System.getenv("GMAIL_USERNAME");
+	String engValueGmailPass = System.getenv("GMAIL_PASS");
 
     @Bean
     public JavaMailSender javaMailService() {
@@ -62,8 +64,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         javaMailSender.setHost("smtp.gmail.com");
         javaMailSender.setPort(587);
         
-        javaMailSender.setUsername("");
-        javaMailSender.setPassword("");
+        javaMailSender.setUsername(engValueGmailUSer);
+        javaMailSender.setPassword(engValueGmailPass);
         
         Properties props = javaMailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

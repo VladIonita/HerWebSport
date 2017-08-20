@@ -26,6 +26,11 @@ public class HibernateConfiguration {
 	@Autowired
 	private Environment environment;
 	
+	 String engValueDriver = System.getenv("CLEARDB_DATABASE_DRIVER");
+	 String envValue = System.getenv("CLEARDB_DATABASE_URL");
+	 String envValueUsername = System.getenv("CLEARDB_DATABASE_USERNAME");
+	 String envValuePassword = System.getenv("CLEARDB_DATABASE_PASSWORD");
+	
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -38,10 +43,10 @@ public class HibernateConfiguration {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+        dataSource.setDriverClassName(engValueDriver);
+        dataSource.setUrl(envValue);
+        dataSource.setUsername(envValueUsername);
+        dataSource.setPassword(envValuePassword);
         return dataSource;
     }
      
