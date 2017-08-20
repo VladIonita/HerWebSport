@@ -1,5 +1,7 @@
 package com.hubsport.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -14,21 +16,23 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 @Configuration
-@EnableWebSecurity(debug = false)// to show logger
+@EnableWebSecurity(debug = false) // to show logger
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	
-    @Autowired
-    @Qualifier("customUserDetailsService")
-    UserDetailsService userDetailsService;
+
+	@Autowired
+	@Qualifier("customUserDetailsService")
+	UserDetailsService userDetailsService;
 
 	@Autowired
 	MySimpleUrlAuthenticationSuccessHandler successHandler;
-	
-//    @Autowired
-//    PersistentTokenRepository tokenRepository;
-	
+
+	@Autowired
+	DataSource dataSource;
+
 	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
@@ -37,42 +41,35 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/").permitAll()
-				.antMatchers("/admin/**")
-				.access("hasRole('ROLE_ADMIN')")
-				.and().formLogin().loginPage("/login")
-				.failureUrl("/login?error=true")
-				.successHandler(successHandler).usernameParameter("username").passwordParameter("password")
-//				.and()
-//				.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
-//				.tokenValiditySeconds(86400)
-//				.and().csrf()
-				.and().exceptionHandling().accessDeniedPage("/accessDenied");
+		http.authorizeRequests().antMatchers("/", "/resetPassword").permitAll().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+				.and().formLogin().loginPage("/login").failureUrl("/login?error=true").successHandler(successHandler)
+				.usernameParameter("username").passwordParameter("password").and().rememberMe()
+				.rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository())
+				.tokenValiditySeconds(90).and().csrf().and().exceptionHandling().accessDeniedPage("/accessDenied");
 	}
-	
-	
-//    @Bean
-//    public PersistentTokenBasedRememberMeServices getPersistentTokenBasedRememberMeServices() {
-//        PersistentTokenBasedRememberMeServices tokenBasedservice = new PersistentTokenBasedRememberMeServices(
-//                "remember-me", userDetailsService, tokenRepository);
-//        return tokenBasedservice;
-//    }
-//    
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
-    }
-//
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    
-    @Bean
-    public AuthenticationTrustResolver getAuthenticationTrustResolver() {
-        return new AuthenticationTrustResolverImpl();
-    }
+
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
+		tokenRepositoryImpl.setDataSource(dataSource);
+		return tokenRepositoryImpl;
+	}
+
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+		authenticationProvider.setUserDetailsService(userDetailsService);
+		authenticationProvider.setPasswordEncoder(passwordEncoder());
+		return authenticationProvider;
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public AuthenticationTrustResolver getAuthenticationTrustResolver() {
+		return new AuthenticationTrustResolverImpl();
+	}
 }

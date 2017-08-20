@@ -23,4 +23,9 @@ public interface UserService {
     boolean isUserUnique(Integer id,String username);
     
     boolean isUserEmailUnique(Integer id,String email);
+    
+    void saveToken(String token, Users users);
+    
+    Users findUserByResetToken(String token);
+    
 }

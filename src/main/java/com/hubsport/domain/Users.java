@@ -1,19 +1,16 @@
 package com.hubsport.domain;
 
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.hubsport.dao.FormValidationGroup;
@@ -49,6 +46,9 @@ public class Users {
 	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
+
+	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+	private PasswordResetToken passwordResetTokens;
 
 	public Integer getId() {
 		return id;
@@ -98,6 +98,15 @@ public class Users {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+
+	public PasswordResetToken getPasswordResetTokens() {
+		return passwordResetTokens;
+	}
+
+	public void setPasswordResetTokens(PasswordResetToken passwordResetTokens) {
+		this.passwordResetTokens = passwordResetTokens;
 	}
 
 	public boolean isNew() {

@@ -7,7 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hubsport.dao.PasswordTokenDao;
 import com.hubsport.dao.UserDao;
+import com.hubsport.domain.PasswordResetToken;
 import com.hubsport.domain.Users;
 
 @Service("userService")
@@ -16,7 +18,11 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
-
+	
+	@Autowired
+	private PasswordTokenDao passwordTokenDao;
+	
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -72,5 +78,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Users> findAllUsers() {
 		return userDao.findAllUsers();
+	}
+	
+	@Override
+	public Users findUserByResetToken(String token) {
+		Users users = userDao.findbyid(passwordTokenDao.findbyToken(token).getId());
+		return users;
+	}
+
+	@Override
+	public void saveToken( String token, Users users) {
+		PasswordResetToken myToken = new PasswordResetToken(token, users);
+		passwordTokenDao.save(myToken);		
 	}
 }

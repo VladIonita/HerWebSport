@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +15,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Login</title>
+<title>Forgot password</title>
 
 <!-- Bootstrap core CSS -->
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
@@ -53,54 +56,9 @@
 			</div>
 		</div>
 	</nav>
-
-
 	<div class="container">
-		<c:url var="loginUrl" value="/login" />
-		<form action="${loginUrl}" method="post" class="form-signin">
-			<c:if test="${param.error != null}">
-				<div class="alert alert-danger">
-					<p>Invalid username and password.</p>
-				</div>
-			</c:if>
-			<c:if test="${param.logout != null}">
-				<div class="alert alert-success">
-					<p>You have been logged out successfully.</p>
-				</div>
-			</c:if>
-			<div class="input-group input-sm">
-				<label class="input-group-addon" for="username"><i
-					class="fa fa-user"></i></label> <input type="text" class="form-control"
-					id="username" name="username" placeholder="Enter Username" required>
-			</div>
-			<div class="input-group input-sm">
-				<label class="input-group-addon" for="password"><i
-					class="fa fa-lock"></i></label> <input type="password" class="form-control"
-					id="password" name="password" placeholder="Enter Password" required>
-			</div>
-			<div class="input-group input-sm">
-				<div class="checkbox">
-					<label><input type="checkbox" id="rememberme"
-						name="remember-me"> Remember Me</label>
-				</div>
-			</div>
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" />
-
-			<div class="form-actions">
-				<input type="submit" class="btn btn-lg btn-block btn-primary"
-					value="Log in">
-			</div>
-				<p align="center"><br/><a href="<c:url value="/forgotPassword" />">Forgot Password</a></p>
-		</form>
-
+		<h4>Please check your email for password reset link.</h4>
 	</div>
-	<!-- /container -->
-
-
-
-
-
 
 	<%@ include file="adminFooter.jsp"%>
 
@@ -120,6 +78,4 @@
 		src="<c:url value="/resources/js/ie10-viewport-bug-workaround.js" />"></script>
 </body>
 </html>
-
-
 
