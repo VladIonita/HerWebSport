@@ -37,7 +37,7 @@ public class AdminController {
 	@Autowired
 	private MailService emailService;
 
-	@RequestMapping("/dashboard")
+	@RequestMapping("/")
 	public String defaultPage(Model model) {
 		model.addAttribute("partial", "bash");
 		model.addAttribute("pageTitle", "Dashboard");
