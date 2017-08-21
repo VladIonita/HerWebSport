@@ -70,11 +70,11 @@
 					<c:when test="${placeForm['new']}">
 						<input type="submit" value="Register"
 							class="btn btn-primary btn-sm" /> or <a
-							href="<c:url value='/admin/places/list' />">Cancel</a>
+							href="<c:url value='/admin/places' />">Cancel</a>
 					</c:when>
 					<c:otherwise>
 						<input type="submit" value="Update" class="btn btn-primary btn-sm" /> or <a
-							href="<c:url value='/admin/places/list' />">Cancel</a>
+							href="<c:url value='/admin/places' />">Cancel</a>
 					</c:otherwise>
 				</c:choose>
 			</div>

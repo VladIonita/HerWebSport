@@ -8,7 +8,7 @@
 <div class="container">
 	<sec:authorize access="hasRole('ADMIN')">
 		<p style="text-align: right">
-			<a href="<c:url value="/admin/users/users/add" />"
+			<a href="<c:url value="/admin/users/add" />"
 				class="btn btn-primary btn-sm" role="button">New User</a>
 		</p>
 	</sec:authorize>
@@ -31,8 +31,8 @@
 						<td>${user.firstName}</td>
 						<td>${user.lastName}</td>
 						<sec:authorize access="hasRole('ADMIN')">
-						 <td><a href="<c:url value='/admin/users/users/${user.id}/update' />" class="btn btn-success btn-sm">edit</a>
-                          <a href="<c:url value='/admin/users/users/${user.id}/delete' />" class="btn btn-danger btn-sm">delete</a></td>
+						 <td><a href="<c:url value='/admin/users/update/${user.id}' />" class="btn btn-success btn-sm">edit</a>
+                          <a href="<c:url value='/admin/users/delete/${user.id}' />" class="btn btn-danger btn-sm">delete</a></td>
                         </sec:authorize>
 					</tr>
 				</c:forEach>

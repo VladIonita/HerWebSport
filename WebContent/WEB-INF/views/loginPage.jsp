@@ -56,7 +56,7 @@
 
 
 	<div class="container">
-		<c:url var="loginUrl" value="/login" />
+		<c:url var="loginUrl" value="/admin/login" />
 		<form action="${loginUrl}" method="post" class="form-signin">
 			<c:if test="${param.error != null}">
 				<div class="alert alert-danger">
@@ -91,35 +91,15 @@
 				<input type="submit" class="btn btn-lg btn-block btn-primary"
 					value="Log in">
 			</div>
-				<p align="center"><br/><a href="<c:url value="/forgotPassword" />">Forgot Password</a></p>
+				<p align="center"><br/><a href="<c:url value="/admin/recover" />">Forgot Password</a></p>
 		</form>
 
 	</div>
 	<!-- /container -->
 
 
-
-
-
-
 	<%@ include file="adminFooter.jsp"%>
 
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script>
-		window.jQuery
-				|| document
-						.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
-	</script>
-	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script
-		src="<c:url value="/resources/js/ie10-viewport-bug-workaround.js" />"></script>
-</body>
-</html>
 
 
 

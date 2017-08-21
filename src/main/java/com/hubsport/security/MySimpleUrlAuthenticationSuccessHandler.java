@@ -31,7 +31,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 		authorities.forEach(authority -> {
 			 if (authority.getAuthority().equals("ROLE_ADMIN")) {
 				try {
-					redirectStrategy.sendRedirect(request, response, "/admin/");
+					redirectStrategy.sendRedirect(request, response, "/admin/dashboard");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

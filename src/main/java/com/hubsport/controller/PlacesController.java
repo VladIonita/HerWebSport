@@ -1,7 +1,5 @@
 package com.hubsport.controller;
 
-import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -36,10 +34,11 @@ public class PlacesController {
 	@Autowired
 	MessageSource messageSource;
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping
 	public String placesPage(ModelMap model) {
 		model.addAttribute("placesList", placesService.findAllPlaces());
-		model.addAttribute("partial", "locations");
+		model.addAttribute("partial", "places");
+		model.addAttribute("pageTitle", "Places");
 		return "index";
 	}
 	
@@ -65,11 +64,11 @@ public class PlacesController {
 			return "index";
 		}
 		placesService.savePlace(places);
-		return "redirect:/admin/places/list";
+		return "redirect:/admin/places";
 	}
 
 	// show update form
-	@RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String showUpdatePlacesForm(@PathVariable("id") int id, Model model) {
 		Places places = placesService.findById(id);
 		model.addAttribute("placeForm", places);
@@ -78,7 +77,7 @@ public class PlacesController {
 	}
 
 	
-	@RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
 	public String updatePlaces(@PathVariable("id") int id, Model model, @Validated(FormValidationGroup.class) 	Places places,
 			BindingResult result) {
 
@@ -88,13 +87,13 @@ public class PlacesController {
 		}
 
 		placesService.updatePlace(places);
-		return "redirect:/admin/places/list";
+		return "redirect:/admin/places";
 	}
 	
 	// delete place
-	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deletePlaces(@PathVariable("id") int id) {
 		placesService.deletePlacesById(id);
-		return "redirect:/admin/places/list";
+		return "redirect:/admin/places";
 	}
 }

@@ -1,38 +1,4 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="../../favicon.ico">
-
-<title>Users</title>
-
-<!-- Bootstrap core CSS -->
-<link href="<c:url value="/resources/css/bootstrap.min.css" />"
-	rel="stylesheet">
-
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<link
-	href="<c:url value="/resources/css/ie10-viewport-bug-workaround.css" />"
-	rel="stylesheet">
-
-<!-- Custom styles for this template -->
-<link href="<c:url value="/resources/css/sticky-footer-navbar.css" />"
-	rel="stylesheet">
-	
-<link href="<c:url value="/resources/css/dataTables.bootstrap.min.css"/>" rel="stylesheet">
-
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
 <body>
 	<!-- Fixed navbar -->
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -50,10 +16,14 @@
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li><a href="${pageContext.request.contextPath}/">Home</a></li>
-					<li><a href="${pageContext.request.contextPath}/admin/">Admin</a></li>
-					<li><a href="${pageContext.request.contextPath}/admin/users/list">Users</a></li>
-					<li><a href="${pageContext.request.contextPath}/admin/events/list">Events</a></li>
-					<li><a href="${pageContext.request.contextPath}/admin/places/list">Places</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/admin/dashboard">Admin</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/admin/users">Users</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/admin/events">Events</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/admin/places">Places</a></li>
 					<!--  <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">

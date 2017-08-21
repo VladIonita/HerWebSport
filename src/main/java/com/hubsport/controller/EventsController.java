@@ -28,10 +28,11 @@ public class EventsController {
 	@Autowired
 	MessageSource messageSource;
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping
 	public String placesPage(ModelMap model) {
 		model.addAttribute("timetableList", timetableService.findAllTimetable());
 		model.addAttribute("partial", "events");
+		model.addAttribute("pageTitle", "Events");
 		return "index";
 	}
 

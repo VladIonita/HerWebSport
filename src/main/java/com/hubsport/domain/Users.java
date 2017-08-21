@@ -25,12 +25,11 @@ public class Users {
 	private Integer id;
 
 	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
-	@Column(name = "USERNAME", unique = true, nullable = false)
-	@Size(min = 5, max = 15, groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
+	@Column(name = "USERNAME", nullable = false)
 	private String username;
 
 	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
-	@Column(name = "EMAIL", unique = true, nullable = false)
+	@Column(name = "EMAIL", nullable = false)
 	@Email
 	private String email;
 

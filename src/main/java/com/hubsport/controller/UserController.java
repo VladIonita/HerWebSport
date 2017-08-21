@@ -30,15 +30,16 @@ public class UserController {
 	MessageSource messageSource;
 
 	// access to users
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping
 	public String usersPage(ModelMap model) {
 		model.addAttribute("userList", userService.findAllUsers());
+		model.addAttribute("pageTitle", "Users");
 		model.addAttribute("partial", "users");
 		return "index";
 	}
 
 	// show add user form
-	@RequestMapping(value = "/users/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showAddUserForm(Model model) {
 		Users users = new Users();
 		model.addAttribute("userForm", users);
@@ -47,7 +48,7 @@ public class UserController {
 	}
 
 	// save or update user
-	@RequestMapping(value = "/users", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated(FormValidationGroup.class) Users users,
 			BindingResult result, Model model) {
 
@@ -62,20 +63,20 @@ public class UserController {
 			result.addError(usernameError);
 			model.addAttribute("partial", "userform");
 			return "index";
-
-		} else if (!userService.isUserEmailUnique(users.getId(), users.getEmail())) {
-			FieldError emailError = new FieldError("user", "email", messageSource.getMessage("non.unique.email",
-					new String[] { users.getEmail() }, Locale.getDefault()));
-			result.addError(emailError);
-			model.addAttribute("partial", "userform");
-			return "index";
 		}
+//			else if (!userService.isUserEmailUnique(users.getId(), users.getEmail())) {
+//			FieldError emailError = new FieldError("user", "email", messageSource.getMessage("non.unique.email",
+//					new String[] { users.getEmail() }, Locale.getDefault()));
+//			result.addError(emailError);
+//			model.addAttribute("partial", "userform");
+//			return "index";
+//		}
 		userService.saveUser(users);
-		return "redirect:/admin/users/list";
+		return "redirect:/admin/users";
 	}
 
 	// show update form
-	@RequestMapping(value = "/users/{id}/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String showUpdateUserForm(@PathVariable("id") int id, Model model) {
 		Users users = userService.findById(id);
 		model.addAttribute("userForm", users);
@@ -83,7 +84,7 @@ public class UserController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/users/{id}/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
 	public String updateUser(@PathVariable("id") int id, Model model, @Validated(FormValidationGroup.class) Users users,
 			BindingResult result) {
 
@@ -91,29 +92,15 @@ public class UserController {
 			model.addAttribute("partial", "userform");
 			return "index";
 		}
-		if (!userService.isUserUnique(users.getId(), users.getUsername())) {
-			FieldError usernameError = new FieldError("user", "username", messageSource
-					.getMessage("non.unique.username", new String[] { users.getUsername() }, Locale.getDefault()));
-			result.addError(usernameError);
-			model.addAttribute("partial", "userform");
-			return "index";
-
-		} else if (!userService.isUserEmailUnique(users.getId(), users.getEmail())) {
-			FieldError emailError = new FieldError("user", "email", messageSource.getMessage("non.unique.email",
-					new String[] { users.getEmail() }, Locale.getDefault()));
-			result.addError(emailError);
-			model.addAttribute("partial", "userform");
-			return "index";
-		}
 		userService.updateUser(users);
-		return "redirect:/admin/users/list";
+		return "redirect:/admin/users";
 	}
 
 	// delete user
-	@RequestMapping(value = "/users/{id}/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable("id") int id) {
 		userService.deleteBID(id);
-		return "redirect:/admin/users/list";
+		return "redirect:/admin/users";
 	}
 
 }

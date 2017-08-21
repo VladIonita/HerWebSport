@@ -40,29 +40,8 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script type="text/javascript">
-	function onLoad() {
-		$("#confirmPassword").keyup(checkPasswordMatch);
-	}
-
-	function checkPasswordMatch() {
-		var password = $("#password").val();
-		var confirmPassword = $("#password_confirm").val();
-
-		if (password != confirmPassword)
-			$("#divCheckPasswordMatch").text("Passwords do not match!");
-		else
-			$("#divCheckPasswordMatch").text(" ");
-	}
-
-	$(document).ready(onLoad);
-</script>
 </head>
 <body>
-
 
 	<!-- Fixed navbar -->
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -78,52 +57,25 @@
 		</div>
 	</nav>
 	<div class="container">
-		<spring:url value="/newPassword" var="newActionUrl" />
+
+		<spring:url value="/admin/reset" var="resetActionUrl" />
 
 		<form:form class="form-horizontal" method="post"
-			modelAttribute="resetToken" action="${newActionUrl}">
+			modelAttribute="userForm" action="${resetActionUrl}">
 
-			<spring:bind path="password">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<label class="col-sm-2 control-label">Password</label>
-					<div class="col-sm-10">
-						<form:password path="password" class="form-control" id="password"
-							placeholder="Password" />
-						<form:errors path="password" class="control-label" />
-					</div>
-				</div>
-			</spring:bind>
-			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">Confirm Password</label>
-				<div class="col-sm-10">
-					<input type="password" class="form-control"
-						onkeyup="checkPasswordMatch();" id="password_confirm"
-						placeholder="Password Confirmation" />
-					<div id="divCheckPasswordMatch" style="color: red;"></div>
-				</div>
+			<p style="font-size: x-large;">Recover password</p>
+			<p style="font-size: medium;">Enter your e-mail address and we'll
+				send you a link to reset your password</p>
+
+
+			<div class="col-sm-5">
+				<form:input path="email" type="email" class="form-control"
+					id="email" placeholder="Email" />
 			</div>
-			<button type="submit" class="btn btn-default">Save</button>
+			<button type="submit" class="btn btn-default">Send</button>
 		</form:form>
 	</div>
 
 
-
 	<%@ include file="adminFooter.jsp"%>
-
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script>
-		window.jQuery
-				|| document
-						.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
-	</script>
-	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script
-		src="<c:url value="/resources/js/ie10-viewport-bug-workaround.js" />"></script>
-</body>
-</html>
 

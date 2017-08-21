@@ -41,8 +41,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/resetPassword").permitAll().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-				.and().formLogin().loginPage("/login").failureUrl("/login?error=true").successHandler(successHandler)
+		http.authorizeRequests().antMatchers("/","/admin/login","/admin/recover", "/admin/reset").permitAll().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+				.and().formLogin().loginPage("/admin/login").failureUrl("/admin/login?error=true").successHandler(successHandler)
 				.usernameParameter("username").passwordParameter("password").and().rememberMe()
 				.rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository())
 				.tokenValiditySeconds(90).and().csrf().and().exceptionHandling().accessDeniedPage("/accessDenied");

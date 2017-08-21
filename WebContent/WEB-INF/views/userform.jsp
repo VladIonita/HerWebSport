@@ -36,7 +36,7 @@
 	</c:choose>
 	<br />
 
-	<spring:url value="/admin/users/users" var="userActionUrl" />
+	<spring:url value="/admin/users/save" var="userActionUrl" />
 
 	<form:form class="form-horizontal" method="post"
 		modelAttribute="userForm" action="${userActionUrl}">
@@ -110,10 +110,10 @@
 			<div class="col-sm-offset-2 col-sm-10">
 				<c:choose>
 					<c:when test="${userForm['new']}">
-						<input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/admin/users/list' />">Cancel</a>
+						<input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/admin/users' />">Cancel</a>
 					</c:when>
 					<c:otherwise>
-						<input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/admin/users/list' />">Cancel</a>
+						<input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/admin/users' />">Cancel</a>
 					</c:otherwise>
 				</c:choose>
 			</div>
