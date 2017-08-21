@@ -17,7 +17,7 @@
 				<ul class="nav navbar-nav">
 					<li><a href="${pageContext.request.contextPath}/">Home</a></li>
 					<li><a
-						href="${pageContext.request.contextPath}/admin/dashboard">Admin</a></li>
+						href="${pageContext.request.contextPath}/admin/">Admin</a></li>
 					<li><a
 						href="${pageContext.request.contextPath}/admin/users">Users</a></li>
 					<li><a

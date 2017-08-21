@@ -40,7 +40,7 @@ public class AdminController {
 	@RequestMapping("/")
 	public String defaultPage(Model model) {
 		model.addAttribute("partial", "bash");
-		model.addAttribute("pageTitle", "Dashboard");
+		model.addAttribute("pageTitle", "Admin");
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "index";
 	}
