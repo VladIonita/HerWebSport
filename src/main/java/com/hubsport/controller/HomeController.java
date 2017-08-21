@@ -42,7 +42,7 @@ public class HomeController {
 	// handling access to login
 	@RequestMapping(value = { "/login", "admin"}, method = RequestMethod.GET)
 	public String loginPage() {
-	return "home";
+	return "redirect:/admin/login";
 	}
 
 }

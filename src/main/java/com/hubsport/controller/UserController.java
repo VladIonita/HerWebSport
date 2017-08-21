@@ -2,6 +2,8 @@ package com.hubsport.controller;
 
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -48,7 +50,7 @@ public class UserController {
 	}
 
 	// save or update user
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated(FormValidationGroup.class) Users users,
 			BindingResult result, Model model) {
 
@@ -63,17 +65,21 @@ public class UserController {
 			result.addError(usernameError);
 			model.addAttribute("partial", "userform");
 			return "index";
+			
 		}
-//			else if (!userService.isUserEmailUnique(users.getId(), users.getEmail())) {
-//			FieldError emailError = new FieldError("user", "email", messageSource.getMessage("non.unique.email",
-//					new String[] { users.getEmail() }, Locale.getDefault()));
-//			result.addError(emailError);
-//			model.addAttribute("partial", "userform");
-//			return "index";
-//		}
+		
+		if (!userService.isUserEmailUnique(users.getId(), users.getEmail())) {
+			FieldError emailError = new FieldError("user", "email", messageSource.getMessage("non.unique.email",
+					new String[] { users.getEmail() }, Locale.getDefault()));
+			result.addError(emailError);
+			model.addAttribute("partial", "userform");
+			return "index";
+		}
+		
 		userService.saveUser(users);
 		return "redirect:/admin/users";
 	}
+	
 
 	// show update form
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
@@ -85,13 +91,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String updateUser(@PathVariable("id") int id, Model model, @Validated(FormValidationGroup.class) Users users,
+	public String updateUser(@PathVariable("id") int id, Model model,@Validated(FormValidationGroup.class) Users users,
 			BindingResult result) {
 
 		if (result.hasErrors()) {
 			model.addAttribute("partial", "userform");
 			return "index";
 		}
+		
 		userService.updateUser(users);
 		return "redirect:/admin/users";
 	}

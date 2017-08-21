@@ -36,7 +36,7 @@
 	</c:choose>
 	<br />
 
-	<spring:url value="/admin/users/save" var="userActionUrl" />
+	<spring:url value="/admin/users/add" var="userActionUrl" />
 
 	<form:form class="form-horizontal" method="post"
 		modelAttribute="userForm" action="${userActionUrl}">
@@ -91,8 +91,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Password</label>
 				<div class="col-sm-10">
-					<form:password path="password" class="form-control" id="password"
-						placeholder="Password" />
+					<form:input type="password" path="password" id="password" class="form-control input-sm" placeholder="Password"/>
 					<form:errors path="password" class="control-label" />
 				</div>
 			</div>
@@ -100,7 +99,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Confirm Password</label>
 				<div class="col-sm-10">
-					<input type="password" class="form-control"
+					<form:input type="password" path="retypePassword" class="form-control input-sm"
 						onkeyup="checkPasswordMatch();" id="password_confirm"
 						placeholder="Password Confirmation" />
 					<div id="divCheckPasswordMatch" style="color: red;"></div>

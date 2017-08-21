@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and().formLogin().loginPage("/admin/login").failureUrl("/admin/login?error=true").successHandler(successHandler)
 				.usernameParameter("username").passwordParameter("password").and().rememberMe()
 				.rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository())
-				.tokenValiditySeconds(90).and().csrf().and().exceptionHandling().accessDeniedPage("/accessDenied");
+				.tokenValiditySeconds(9000).and().csrf().and().exceptionHandling().accessDeniedPage("/accessDenied");
 	}
 
 	@Bean

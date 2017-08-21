@@ -34,9 +34,9 @@
 						<td>${places.towns.nameTowns}</td>
 						<td>${places.towns.districts.nameDistrict}</td>
 						<td><a
-							href="<c:url value='/admin/places//update${places.id}' />"
+							href="<c:url value='/admin/places/update/${places.id}' />"
 							class="btn btn-success btn-sm">edit</a> <a
-							href="<c:url value='/admin/places//delete${places.id}' />"
+							href="<c:url value='/admin/places/delete/${places.id}' />"
 							class="btn btn-danger btn-sm">delete</a></td>
 					</tr>
 				</c:forEach>

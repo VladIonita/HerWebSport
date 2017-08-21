@@ -8,13 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.hubsport.dao.FormValidationGroup;
-import com.hubsport.dao.PersistenceValidationGroup;
 
 @Entity
 @Table(name = "USERS")
@@ -24,27 +22,29 @@ public class Users {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
+	@NotEmpty
 	@Column(name = "USERNAME", nullable = false)
 	private String username;
 
-	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
+	@NotEmpty
 	@Column(name = "EMAIL", nullable = false)
 	@Email
 	private String email;
 
-	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
+	@NotEmpty
 	@Column(name = "PASSWORD", nullable = false)
-	@Size(min = 5, max = 15, groups = { FormValidationGroup.class })
 	private String password;
 
-	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
+	@NotEmpty
 	@Column(name = "FIRST_NAME", nullable = false)
 	private String firstName;
 
-	@NotEmpty(groups = { PersistenceValidationGroup.class, FormValidationGroup.class })
+	@NotEmpty
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
+	
+	@Transient
+    private String retypePassword;
 
 	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
 	private PasswordResetToken passwordResetTokens;
@@ -106,6 +106,16 @@ public class Users {
 
 	public void setPasswordResetTokens(PasswordResetToken passwordResetTokens) {
 		this.passwordResetTokens = passwordResetTokens;
+	}
+	
+	
+
+	public String getRetypePassword() {
+		return password;
+	}
+
+	public void setRetypePassword(String retypePassword) {
+		this.retypePassword = retypePassword;
 	}
 
 	public boolean isNew() {
