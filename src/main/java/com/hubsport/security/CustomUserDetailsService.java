@@ -32,14 +32,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 	// admin vs user, it shows status
 
 	@Transactional(readOnly=true)
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Users users = userService.findByUsername(username);
-		logger.info("Username : {}",username);
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Users users = userService.findByEmail(email);
+		logger.info("Username : {}",email);
 		if(users==null) {
 			logger.info("Usere de negasit");
 			throw new UsernameNotFoundException("Username not found poate ca [plm");
 		}
-		return new org.springframework.security.core.userdetails.User(users.getUsername(), users.getPassword(),true, true, true, true, getGrantedAuthorities(users));
+		return new org.springframework.security.core.userdetails.User(users.getEmail(), users.getPassword(),true, true, true, true, getGrantedAuthorities(users));
 	}
 	
     private List<GrantedAuthority> getGrantedAuthorities(Users users){

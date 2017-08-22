@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
 		crit.add(Restrictions.eq("id", id));
 		Users users = (Users) crit.uniqueResult();
 		if (users != null) {
-			Hibernate.initialize(users.getUsername());
+			Hibernate.initialize(users.getEmail());
 		}
 		return users;
 	}
@@ -42,19 +42,7 @@ public class UserDaoImpl implements UserDao {
 		crit.add(Restrictions.eq("email", email));
 		Users users = (Users) crit.uniqueResult();
 		if (users != null) {
-			Hibernate.initialize(users.getUsername());
-		}
-		return users;
-	}
-
-	@Override
-	public Users findbyusername(String username) {
-		logger.info("username : {}", username);
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Users.class);
-		crit.add(Restrictions.eq("username", username));
-		Users users = (Users) crit.uniqueResult();
-		if (users != null) {
-			Hibernate.initialize(users.getUsername());
+			Hibernate.initialize(users.getEmail());
 		}
 		return users;
 	}

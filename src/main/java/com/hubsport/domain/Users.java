@@ -23,10 +23,6 @@ public class Users {
 	private Integer id;
 
 	@NotEmpty
-	@Column(name = "USERNAME", nullable = false)
-	private String username;
-
-	@NotEmpty
 	@Column(name = "EMAIL", nullable = false)
 	@Email
 	private String email;
@@ -89,17 +85,6 @@ public class Users {
 		this.lastName = lastName;
 	}
 
-	// made for comparing two objects
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-
 	public PasswordResetToken getPasswordResetTokens() {
 		return passwordResetTokens;
 	}
@@ -127,7 +112,7 @@ public class Users {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		return result;
 	}
 
@@ -155,7 +140,7 @@ public class Users {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", email=" + email + ", firstName=" + firstName
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName
 				+ ", lastName=" + lastName + "]";
 	}
 

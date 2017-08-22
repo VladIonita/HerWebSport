@@ -9,6 +9,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 
 import com.hubsport.dao.FormValidationGroup;
 import com.hubsport.domain.Users;
+import com.hubsport.security.UserFormValidator;
 import com.hubsport.service.UserService;
 
 @Controller
@@ -27,11 +30,19 @@ import com.hubsport.service.UserService;
 public class UserController {
 
 	@Autowired
+	UserFormValidator userFormValidator;
+
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(userFormValidator);
+	}
+
+	@Autowired
 	UserService userService;
 
 	@Autowired
 	MessageSource messageSource;
-	
+
 	// list all users
 	@RequestMapping
 	public String usersPage(ModelMap model) {
@@ -50,30 +61,34 @@ public class UserController {
 		return "index";
 	}
 
-	
-	
-	
-	
-	
 	// save or update user
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String saveOrUpdateUser(@ModelAttribute("userForm")  @Validated Users users,
-			BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
+	public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated Users users, BindingResult result,
+			Model model, final RedirectAttributes redirectAttributes) {
 
 		if (result.hasErrors()) {
 			model.addAttribute("partial", "userform");
 			return "index";
+		} else {
+			redirectAttributes.addFlashAttribute("css", "success");
+			if (users.isNew()) {
+				redirectAttributes.addFlashAttribute("msg", "User added successfully!");
+			} else {
+				redirectAttributes.addFlashAttribute("msg", "User updated successfully!");
+			}
+
+			userService.saveOrUpdate(users);
+
+			// POST/REDIRECT/GET
+			return "redirect:/admin/users";
+
+			// POST/FORWARD/GET
+			// return "user/list";
+
 		}
 
-		userService.saveUser(users);
-		return "redirect:/admin/users";
 	}
-	
 
-	
-	
-	
-	
 	// show update form
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String showUpdateUserForm(@PathVariable("id") int id, Model model) {
@@ -83,19 +98,25 @@ public class UserController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String updateUser(@PathVariable("id") int id, Model model,@Validated(FormValidationGroup.class) Users users,
-			BindingResult result) {
+	
+	
+	
+//	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+//	public String updateUser(@PathVariable("id") int id, Model model, @Validated(FormValidationGroup.class) Users users,
+//			BindingResult result) {
+//
+//		if (result.hasErrors()) {
+//			model.addAttribute("partial", "userform");
+//			return "index";
+//		}
+//
+//		userService.updateUser(users);
+//		return "redirect:/admin/users";
+//	}
 
-		if (result.hasErrors()) {
-			model.addAttribute("partial", "userform");
-			return "index";
-		}
-		
-		userService.updateUser(users);
-		return "redirect:/admin/users";
-	}
-
+	
+	
+	
 	// delete user
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable("id") int id) {

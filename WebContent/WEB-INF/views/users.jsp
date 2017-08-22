@@ -16,7 +16,7 @@
 		<table class="table table-striped table-bordered table-hover" id="mydata">
 			<thead>
 				<tr>
-					<th>Username</th>
+					<th>Email</th>
 					<th>Firstname</th>
 					<th>Lastname</th>
 					<sec:authorize access="hasRole('ADMIN')">
@@ -27,7 +27,7 @@
 			<tbody>
 				<c:forEach items="${userList}" var="user">
 					<tr>
-						<td>${user.username}</td>
+						<td>${user.email}</td>
 						<td>${user.firstName}</td>
 						<td>${user.lastName}</td>
 						<sec:authorize access="hasRole('ADMIN')">

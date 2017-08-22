@@ -77,10 +77,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
 	@Bean
-	public MessageSource messageSource() {
-		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasename("message");
-		return messageSource;
+	public ResourceBundleMessageSource messageSource() {
+		ResourceBundleMessageSource rb = new ResourceBundleMessageSource();
+		rb.setBasenames(new String[] { "validation" });
+		return rb;
 	}
 
 }

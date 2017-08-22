@@ -10,18 +10,16 @@ public interface UserService {
     
     Users findByEmail(String email);
     
-    Users findByUsername(String username);
-    
     List<Users> findAllUsers(); 
     
-    void saveUser(Users users);
+//    void saveUser(Users users);
+//    
+//    void updateUser(Users users);
+
+    void saveOrUpdate(Users users);
     
-    void updateUser(Users users);
-     
     void deleteBID(Integer id);
  
-    boolean isUserUnique(Integer id,String username);
-    
     boolean isUserEmailUnique(Integer id,String email);
     
     void saveToken(String token, Users users);

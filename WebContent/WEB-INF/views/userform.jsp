@@ -65,17 +65,6 @@
 			</div>
 		</spring:bind>
 
-		<spring:bind path="username">
-			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">User Name</label>
-				<div class="col-sm-10">
-					<form:input path="username" type="text" class="form-control"
-						id="username" placeholder="Username" />
-					<form:errors path="username" class="control-label" />
-				</div>
-			</div>
-		</spring:bind>
-
 		<spring:bind path="email">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Email</label>

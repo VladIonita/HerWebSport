@@ -8,8 +8,6 @@ public interface UserDao {
 
 	Users findbyid(Integer id);
 	
-	Users findbyusername(String username);
-
 	Users findbyemail(String email);
 	
 	List<Users> findAllUsers();
