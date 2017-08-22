@@ -54,6 +54,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		tokenRepositoryImpl.setDataSource(dataSource);
 		return tokenRepositoryImpl;
 	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
@@ -63,10 +68,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return authenticationProvider;
 	}
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 
 	@Bean
 	public AuthenticationTrustResolver getAuthenticationTrustResolver() {

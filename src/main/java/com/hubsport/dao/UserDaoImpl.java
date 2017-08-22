@@ -60,10 +60,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	// save user
+	
 	@Override
 	public void save(Users users) {
 		logger.info("user : {}", users);
-		sessionFactory.getCurrentSession().save(users);
+		sessionFactory.getCurrentSession().persist(users);
 	}
 	
 	

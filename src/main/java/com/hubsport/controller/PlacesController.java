@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.hubsport.dao.FormValidationGroup;
 import com.hubsport.domain.Places;
 import com.hubsport.service.DistrictsService;
 import com.hubsport.service.PlacesService;
@@ -56,7 +55,7 @@ public class PlacesController {
 	
 	// save  place
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String saveOrUpdatePlaces(@ModelAttribute("placeForm") @Validated(FormValidationGroup.class) Places places,
+	public String saveOrUpdatePlaces(@ModelAttribute("placeForm") @Validated Places places,
 			BindingResult result, Model model) {
 		model.addAttribute("districtList", districService.findAllDistricts());
 		if (result.hasErrors()) {
@@ -78,7 +77,7 @@ public class PlacesController {
 
 	
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String updatePlaces(@PathVariable("id") int id, Model model, @Validated(FormValidationGroup.class) 	Places places,
+	public String updatePlaces(@PathVariable("id") int id, Model model, @Validated	Places places,
 			BindingResult result) {
 
 		if (result.hasErrors()) {

@@ -29,17 +29,24 @@ public class UserFormValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 
 		Users user = (Users) target;
-
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.userForm.name");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.userForm.email");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "NotEmpty.userForm.address");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.userForm.password");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword","NotEmpty.userForm.confirmPassword");
-
-		if(!emailValidator.valid(user.getEmail())){
-			errors.rejectValue("email", "Pattern.userForm.email");
-		}
 		
+		if(user.getId() == null) {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.userForm.firstName");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.userForm.lastName");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.userForm.email");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.userForm.password");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "retypePassword","NotEmpty.userForm.retypePassword");
+
+			if(!emailValidator.valid(user.getEmail())){
+				errors.rejectValue("email", "Pattern.userForm.email");
+			}
+			
+			 if(!userService.isUserEmailUnique(user.getId(), user.getEmail())){
+				 errors.rejectValue("email", "Valid.userForm.email");
+			 }
+		}
+
+
 	}
 
 }

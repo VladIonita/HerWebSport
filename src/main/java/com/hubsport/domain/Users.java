@@ -92,8 +92,6 @@ public class Users {
 	public void setPasswordResetTokens(PasswordResetToken passwordResetTokens) {
 		this.passwordResetTokens = passwordResetTokens;
 	}
-	
-	
 
 	public String getRetypePassword() {
 		return password;

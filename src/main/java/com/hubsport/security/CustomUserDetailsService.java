@@ -34,9 +34,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Transactional(readOnly=true)
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Users users = userService.findByEmail(email);
-		logger.info("Username : {}",email);
+		logger.info("Email : {}",email);
 		if(users==null) {
-			logger.info("Usere de negasit");
+			logger.info("User de negasit");
 			throw new UsernameNotFoundException("Username not found poate ca [plm");
 		}
 		return new org.springframework.security.core.userdetails.User(users.getEmail(), users.getPassword(),true, true, true, true, getGrantedAuthorities(users));

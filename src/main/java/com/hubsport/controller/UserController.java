@@ -20,7 +20,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 
-import com.hubsport.dao.FormValidationGroup;
 import com.hubsport.domain.Users;
 import com.hubsport.security.UserFormValidator;
 import com.hubsport.service.UserService;
@@ -98,25 +97,6 @@ public class UserController {
 		return "index";
 	}
 
-	
-	
-	
-//	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-//	public String updateUser(@PathVariable("id") int id, Model model, @Validated(FormValidationGroup.class) Users users,
-//			BindingResult result) {
-//
-//		if (result.hasErrors()) {
-//			model.addAttribute("partial", "userform");
-//			return "index";
-//		}
-//
-//		userService.updateUser(users);
-//		return "redirect:/admin/users";
-//	}
-
-	
-	
-	
 	// delete user
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable("id") int id) {
