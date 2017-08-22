@@ -58,8 +58,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void saveOrUpdate(Users users) {
-		users.setPassword(passwordEncoder.encode(users.getPassword()));
 		if (findById(users.getId()) == null) {
+			users.setPassword(passwordEncoder.encode(users.getPassword()));
 			userDao.save(users);
 		} else {
 			Users entity = userDao.findbyid(users.getId());
@@ -68,9 +68,7 @@ public class UserServiceImpl implements UserService {
 				entity.setLastName(users.getLastName());
 				entity.setId(users.getId());
 				entity.setEmail(users.getEmail());
-				if (!users.getPassword().equals(entity.getPassword())) {
-					entity.setPassword(passwordEncoder.encode(users.getPassword()));
-				}
+				entity.setPassword(passwordEncoder.encode(users.getPassword()));
 			}
 		}
 	}

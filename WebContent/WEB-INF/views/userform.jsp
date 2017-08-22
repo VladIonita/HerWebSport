@@ -38,6 +38,7 @@
 
 	<spring:url value="/admin/users/add" var="userActionUrl" />
 
+
 	<form:form class="form-horizontal" method="post"
 		modelAttribute="userForm" action="${userActionUrl}">
 
@@ -59,7 +60,7 @@
 				<label class="col-sm-2 control-label">Last Name</label>
 				<div class="col-sm-10">
 					<form:input path="lastName" type="text" class="form-control"
-						id="lastName" placeholder="Last Name" />
+						id="lastName" placeholder="Last Name" showPassword="false" />
 					<form:errors path="lastName" class="control-label" />
 				</div>
 			</div>
@@ -90,7 +91,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Password</label>
 				<div class="col-sm-10">
-					<form:input type="password" path="password" id="password"
+					<form:password path="password" id="password"
 						class="form-control input-sm" placeholder="Password" />
 					<form:errors path="password" class="control-label" />
 				</div>
@@ -100,7 +101,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Confirm Password</label>
 				<div class="col-sm-10">
-					<form:input type="password" path="retypePassword"
+					<form:password path="retypePassword"
 						class="form-control input-sm" onkeyup="checkPasswordMatch();"
 						id="password_confirm" placeholder="Password Confirmation" />
 					<form:errors path="retypePassword" class="control-label" />
