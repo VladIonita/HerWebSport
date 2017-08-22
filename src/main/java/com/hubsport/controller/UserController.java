@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
@@ -30,8 +31,8 @@ public class UserController {
 
 	@Autowired
 	MessageSource messageSource;
-
-	// access to users
+	
+	// list all users
 	@RequestMapping
 	public String usersPage(ModelMap model) {
 		model.addAttribute("userList", userService.findAllUsers());
@@ -49,38 +50,30 @@ public class UserController {
 		return "index";
 	}
 
+	
+	
+	
+	
+	
 	// save or update user
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated(FormValidationGroup.class) Users users,
-			BindingResult result, Model model) {
+	public String saveOrUpdateUser(@ModelAttribute("userForm")  @Validated Users users,
+			BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
 
 		if (result.hasErrors()) {
 			model.addAttribute("partial", "userform");
 			return "index";
 		}
 
-		if (!userService.isUserUnique(users.getId(), users.getUsername())) {
-			FieldError usernameError = new FieldError("user", "username", messageSource
-					.getMessage("non.unique.username", new String[] { users.getUsername() }, Locale.getDefault()));
-			result.addError(usernameError);
-			model.addAttribute("partial", "userform");
-			return "index";
-			
-		}
-		
-		if (!userService.isUserEmailUnique(users.getId(), users.getEmail())) {
-			FieldError emailError = new FieldError("user", "email", messageSource.getMessage("non.unique.email",
-					new String[] { users.getEmail() }, Locale.getDefault()));
-			result.addError(emailError);
-			model.addAttribute("partial", "userform");
-			return "index";
-		}
-		
 		userService.saveUser(users);
 		return "redirect:/admin/users";
 	}
 	
 
+	
+	
+	
+	
 	// show update form
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String showUpdateUserForm(@PathVariable("id") int id, Model model) {
