@@ -65,6 +65,19 @@
 		</div>
 	</div>
 
+	<div class="page-header">
+		<div align="center">
+			<br />
+			<h1>Welcome to HubSport</h1>
+			<h4>Web site is under construction. Much of the work is done in
+				administration!!!</h4>
+			<h4>
+				For more information and under the hood insight please visit <a
+					href="https://github.com/VladIonita/HerWebSport">https://github.com/VladIonita/HerWebSport
+				</a>
+			</h4>
+		</div>
+	</div>
 
 
 	<!-- Bootstrap core JavaScript

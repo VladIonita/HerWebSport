@@ -29,9 +29,11 @@
 	src="<c:url value="/resources/js/dataTables.bootstrap.min.js" />"></script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#mydata').DataTable();
-	});
+	var $table = $('#mydata');
+
+	if ($table.length) {
+		$table.DataTable();
+	}
 </script>
 </body>
 </html>
