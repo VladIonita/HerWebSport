@@ -51,6 +51,7 @@ public class Users implements Serializable {
 	@Transient
     private String retypePassword;
 
+	@JsonIgnore
 	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
 	private PasswordResetToken passwordResetTokens;
 

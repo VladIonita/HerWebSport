@@ -37,7 +37,11 @@ public class AdminController {
 	@Autowired
 	private MailService emailService;
 	
-	
+	// handling 404 error
+	@RequestMapping(value = "*", method = { RequestMethod.GET, RequestMethod.POST })
+	public String fallback() {
+		return "fallback";
+	}
 	
 	@RequestMapping("/")
 	public String defaultPage(Model model) {

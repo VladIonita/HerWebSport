@@ -15,35 +15,32 @@
 <script
 	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script>
-	$(document).ready(function() {
-		var table = $('#usersTable').DataTable({
-			"sAjaxSource" : "${pageContext.request.contextPath}/admin/json/all",
-		})
+	$('#tableClient').DataTable({
+		'sAjaxSource' : '{context}/admin/json/all',
+		"sAjaxDataProp" : 'results',
+		"aoColumns" : [ {
+			mDataProp : 'email'
+		}, {
+			mDataProp : 'firstName'
+		}, {
+			mDataProp : 'lastName'
+		} ]
 	});
 </script>
 </head>
 
 <body>
-	<h1>Employees Table</h1>
-	<table id="usersTable" class="display">
-
-		<!-- Header Table -->
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Last Name</th>
-				<th>Email</th>
-			</tr>
-		</thead>
-		<!-- Footer Table -->
-		<tfoot>
-			<tr>
-				<th>Name</th>
-				<th>Last Name</th>
-				<th>Email</th>
-			</tr>
-		</tfoot>
-	</table>
+	<div>
+		<table id="tableClient" class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Emp Id</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
 
 </body>
 </html>
