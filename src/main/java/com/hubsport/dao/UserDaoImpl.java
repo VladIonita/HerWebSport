@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,15 +53,33 @@ public class UserDaoImpl implements UserDao {
 	// find all users
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Users> findAllUsers() {
+	public List<Users> findUsers(Integer start, Integer lenght) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Users.class)
-				.addOrder(Order.asc("firstName"));
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
-																		// duplicates.
+						  .setProjection(Projections.projectionList()
+								  .add(Projections.property("id"), "id")
+								  .add(Projections.property("email"), "email")
+								  .add(Projections.property("firstName"), "firstName")
+								  .add(Projections.property("lastName"), "lastName"))
+								  .setResultTransformer(Transformers.aliasToBean(Users.class))
+								  .addOrder(Order.asc("firstName"))
+								  .setMaxResults(lenght)
+								  .setFirstResult(start);
+		
+		
+//		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
 		List<Users> users = (List<Users>) criteria.list();
 		return users;
 	}
-
+ 
+	public Long countUsers() {
+//		Long count = (Long) sessionFactory.getCurrentSession().createQuery("select count(*) from  hubsport.users")
+//                .uniqueResult();
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Users.class);
+		 criteria.setProjection(Projections.rowCount());
+		 Long resultCount = (Long)criteria.uniqueResult();
+		return resultCount;
+	}
+	
 	// save user
 	
 	@Override

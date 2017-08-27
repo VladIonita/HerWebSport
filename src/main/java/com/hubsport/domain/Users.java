@@ -36,6 +36,7 @@ public class Users implements Serializable {
 	@Email
 	private String email;
 
+//	@JsonIgnore
 	@NotEmpty
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
@@ -48,10 +49,11 @@ public class Users implements Serializable {
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
 	
+//	@JsonIgnore
 	@Transient
     private String retypePassword;
 
-	@JsonIgnore
+//	@JsonIgnore
 	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
 	private PasswordResetToken passwordResetTokens;
 

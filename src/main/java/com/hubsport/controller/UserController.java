@@ -42,7 +42,7 @@ public class UserController {
 	// list all users
 	@RequestMapping
 	public String usersPage(ModelMap model) {
-		model.addAttribute("userList", userService.findAllUsers());
+//		model.addAttribute("userList", userService.findAllUsers());
 		model.addAttribute("pageTitle", "Users");
 		model.addAttribute("partial", "users");
 		return "index";

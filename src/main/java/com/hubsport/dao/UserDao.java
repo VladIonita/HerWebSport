@@ -10,12 +10,15 @@ public interface UserDao {
 	
 	Users findbyemail(String email);
 	
-	List<Users> findAllUsers();
 	
 	void save(Users users);
 	
 	void update(Users users);
 	
 	void deleteId(Integer id);
+	
+	Long countUsers();
+
+	List<Users> findUsers(Integer start, Integer lenght);
 
 }

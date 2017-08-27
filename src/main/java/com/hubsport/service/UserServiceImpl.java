@@ -64,11 +64,14 @@ public class UserServiceImpl implements UserService {
 		} else {
 			Users entity = userDao.findbyid(users.getId());
 			if (entity != null) {
+
 				entity.setFirstName(users.getFirstName());
 				entity.setLastName(users.getLastName());
 				entity.setId(users.getId());
 				entity.setEmail(users.getEmail());
-				entity.setPassword(passwordEncoder.encode(users.getPassword()));
+				if (users.getPassword() != null) {
+					entity.setPassword(passwordEncoder.encode(users.getPassword()));
+				}
 			}
 		}
 	}
@@ -80,8 +83,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Users> findAllUsers() {
-		return userDao.findAllUsers();
+	public List<Users> findUsers(Integer start, Integer lenght) {
+		return userDao.findUsers(start, lenght);
 	}
 
 	@Override
@@ -95,4 +98,10 @@ public class UserServiceImpl implements UserService {
 		PasswordResetToken myToken = new PasswordResetToken(token, users);
 		passwordTokenDao.save(myToken);
 	}
+
+	@Override
+	public Long countGet() {
+		return userDao.countUsers();
+	}
+
 }

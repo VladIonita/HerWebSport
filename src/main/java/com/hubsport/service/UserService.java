@@ -10,7 +10,7 @@ public interface UserService {
     
     Users findByEmail(String email);
     
-    List<Users> findAllUsers(); 
+    List<Users> findUsers(Integer start, Integer lenght); 
     
 //    void saveUser(Users users);
 //    
@@ -25,5 +25,7 @@ public interface UserService {
     void saveToken(String token, Users users);
     
     Users findUserByResetToken(String token);
+
+	Long countGet();
     
 }

@@ -16,15 +16,8 @@
 	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script>
 	$('#tableClient').DataTable({
-		'sAjaxSource' : '{context}/admin/json/all',
-		"sAjaxDataProp" : 'results',
-		"aoColumns" : [ {
-			mDataProp : 'email'
-		}, {
-			mDataProp : 'firstName'
-		}, {
-			mDataProp : 'lastName'
-		} ]
+		serverSide: true,
+		ajax: '${pageContext.request.contextPath}/admin/json/all'
 	});
 </script>
 </head>

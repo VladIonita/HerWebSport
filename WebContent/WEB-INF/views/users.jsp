@@ -26,18 +26,16 @@
 	</sec:authorize>
 	<div class="container">
 		<table class="table table-striped table-bordered table-hover"
-			id="mydata">
+			id="mydataJson">
 			<thead>
 				<tr>
 					<th>Email</th>
 					<th>Firstname</th>
 					<th>Lastname</th>
-					<sec:authorize access="hasRole('ADMIN')">
-						<th width="120"></th>
-					</sec:authorize>
+					<th></th>
 				</tr>
 			</thead>
-			<tbody>
+			<!-- <tbody>
 				<c:forEach items="${userList}" var="user">
 					<tr>
 						<td>${user.email}</td>
@@ -52,7 +50,7 @@
 						</sec:authorize>
 					</tr>
 				</c:forEach>
-			</tbody>
+			</tbody> -->
 		</table>
 	</div>
 </div>
