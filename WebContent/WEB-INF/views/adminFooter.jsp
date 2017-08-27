@@ -34,7 +34,7 @@
 						"columnDefs" : [ {
 							"targets" : 3,
 							render : function(data, type, row) {
-								return '<a href="<c:url value="/admin/users/update/'+data+'"/>" class="btn btn-success btn-sm">edit</a>'
+								return '<a href="<c:url value="/admin/users/update/'+data+'"/>" class="btn btn-success btn-sm">edit</a>' +
 								+ '<a href="<c:url value="/admin/users/delete/'+data+'"/>" class="btn btn-danger btn-sm">delete</a>';
 							},
 						} ]
