@@ -34,24 +34,6 @@ public class UserServiceImpl implements UserService {
 		return users;
 	}
 
-	// public void saveUser(Users users) {
-	// users.setPassword(passwordEncoder.encode(users.getPassword()));
-	// userDao.save(users);
-	// }
-	//
-	// public void updateUser(Users users) {
-	// Users entity = userDao.(users.getId());
-	// if(entity!=null){
-	// entity.setId(users.getId());
-	// if(!users.getPassword().equals(entity.getPassword())){
-	// entity.setPassword(passwordEncoder.encode(users.getPassword()));
-	// }
-	// entity.setFirstName(users.getFirstName());
-	// entity.setLastName(users.getLastName());
-	// entity.setEmail(users.getEmail());
-	// }
-	// }
-
 	public void deleteBID(Integer id) {
 		userDao.deleteId(id);
 	}
@@ -70,7 +52,7 @@ public class UserServiceImpl implements UserService {
 				System.out.println(users.getPassword());
 				if (!users.getPassword().equalsIgnoreCase("")) {
 					entity.setPassword(passwordEncoder.encode(users.getPassword()));
-				} 
+				}
 			}
 		}
 

@@ -36,22 +36,6 @@
 					<th></th></sec:authorize>
 				</tr>
 			</thead>
-			<!-- <tbody>
-				<c:forEach items="${userList}" var="user">
-					<tr>
-						<td>${user.email}</td>
-						<td>${user.firstName}</td>
-						<td>${user.lastName}</td>
-						<sec:authorize access="hasRole('ADMIN')">
-							<td><a
-								href="<c:url value='/admin/users/update/${user.id}' />"
-								class="btn btn-success btn-sm">edit</a> <a
-								href="<c:url value='/admin/users/delete/${user.id}' />"
-								class="btn btn-danger btn-sm">delete</a></td>
-						</sec:authorize>
-					</tr>
-				</c:forEach>
-			</tbody> -->
 		</table>
 	</div>
 </div>

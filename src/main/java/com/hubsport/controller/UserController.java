@@ -1,6 +1,8 @@
 package com.hubsport.controller;
 
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -42,7 +46,7 @@ public class UserController {
 	// list all users
 	@RequestMapping
 	public String usersPage(ModelMap model) {
-//		model.addAttribute("userList", userService.findAllUsers());
+		// model.addAttribute("userList", userService.findAllUsers());
 		model.addAttribute("pageTitle", "Users");
 		model.addAttribute("partial", "users");
 		return "index";
@@ -75,11 +79,7 @@ public class UserController {
 
 			userService.saveOrUpdate(users);
 
-			// POST/REDIRECT/GET
 			return "redirect:/admin/users";
-
-			// POST/FORWARD/GET
-			// return "user/list";
 
 		}
 
@@ -99,6 +99,24 @@ public class UserController {
 	public String deleteUser(@PathVariable("id") int id) {
 		userService.deleteBID(id);
 		return "redirect:/admin/users";
+	}
+	
+	// request by json
+	@RequestMapping(path="/all", method=RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> getAllUsers( @RequestParam("length") int length,@RequestParam("draw") int draw, @RequestParam("start") int start) {
+		
+		List<Users> usersList = userService.findUsers(start, length);
+		Long count = userService.countGet();
+		
+		Map<String, Object> data = new HashMap<>();
+		data.put("draw",draw);
+		data.put("recordsTotal", count);
+		data.put("recordsFiltered", count);
+		data.put("data",usersList);
+	    
+	    return data;
+	    
 	}
 
 }

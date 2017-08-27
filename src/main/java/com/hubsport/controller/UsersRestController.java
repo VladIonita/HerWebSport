@@ -36,16 +36,8 @@ public class UsersRestController {
 		data.put("recordsTotal", count);
 		data.put("recordsFiltered", count);
 		data.put("data",usersList);
-		
-		
 	    
 	    return data;
 	    
-	}
-	
-	@RequestMapping(value="/all/{id}", method=RequestMethod.GET)
-	@ResponseBody
-	public Users getUserById(@PathVariable Integer id) {
-		return userService.findById(id);
 	}
 }

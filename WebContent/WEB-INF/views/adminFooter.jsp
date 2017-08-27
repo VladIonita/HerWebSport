@@ -23,7 +23,7 @@
 						serverSide : true,
 						ordering : false,
 						searching : false,
-						ajax : '${pageContext.request.contextPath}/admin/json/all',
+						ajax : '${pageContext.request.contextPath}/admin/users/all',
 						columns : [ {
 							data : 'email'
 						}, {
