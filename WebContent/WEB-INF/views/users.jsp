@@ -32,7 +32,8 @@
 					<th>Email</th>
 					<th>Firstname</th>
 					<th>Lastname</th>
-					<th></th>
+					<sec:authorize access="hasRole('ADMIN')">
+					<th></th></sec:authorize>
 				</tr>
 			</thead>
 			<!-- <tbody>
