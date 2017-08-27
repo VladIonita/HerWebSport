@@ -64,16 +64,16 @@ public class UserServiceImpl implements UserService {
 		} else {
 			Users entity = userDao.findbyid(users.getId());
 			if (entity != null) {
-
 				entity.setFirstName(users.getFirstName());
 				entity.setLastName(users.getLastName());
-				entity.setId(users.getId());
 				entity.setEmail(users.getEmail());
-				if (users.getPassword() != null) {
+				System.out.println(users.getPassword());
+				if (!users.getPassword().equalsIgnoreCase("")) {
 					entity.setPassword(passwordEncoder.encode(users.getPassword()));
-				}
+				} 
 			}
 		}
+
 	}
 
 	@Override

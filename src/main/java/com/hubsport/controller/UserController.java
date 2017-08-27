@@ -101,9 +101,4 @@ public class UserController {
 		return "redirect:/admin/users";
 	}
 
-	//by ajax and json
-	@RequestMapping(path = "/listOfJSON", method = RequestMethod.GET)
-	public String goHome() {
-		return "UsersByJSOn";
-	}
 }
