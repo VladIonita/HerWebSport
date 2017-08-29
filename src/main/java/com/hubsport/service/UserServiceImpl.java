@@ -93,6 +93,17 @@ public class UserServiceImpl implements UserService {
 		passwordTokenDao.save(myToken);
 
 	}
+	
+	@Override
+	public boolean validatePasswordResetToken(String token) {
+		PasswordResetToken passwordResetToken = passwordTokenDao.findbyToken(token);
+		if(!passwordResetToken.equals(null)) {
+			if(passwordResetToken.getExpiryDate().before(Calendar.getInstance().getTime()) ) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public Long countGet() {

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +38,8 @@ public class AdminController {
 	
 	@Autowired
 	private MailService emailService;
+	
+	String link = System.getenv("PT_MAIL_LINK");
 	
 	// handling 404 error
 	@RequestMapping(value = "*", method = { RequestMethod.GET, RequestMethod.POST })
@@ -105,19 +108,32 @@ public class AdminController {
 
 			userService.saveToken(token, users);
 
-			String appUrl = request.getScheme() + "://" + request.getServerName();
+			String appUrl = request.getScheme() + "://" + request.getServerName() + link;
 
 			SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
 			passwordResetEmail.setFrom("support@demo.com");
 			passwordResetEmail.setTo(users.getEmail());
 			passwordResetEmail.setSubject("Password Reset Request");
 			passwordResetEmail
-					.setText("To reset your password, click the link below:\n" + appUrl + "/reset?token=" + token);
+					.setText("To reset your password, click the link below:\n" + appUrl + "/admin/password/reset/" + token);
 			emailService.sendEmail(passwordResetEmail);
 
 
 		}
 		return "redirect:/admin/password/recover";
 	}
-
+	
+	@RequestMapping(value = "/password/reset/{token}", method = RequestMethod.GET)
+	public String validatePasswordResetToken(@PathVariable("token") String token, Model model, final RedirectAttributes redirectAttributes) {
+		Users users = new Users();
+		model.addAttribute("userForm", users);
+		model.addAttribute("partial", "userform");
+		if(userService.validatePasswordResetToken(token)) {
+			return "resetPassword";
+		}
+		redirectAttributes.addFlashAttribute("css", "success");
+		redirectAttributes.addFlashAttribute("msg", "Email has expired. Please try again!");
+		return "loginPage";
+		
+	}
 }

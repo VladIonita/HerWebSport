@@ -22,6 +22,8 @@ public interface UserService {
     
     Users findUserByResetToken(String token);
     
+    boolean validatePasswordResetToken(String token);
+    
 	Long countGet();
     
 }

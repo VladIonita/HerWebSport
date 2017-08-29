@@ -56,6 +56,17 @@
 
 
 	<div class="container">
+
+		<c:if test="${not empty msg}">
+			<div class="alert alert-${css} alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<strong>${msg}</strong>
+			</div>
+		</c:if>
+
 		<c:url var="loginUrl" value="/admin/login" />
 		<form action="${loginUrl}" method="post" class="form-signin">
 			<c:if test="${param.error != null}">
@@ -91,7 +102,11 @@
 				<input type="submit" class="btn btn-lg btn-block btn-primary"
 					value="Log in">
 			</div>
-				<p align="center"><br/><a href="<c:url value="/admin/password/recover" />">Forgot Password</a></p>
+			<p align="center">
+				<br />
+				<a href="<c:url value="/admin/password/recover" />">Forgot
+					Password</a>
+			</p>
 		</form>
 
 	</div>
@@ -99,7 +114,3 @@
 
 
 	<%@ include file="adminFooter.jsp"%>
-
-
-
-
