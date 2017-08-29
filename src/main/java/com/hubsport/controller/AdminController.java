@@ -10,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -108,7 +110,7 @@ public class AdminController {
 
 			userService.saveToken(token, users);
 
-			String appUrl = request.getScheme() + "://" + request.getServerName() + link;
+			String appUrl = request.getScheme() + "://" + request.getServerName();
 
 			SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
 			passwordResetEmail.setFrom("support@demo.com");
@@ -125,15 +127,35 @@ public class AdminController {
 	
 	@RequestMapping(value = "/password/reset/{token}", method = RequestMethod.GET)
 	public String validatePasswordResetToken(@PathVariable("token") String token, Model model, final RedirectAttributes redirectAttributes) {
-		Users users = new Users();
-		model.addAttribute("userForm", users);
-		model.addAttribute("partial", "userform");
+		
+//		model.addAttribute("partial", "userform");
 		if(userService.validatePasswordResetToken(token)) {
+			Users users = userService.findUserByResetToken(token);
+			model.addAttribute("userForm", users);
+			
+			System.out.println(users.getId());
 			return "resetPassword";
 		}
 		redirectAttributes.addFlashAttribute("css", "success");
 		redirectAttributes.addFlashAttribute("msg", "Email has expired. Please try again!");
 		return "loginPage";
-		
 	}
-}
+	
+	
+	// save or update user
+	@RequestMapping(value = "/password/reset/{token}", method = RequestMethod.POST)
+	public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated Users users, BindingResult result,
+			Model model, final RedirectAttributes redirectAttributes) {
+		if (result.hasErrors()) {
+			return "/password/reset/{token}";
+		}
+			redirectAttributes.addFlashAttribute("css", "success");
+			redirectAttributes.addFlashAttribute("msg", "Password updated successfully!");
+
+			userService.saveOrUpdate(users);
+
+			return "redirect:/login";
+
+		}
+
+	}

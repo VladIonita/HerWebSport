@@ -85,7 +85,6 @@ public class UserServiceImpl implements UserService {
 		System.out.println(users.getId());
 		PasswordResetToken myToken = new PasswordResetToken(token, users, expiryDate);
 		if(passwordTokenDao.findPasswordResetToken(myToken.getUsers().getId()).equals(null)) {
-			System.out.println("tokenul nu exista ");
 			passwordTokenDao.save(myToken);
 		}
 		System.out.println("tokenul exista ");
@@ -97,11 +96,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean validatePasswordResetToken(String token) {
 		PasswordResetToken passwordResetToken = passwordTokenDao.findbyToken(token);
+		
 		if(!passwordResetToken.equals(null)) {
-			if(passwordResetToken.getExpiryDate().before(Calendar.getInstance().getTime()) ) {
+			System.out.println("tokenul exista ");
+			if(passwordResetToken.getExpiryDate().after(Calendar.getInstance().getTime()) ) {
+				System.out.println("tokenul se incadreaza in limita de timp ");
 				return true;
 			}
 		}
+		System.out.println("tokenul nu exista ");
 		return false;
 	}
 

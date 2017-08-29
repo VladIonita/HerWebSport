@@ -81,12 +81,12 @@
 		<spring:url value="/newPassword" var="newActionUrl" />
 
 		<form:form class="form-horizontal" method="post"
-			modelAttribute="resetToken" action="${newActionUrl}">
+			modelAttribute="userForm" action="${newActionUrl}">
 
 			<spring:bind path="password">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
 					<label class="col-sm-2 control-label">Password</label>
-					<div class="col-sm-10">
+					<div class="col-sm-4">
 						<form:password path="password" class="form-control" id="password"
 							placeholder="Password" />
 						<form:errors path="password" class="control-label" />
@@ -95,18 +95,17 @@
 			</spring:bind>
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Confirm Password</label>
-				<div class="col-sm-10">
+				<div class="col-sm-4">
 					<input type="password" class="form-control"
 						onkeyup="checkPasswordMatch();" id="password_confirm"
 						placeholder="Password Confirmation" />
 					<div id="divCheckPasswordMatch" style="color: red;"></div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-default">Save</button>
+			<button type="submit" class="btn btn-default">Update</button>
 		</form:form>
 	</div>
 
 
 
 	<%@ include file="adminFooter.jsp"%>
-
