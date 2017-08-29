@@ -1,10 +1,12 @@
 package com.hubsport.domain;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,19 +16,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "password_reset_token")
-public class PasswordResetToken {
+public class PasswordResetToken implements Serializable {
 
-	private static final int EXPIRATION = 60 * 24;
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer Id;
 
 	@Column(name = "TOKEN", unique = true, nullable = false)
 	private String token;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(nullable = false, name = "USERS_ID")
+	
+	@OneToOne(targetEntity = Users.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "USERS_ID")
 	private Users users;
 
 	@Column(name = "expiry_date", nullable = false)
@@ -35,17 +40,19 @@ public class PasswordResetToken {
 	public PasswordResetToken() {
 	}
 
-	public PasswordResetToken(String token, Users users) {
+	public PasswordResetToken(String token, Users users, Date expiryDate) {
 		this.token = token;
 		this.users = users;
+		this.expiryDate = expiryDate;
+				
 	}
-
+	
 	public Integer getId() {
-		return id;
+		return Id;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		Id = id;
 	}
 
 	public String getToken() {
@@ -55,7 +62,7 @@ public class PasswordResetToken {
 	public void setToken(String token) {
 		this.token = token;
 	}
-
+	
 	public Users getUsers() {
 		return users;
 	}
@@ -71,9 +78,5 @@ public class PasswordResetToken {
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
-
-	public static int getExpiration() {
-		return EXPIRATION;
-	}
-
+	
 }

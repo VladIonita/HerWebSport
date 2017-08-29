@@ -1,10 +1,13 @@
 package com.hubsport.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hubsport.dao.PasswordTokenDao;
@@ -13,7 +16,7 @@ import com.hubsport.domain.PasswordResetToken;
 import com.hubsport.domain.Users;
 
 @Service("userService")
-@Transactional
+@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -75,15 +78,24 @@ public class UserServiceImpl implements UserService {
 		return users;
 	}
 
-	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void saveToken(String token, Users users) {
-		PasswordResetToken myToken = new PasswordResetToken(token, users);
+		Date expiryDate = new Date();
+		expiryDate.setTime(Calendar.getInstance().getTimeInMillis() + 1000 * 60 * 60 * 24);
+		System.out.println(users.getId());
+		PasswordResetToken myToken = new PasswordResetToken(token, users, expiryDate);
+		if(passwordTokenDao.findPasswordResetToken(myToken.getUsers().getId()).equals(null)) {
+			System.out.println("tokenul nu exista ");
+			passwordTokenDao.save(myToken);
+		}
+		System.out.println("tokenul exista ");
+		passwordTokenDao.deleteId(myToken.getUsers().getId());
 		passwordTokenDao.save(myToken);
+
 	}
 
 	@Override
 	public Long countGet() {
 		return userDao.countUsers();
 	}
-
 }

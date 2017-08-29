@@ -58,7 +58,17 @@
 	</nav>
 	<div class="container">
 
-		<spring:url value="/admin/reset" var="resetActionUrl" />
+		<c:if test="${not empty msg}">
+			<div class="alert alert-${css} alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<strong>${msg}</strong>
+			</div>
+		</c:if>
+
+		<spring:url value="/admin/password/recover" var="resetActionUrl" />
 
 		<form:form class="form-horizontal" method="post"
 			modelAttribute="userForm" action="${resetActionUrl}">
@@ -78,4 +88,3 @@
 
 
 	<%@ include file="adminFooter.jsp"%>
-

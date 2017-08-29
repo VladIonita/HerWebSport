@@ -12,10 +12,6 @@ public interface UserService {
     
     List<Users> findUsers(Integer start, Integer lenght); 
     
-//    void saveUser(Users users);
-//    
-//    void updateUser(Users users);
-
     void saveOrUpdate(Users users);
     
     void deleteBID(Integer id);
@@ -25,7 +21,7 @@ public interface UserService {
     void saveToken(String token, Users users);
     
     Users findUserByResetToken(String token);
-
+    
 	Long countGet();
     
 }

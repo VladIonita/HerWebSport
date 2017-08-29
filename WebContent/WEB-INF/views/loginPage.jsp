@@ -91,7 +91,7 @@
 				<input type="submit" class="btn btn-lg btn-block btn-primary"
 					value="Log in">
 			</div>
-				<p align="center"><br/><a href="<c:url value="/admin/recover" />">Forgot Password</a></p>
+				<p align="center"><br/><a href="<c:url value="/admin/password/recover" />">Forgot Password</a></p>
 		</form>
 
 	</div>

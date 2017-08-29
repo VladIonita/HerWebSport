@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hubsport.domain.Users;
 import com.hubsport.service.CurrentTimeFormated;
@@ -78,7 +79,7 @@ public class AdminController {
 		return userName;
 	}
 
-	@RequestMapping(value = "/recover", method = RequestMethod.GET)
+	@RequestMapping(value = "/password/recover", method = RequestMethod.GET)
 	public String forgotPassword(Model model) {
 		Users users = new Users();
 		model.addAttribute("userForm", users);
@@ -86,19 +87,25 @@ public class AdminController {
 	}
 
 	// Process reset password form
-	@RequestMapping(value = "/reset", method = RequestMethod.POST)
+	@RequestMapping(value = "/password/recover", method = RequestMethod.POST)
 	public String processForgotPasswordForm(Model model, HttpServletRequest request,
-			@RequestParam("email") String userEmail) throws NotFoundException {
+			@RequestParam("email") String userEmail, final RedirectAttributes redirectAttributes) throws NotFoundException {
 		Users users = userService.findByEmail(userEmail);
 
 		if (users == null) {
-			throw new NotFoundException("We didn't find an account for that e-mail address.");
+			redirectAttributes.addFlashAttribute("css", "success");
+			redirectAttributes.addFlashAttribute("msg", "Check your inbox for the next steps." +
+		 "If you don't receive an email, and it's not in your spam folder this could mean you signed up with a different address.");
+
 		} else {
+			redirectAttributes.addFlashAttribute("css", "success");
+			redirectAttributes.addFlashAttribute("msg", "Check your inbox for the next steps." +
+		 "If you don't receive an email, and it's not in your spam folder this could mean you signed up with a different address.");
 			String token = UUID.randomUUID().toString();
 
 			userService.saveToken(token, users);
 
-			String appUrl = request.getScheme() + "://" + request.getServerName() + ":8080/HerWebSport";
+			String appUrl = request.getScheme() + "://" + request.getServerName();
 
 			SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
 			passwordResetEmail.setFrom("support@demo.com");
@@ -106,13 +113,11 @@ public class AdminController {
 			passwordResetEmail.setSubject("Password Reset Request");
 			passwordResetEmail
 					.setText("To reset your password, click the link below:\n" + appUrl + "/reset?token=" + token);
-
 			emailService.sendEmail(passwordResetEmail);
 
-			model.addAttribute("successMessage", "A password reset link has been sent to " + userEmail);
 
 		}
-		return "recover";
+		return "redirect:/admin/password/recover";
 	}
 
 }

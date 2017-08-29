@@ -21,7 +21,6 @@
 			.DataTable(
 					{
 						serverSide : true,
-						ordering : false,
 						searching : false,
 						ajax : '${pageContext.request.contextPath}/admin/users/all',
 						columns : [ {

@@ -1,6 +1,7 @@
 package com.hubsport.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,7 +18,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 @Table(name = "USERS")
 public class Users implements Serializable {
@@ -26,7 +26,7 @@ public class Users implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -36,7 +36,6 @@ public class Users implements Serializable {
 	@Email
 	private String email;
 
-//	@JsonIgnore
 	@NotEmpty
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
@@ -48,14 +47,12 @@ public class Users implements Serializable {
 	@NotEmpty
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
-	
-//	@JsonIgnore
-	@Transient
-    private String retypePassword;
 
-//	@JsonIgnore
-	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
-	private PasswordResetToken passwordResetTokens;
+	@Transient
+	private String retypePassword;
+
+//	@OneToOne(cascade = CascadeType.ALL, mappedBy = "users", targetEntity = PasswordResetToken.class)
+//	private PasswordResetToken token;
 
 	public Integer getId() {
 		return id;
@@ -97,14 +94,6 @@ public class Users implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public PasswordResetToken getPasswordResetTokens() {
-		return passwordResetTokens;
-	}
-
-	public void setPasswordResetTokens(PasswordResetToken passwordResetTokens) {
-		this.passwordResetTokens = passwordResetTokens;
-	}
-
 	public String getRetypePassword() {
 		return password;
 	}
@@ -112,6 +101,14 @@ public class Users implements Serializable {
 	public void setRetypePassword(String retypePassword) {
 		this.retypePassword = retypePassword;
 	}
+
+//	public PasswordResetToken getToken() {
+//		return token;
+//	}
+//
+//	public void setToken(PasswordResetToken token) {
+//		this.token = token;
+//	}
 
 	public boolean isNew() {
 		return (this.id == null);
@@ -150,8 +147,7 @@ public class Users implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName
-				+ ", lastName=" + lastName + "]";
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
 
 }
