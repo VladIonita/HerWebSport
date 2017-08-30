@@ -51,7 +51,7 @@ public class AdminController {
 	String link = System.getenv("PT_MAIL_LINK");
 	
 	// handling 404 error
-	@RequestMapping(value = "*", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/*", method = { RequestMethod.GET, RequestMethod.POST })
 	public String fallback() {
 		return "fallback";
 	}
