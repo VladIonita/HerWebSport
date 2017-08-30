@@ -143,18 +143,15 @@ public class AdminController {
 	
 	
 	// save or update user
-	@RequestMapping(value = "/password/reset/{token}", method = RequestMethod.POST)
+	@RequestMapping(value = "/password/reset", method = RequestMethod.POST)
 	public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated Users users, BindingResult result,
 			Model model, final RedirectAttributes redirectAttributes) {
-		if (result.hasErrors()) {
-			return "/password/reset/{token}";
-		}
+			
+
+			userService.updatePass(users);
 			redirectAttributes.addFlashAttribute("css", "success");
 			redirectAttributes.addFlashAttribute("msg", "Password updated successfully!");
-
-			userService.saveOrUpdate(users);
-
-			return "redirect:/login";
+			return "loginPage";
 
 		}
 

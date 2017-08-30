@@ -78,7 +78,7 @@
 		</div>
 	</nav>
 	<div class="container">
-		<spring:url value="/newPassword" var="newActionUrl" />
+		<spring:url value="/admin/password/reset" var="newActionUrl" />
 
 		<form:form class="form-horizontal" method="post"
 			modelAttribute="userForm" action="${newActionUrl}">

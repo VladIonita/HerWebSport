@@ -14,6 +14,8 @@ public interface UserService {
     
     void saveOrUpdate(Users users);
     
+    void updatePass(Users users);
+    
     void deleteBID(Integer id);
  
     boolean isUserEmailUnique(Integer id,String email);

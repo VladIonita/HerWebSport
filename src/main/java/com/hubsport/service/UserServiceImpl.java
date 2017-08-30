@@ -60,6 +60,13 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
+	
+	public void	updatePass(Users users) {
+		Users entity = userDao.findbyid(users.getId());
+		if (entity != null) {
+			entity.setPassword(passwordEncoder.encode(users.getPassword()));
+		}
+	}
 
 	@Override
 	public boolean isUserEmailUnique(Integer id, String email) {
@@ -74,7 +81,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Users findUserByResetToken(String token) {
-		Users users = userDao.findbyid(passwordTokenDao.findbyToken(token).getId());
+		Users users = passwordTokenDao.findbyToken(token).getUsers();
 		return users;
 	}
 
