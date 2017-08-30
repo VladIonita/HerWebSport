@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page session="false"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,7 +80,9 @@
 		<spring:url value="/admin/password/reset" var="newActionUrl" />
 
 		<form:form class="form-horizontal" method="post"
-			modelAttribute="userForm" action="${newActionUrl}">
+			modelAttribute="userPasswordForm" action="${newActionUrl}">
+
+			<form:hidden path="id" />
 
 			<spring:bind path="password">
 				<div class="form-group ${status.error ? 'has-error' : ''}">

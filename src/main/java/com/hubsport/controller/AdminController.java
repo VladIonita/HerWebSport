@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hubsport.domain.Users;
+import com.hubsport.security.UserFormValidator;
 import com.hubsport.service.CurrentTimeFormated;
 import com.hubsport.service.MailService;
 import com.hubsport.service.UserService;
@@ -40,6 +44,9 @@ public class AdminController {
 	
 	@Autowired
 	private MailService emailService;
+	
+	@Autowired
+	MessageSource messageSource;
 	
 	String link = System.getenv("PT_MAIL_LINK");
 	
@@ -131,9 +138,9 @@ public class AdminController {
 //		model.addAttribute("partial", "userform");
 		if(userService.validatePasswordResetToken(token)) {
 			Users users = userService.findUserByResetToken(token);
-			model.addAttribute("userForm", users);
+			System.out.println(users.toString());
+			model.addAttribute("userPasswordForm", users);
 			
-			System.out.println(users.getId());
 			return "resetPassword";
 		}
 		redirectAttributes.addFlashAttribute("css", "success");
@@ -144,14 +151,18 @@ public class AdminController {
 	
 	// save or update user
 	@RequestMapping(value = "/password/reset", method = RequestMethod.POST)
-	public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated Users users, BindingResult result,
+	public String saveOrUpdateUserPassword(@ModelAttribute("userPasswordForm") @Validated Users users, BindingResult result,
 			Model model, final RedirectAttributes redirectAttributes) {
-			
-
+		
+//			Users usersToken = userService.findUserByResetToken(token);
+			System.out.println(users.toString());
+		
 			userService.updatePass(users);
+			
 			redirectAttributes.addFlashAttribute("css", "success");
 			redirectAttributes.addFlashAttribute("msg", "Password updated successfully!");
-			return "loginPage";
+			
+			return "redirect:admin";
 
 		}
 

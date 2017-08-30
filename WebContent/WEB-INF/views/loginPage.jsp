@@ -66,6 +66,9 @@
 				<strong>${msg}</strong>
 			</div>
 		</c:if>
+	</div>
+
+	<div class="container">
 
 		<c:url var="loginUrl" value="/admin/login" />
 		<form action="${loginUrl}" method="post" class="form-signin">
@@ -103,12 +106,10 @@
 					value="Log in">
 			</div>
 			<p align="center">
-				<br />
-				<a href="<c:url value="/admin/password/recover" />">Forgot
+				<br /> <a href="<c:url value="/admin/password/recover" />">Forgot
 					Password</a>
 			</p>
 		</form>
-
 	</div>
 	<!-- /container -->
 

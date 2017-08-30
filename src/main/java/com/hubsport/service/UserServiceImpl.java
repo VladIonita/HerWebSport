@@ -52,13 +52,11 @@ public class UserServiceImpl implements UserService {
 				entity.setFirstName(users.getFirstName());
 				entity.setLastName(users.getLastName());
 				entity.setEmail(users.getEmail());
-				System.out.println(users.getPassword());
 				if (!users.getPassword().equalsIgnoreCase("")) {
 					entity.setPassword(passwordEncoder.encode(users.getPassword()));
 				}
 			}
 		}
-
 	}
 	
 	public void	updatePass(Users users) {
