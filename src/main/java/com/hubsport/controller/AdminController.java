@@ -13,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hubsport.domain.Users;
-import com.hubsport.security.UserFormValidator;
 import com.hubsport.service.CurrentTimeFormated;
 import com.hubsport.service.MailService;
 import com.hubsport.service.UserService;
@@ -134,18 +131,16 @@ public class AdminController {
 	
 	@RequestMapping(value = "/password/reset/{token}", method = RequestMethod.GET)
 	public String validatePasswordResetToken(@PathVariable("token") String token, Model model, final RedirectAttributes redirectAttributes) {
-		
 //		model.addAttribute("partial", "userform");
 		if(userService.validatePasswordResetToken(token)) {
 			Users users = userService.findUserByResetToken(token);
-			System.out.println(users.toString());
 			model.addAttribute("userPasswordForm", users);
-			
 			return "resetPassword";
+		} else {
+			redirectAttributes.addFlashAttribute("css", "success");
+			redirectAttributes.addFlashAttribute("msg", "Email has expired. Please try again!");
+			return "redirect:/admin/password/recover";
 		}
-		redirectAttributes.addFlashAttribute("css", "success");
-		redirectAttributes.addFlashAttribute("msg", "Email has expired. Please try again!");
-		return "loginPage";
 	}
 	
 	

@@ -58,8 +58,8 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 	}
-	
-	public void	updatePass(Users users) {
+
+	public void updatePass(Users users) {
 		Users entity = userDao.findbyid(users.getId());
 		if (entity != null) {
 			entity.setPassword(passwordEncoder.encode(users.getPassword()));
@@ -87,32 +87,30 @@ public class UserServiceImpl implements UserService {
 	public void saveToken(String token, Users users) {
 		Date expiryDate = new Date();
 		expiryDate.setTime(Calendar.getInstance().getTimeInMillis() + 1000 * 60 * 60 * 24);
-		System.out.println(users.getId());
 		PasswordResetToken myToken = new PasswordResetToken(token, users, expiryDate);
-		if(passwordTokenDao.findPasswordResetToken(myToken.getUsers().getId()).equals(null)) {
+		if (passwordTokenDao.findPasswordResetToken(myToken.getUsers().getId()).equals(null)) {
 			passwordTokenDao.save(myToken);
 		}
-		System.out.println("tokenul exista ");
 		passwordTokenDao.deleteId(myToken.getUsers().getId());
 		passwordTokenDao.save(myToken);
 
 	}
-	
+
 	@Override
 	public boolean validatePasswordResetToken(String token) {
 		PasswordResetToken passwordResetToken = passwordTokenDao.findbyToken(token);
-		
-		if(!passwordResetToken.equals(null)) {
-			System.out.println("tokenul exista ");
-			if(passwordResetToken.getExpiryDate().after(Calendar.getInstance().getTime()) ) {
-				System.out.println("tokenul se incadreaza in limita de timp ");
+		if (passwordResetToken == null) {
+			return false;
+		} else {
+			if (passwordResetToken.getExpiryDate().after(Calendar.getInstance().getTime())) {
 				return true;
+			} else {
+				return false;
 			}
 		}
-		System.out.println("tokenul nu exista ");
-		return false;
 	}
 
+	
 	@Override
 	public Long countGet() {
 		return userDao.countUsers();
