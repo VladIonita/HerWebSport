@@ -59,10 +59,13 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	public void updatePass(Users users) {
-		Users entity = userDao.findbyid(users.getId());
+	public void updatePass(Integer userTokenId, String pass) {
+
+		
+		Users entity = userDao.findbyid(userTokenId);
 		if (entity != null) {
-			entity.setPassword(passwordEncoder.encode(users.getPassword()));
+			entity.setPassword(passwordEncoder.encode(pass));
+			passwordTokenDao.deleteId(userTokenId);
 		}
 	}
 
@@ -88,7 +91,8 @@ public class UserServiceImpl implements UserService {
 		Date expiryDate = new Date();
 		expiryDate.setTime(Calendar.getInstance().getTimeInMillis() + 1000 * 60 * 60 * 24);
 		PasswordResetToken myToken = new PasswordResetToken(token, users, expiryDate);
-		if (passwordTokenDao.findPasswordResetToken(myToken.getUsers().getId()).equals(null)) {
+		if (passwordTokenDao.findPasswordResetToken(myToken.getUsers().getId())==null) {
+			
 			passwordTokenDao.save(myToken);
 		}
 		passwordTokenDao.deleteId(myToken.getUsers().getId());
@@ -109,7 +113,6 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 	}
-
 	
 	@Override
 	public Long countGet() {

@@ -15,7 +15,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Forgot password</title>
+<title>Password update</title>
 
 <!-- Bootstrap core CSS -->
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
@@ -57,7 +57,10 @@
 		</div>
 	</nav>
 	<div class="container">
-		<h4>Please check your email for password reset link.</h4>
+		<h4>Password updated successful.</h4>
+		<h4>To access administration page go to login page</h4>
+		<h4><a href="<c:url value='/admin/login' />"
+							class="btn btn-success btn-sm">Login Page</a></h4>
 	</div>
 
 	<%@ include file="adminFooter.jsp"%>

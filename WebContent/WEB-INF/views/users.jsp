@@ -26,7 +26,7 @@
 	</sec:authorize>
 	<div class="container">
 		<table class="table table-striped table-bordered table-hover"
-			id="mydataJson">
+			id="mydataUserJson">
 			<thead>
 				<tr>
 					<th>Email</th>

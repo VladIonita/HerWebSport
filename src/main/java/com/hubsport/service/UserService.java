@@ -14,7 +14,7 @@ public interface UserService {
     
     void saveOrUpdate(Users users);
     
-    void updatePass(Users users);
+    void updatePass(Integer userTokenId, String pass);
     
     void deleteBID(Integer id);
  

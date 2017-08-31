@@ -100,7 +100,6 @@ public class AdminController {
 	public String processForgotPasswordForm(Model model, HttpServletRequest request,
 			@RequestParam("email") String userEmail, final RedirectAttributes redirectAttributes) throws NotFoundException {
 		Users users = userService.findByEmail(userEmail);
-
 		if (users == null) {
 			redirectAttributes.addFlashAttribute("css", "success");
 			redirectAttributes.addFlashAttribute("msg", "Check your inbox for the next steps." +
@@ -111,10 +110,9 @@ public class AdminController {
 			redirectAttributes.addFlashAttribute("msg", "Check your inbox for the next steps." +
 		 "If you don't receive an email, and it's not in your spam folder this could mean you signed up with a different address.");
 			String token = UUID.randomUUID().toString();
-
 			userService.saveToken(token, users);
 
-			String appUrl = request.getScheme() + "://" + request.getServerName();
+			String appUrl = request.getScheme() + "://" + request.getServerName()+ link;
 
 			SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
 			passwordResetEmail.setFrom("support@demo.com");
@@ -131,7 +129,6 @@ public class AdminController {
 	
 	@RequestMapping(value = "/password/reset/{token}", method = RequestMethod.GET)
 	public String validatePasswordResetToken(@PathVariable("token") String token, Model model, final RedirectAttributes redirectAttributes) {
-//		model.addAttribute("partial", "userform");
 		if(userService.validatePasswordResetToken(token)) {
 			Users users = userService.findUserByResetToken(token);
 			model.addAttribute("userPasswordForm", users);
@@ -145,20 +142,15 @@ public class AdminController {
 	
 	
 	// save or update user
-	@RequestMapping(value = "/password/reset", method = RequestMethod.POST)
-	public String saveOrUpdateUserPassword(@ModelAttribute("userPasswordForm") @Validated Users users, BindingResult result,
+	@RequestMapping(value = "/password/reset/{token}", method = RequestMethod.POST)
+	public String saveOrUpdateUserPassword(@PathVariable("token") String token,@ModelAttribute("userPasswordForm") Users users, BindingResult result,
 			Model model, final RedirectAttributes redirectAttributes) {
-		
-//			Users usersToken = userService.findUserByResetToken(token);
-			System.out.println(users.toString());
-		
-			userService.updatePass(users);
-			
-			redirectAttributes.addFlashAttribute("css", "success");
-			redirectAttributes.addFlashAttribute("msg", "Password updated successfully!");
-			
-			return "redirect:admin";
-
+			model.addAttribute("token", token);
+			Users usersToken = userService.findUserByResetToken(token);
+			userService.updatePass(usersToken.getId(), users.getPassword());
+			return "passUpdateSuccess";
 		}
+	
+	
 
 	}

@@ -77,14 +77,10 @@
 		</div>
 	</nav>
 	<div class="container">
-		<spring:url value="/admin/password/reset" var="newActionUrl" />
+		<spring:url value="/admin/password/reset/${token}" var="newActionUrl" />
 
 		<form:form class="form-horizontal" method="post"
-			modelAttribute="userPasswordForm" action="${newActionUrl}">
-
-			<form:hidden path="id" />
-
-			<spring:bind path="password">
+			commandName="userPasswordForm" action="${newActionUrl}">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
 					<label class="col-sm-2 control-label">Password</label>
 					<div class="col-sm-4">
@@ -93,7 +89,6 @@
 						<form:errors path="password" class="control-label" />
 					</div>
 				</div>
-			</spring:bind>
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Confirm Password</label>
 				<div class="col-sm-4">

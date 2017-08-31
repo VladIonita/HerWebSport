@@ -15,13 +15,16 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="../../favicon.ico">
 
 <title>${pageTitle}</title>
 
 <!-- Bootstrap core CSS -->
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
 	rel="stylesheet">
+	
+	    <!-- Selectize CSS -->
+<link href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.bootstrap3.min.css" />"
+	rel="stylesheet" type="text/css">
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <link
@@ -41,4 +44,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    
+
 </head>

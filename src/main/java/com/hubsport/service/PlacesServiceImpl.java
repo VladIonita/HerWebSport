@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hubsport.dao.PlacesDao;
 import com.hubsport.domain.Places;
+import com.hubsport.domain.Users;
 
 @Service("placesService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -46,5 +47,22 @@ public class PlacesServiceImpl implements PlacesService {
 	public List<Places> findAllPlaces() {
 		return placeDao.findAllPlacesHibernate();
 	}
+	
+	@Override
+	public List<Places> findPlaces(Integer start, Integer lenght) {
+		return placeDao.findPlaces(start, lenght);
+	}
+	
+	@Override
+	public Long countGet() {
+		return placeDao.countPlaces();
+	}
+
+	@Override
+	public List<Places> findPlaces(String district, Integer start, Integer lenght) {
+		return placeDao.findPlaces(district, start, lenght);
+	}
+	
+	
 
 }
