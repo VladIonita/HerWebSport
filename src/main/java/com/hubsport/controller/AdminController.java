@@ -112,7 +112,7 @@ public class AdminController {
 			String token = UUID.randomUUID().toString();
 			userService.saveToken(token, users);
 
-			String appUrl = request.getScheme() + "://" + request.getServerName()+ link;
+			String appUrl = request.getScheme() + "://" + request.getServerName();
 
 			SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
 			passwordResetEmail.setFrom("support@demo.com");
