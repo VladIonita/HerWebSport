@@ -19,7 +19,7 @@
 					class="form-control" id="district" name="district" >
 					<option></option>
 					<c:forEach var="dist" items="${distList}">
-						<option>${dist.nameDistrict}</option>
+						<option value="${dist.id}">${dist.nameDistrict}</option>
 					</c:forEach>
 				</select>
 			</div>

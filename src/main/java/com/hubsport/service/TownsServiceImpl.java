@@ -21,6 +21,10 @@ public class TownsServiceImpl implements TownsService {
 	public Towns findById(int id) {
 		return townsDao.findbyid(id);
 	}
+	
+	public Towns findByName(String name) {
+		return townsDao.findbyName(name);
+	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void saveTowns(Towns towns) {
@@ -35,6 +39,11 @@ public class TownsServiceImpl implements TownsService {
 	@Override
 	public List<Towns> findAllTowns() {
 		return townsDao.findAllTownsHibernate();
+	}
+	
+	@Override
+	public List<Towns> findAllTowns(String query) {
+		return townsDao.findAllTowns(query);
 	}
  
 	

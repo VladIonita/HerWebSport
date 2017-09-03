@@ -113,11 +113,14 @@ public class PlacesDaoImpl implements PlacesDao{
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Places> findPlaces(String district, Integer start, Integer lenght) {
+	public List<Places> findPlaces(Integer id, Integer start, Integer lenght) {
 		
-		String sql = "SELECT p.id as id, p.name as placeName, p.address as placeAddress,  t.name as townName, d.name as district FROM places as p, towns as t, districts as d where p.towns_id=t.id and t.districts_id= d.id and d.name like '%" + district + "'%";
+		String sql = "SELECT p.id as id, p.name as placeName, p.address as placeAddress,  t.name as townName, d.name as district FROM places as p, towns as t, districts as d where p.towns_id=t.id and t.districts_id= d.id and d.id = ? ";
+		
 		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		query.setInteger(0, id);
 		query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 		query.setFirstResult(start);
 		query.setMaxResults(lenght);

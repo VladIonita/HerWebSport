@@ -18,7 +18,7 @@
 
 	<spring:url value="/admin/places/add" var="placesActionUrl" />
 
-	<form:form class="form-horizontal" method="post"
+	<form:form class="form-horizontal" method="post" id="form"
 		modelAttribute="placeForm" action="${placesActionUrl}">
 
 		<form:hidden path="id" />
@@ -38,7 +38,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Address</label>
 				<div class="col-sm-10">
-					<form:input path="address" type="text" class="form-control"
+					<form:input path="address"  class="form-control"
 						id="address" placeholder="Address" />
 					<form:errors path="address" class="control-label" />
 				</div>
@@ -47,23 +47,20 @@
 
 		<spring:bind path="towns.nameTowns">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">Town</label>
+				<label class="control-label col-sm-2">Town</label>
 				<div class="col-sm-10">
-					<form:input path="towns.nameTowns" type="text" class="form-control"
-						placeholder="Town" />
-					<form:errors path="towns.nameTowns" class="control-label" />
+					<form:select path="towns.nameTowns" itemValue="id" class="form-control" id="districtAndTowns" >
+						<!-- <option value=""></option>
+					<c:forEach var="townAndDistr" items="${townList}">
+						<option value="${townAndDistr.id}">${townAndDistr.nameTowns}
+							(${townAndDistr.districts.nameDistrict})</option>
+					</c:forEach> -->
+					</</form:select>
 				</div>
 			</div>
 		</spring:bind>
-		
-		<div class="form-group" id="casc">
-			<label class="col-sm-2 control-label">District select</label>
-			<div class="col-sm-10">
-				<form:select path="towns.districts.nameDistrict" items="${distList}"
-					itemValue="id" itemLabel="nameDistrict" class="form-control" />
-			</div>
-		</div>
-		
+
+
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<c:choose>

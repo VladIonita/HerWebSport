@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class Places implements Serializable {
 	@Column(name = "ADDRESS", nullable = false)
 	private String address;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity=Towns.class )
 	@JoinColumn(name = "TOWNS_ID")
 	private Towns towns;
 	

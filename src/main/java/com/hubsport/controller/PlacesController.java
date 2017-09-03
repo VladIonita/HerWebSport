@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hubsport.domain.Districts;
 import com.hubsport.domain.Places;
+import com.hubsport.domain.Towns;
 import com.hubsport.domain.Users;
 import com.hubsport.service.DistrictsService;
 import com.hubsport.service.PlacesService;
@@ -66,6 +67,7 @@ public class PlacesController {
 		Places places = new Places();
 		model.addAttribute("placeForm", places);
 		model.addAttribute("townList", townsService.findAllTowns());
+		
 		model.addAttribute("distList", districService.findAllDistricts());
 		model.addAttribute("partial", "placesform");
 		return "index";
@@ -76,12 +78,11 @@ public class PlacesController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveOrUpdatePlaces(@ModelAttribute("placeForm") @Validated Places places,
 			BindingResult result, Model model) {
-		model.addAttribute("districtList", districService.findAllDistricts());
 		if (result.hasErrors()) {
 			model.addAttribute("partial", "placesform");
 			return "index";
 		}
-		placesService.savePlace(places);
+		placesService.saveOrUpdate(places);
 		return "redirect:/admin/places";
 	}
 
@@ -89,24 +90,14 @@ public class PlacesController {
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String showUpdatePlacesForm(@PathVariable("id") int id, Model model) {
 		Places places = placesService.findById(id);
+		Towns towns = townsService.findById(places.getTowns().getid());
+		System.out.println("id ul orasului este " + places.getTowns().getid());
 		model.addAttribute("placeForm", places);
+		model.addAttribute("townsForm", towns);
 		model.addAttribute("partial", "placesform");
 		return "index";
 	}
 
-	
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String updatePlaces(@PathVariable("id") int id, Model model, @Validated	Places places,
-			BindingResult result) {
-
-		if (result.hasErrors()) {
-			model.addAttribute("partial", "placesform");
-			return "index";
-		}
-
-		placesService.updatePlace(places);
-		return "redirect:/admin/places";
-	}
 	
 	// delete place
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
@@ -133,12 +124,12 @@ public class PlacesController {
 	}
 	
 	// request by json all places
-	@RequestMapping(path="/all/{district}", method=RequestMethod.GET, produces = "application/json")
+	@RequestMapping(path="/all/{id}", method=RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public Map<String, Object> getAllPlacesDistrict(@PathVariable("district") String district, @RequestParam("length") int length,@RequestParam("draw") int draw, @RequestParam("start") int start) {
+	public Map<String, Object> getAllPlacesDistrict(@PathVariable("id") Integer id, @RequestParam("length") int length,@RequestParam("draw") int draw, @RequestParam("start") int start) {
 		
 		
-		List<Places> placesList = placesService.findPlaces(district, start, length);
+		List<Places> placesList = placesService.findPlaces(id, start, length);
 		Long count = placesService.countGet();
 		
 		Map<String, Object> data = new HashMap<>();
@@ -148,5 +139,12 @@ public class PlacesController {
 		data.put("data",placesList);
 	    
 	    return data;
+	}
+	
+	@RequestMapping(path="/towns/{query}", method=RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+public List<Towns> getAllTowns(@PathVariable("query") String query) {
+		List<Towns> townsList = townsService.findAllTowns(query);
+	    return townsList;
 	}
 }

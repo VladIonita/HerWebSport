@@ -51,9 +51,6 @@ public class Users implements Serializable {
 	@Transient
 	private String retypePassword;
 
-//	@OneToOne(cascade = CascadeType.ALL, mappedBy = "users", targetEntity = PasswordResetToken.class)
-//	private PasswordResetToken token;
-
 	public Integer getId() {
 		return id;
 	}
@@ -101,14 +98,6 @@ public class Users implements Serializable {
 	public void setRetypePassword(String retypePassword) {
 		this.retypePassword = retypePassword;
 	}
-
-//	public PasswordResetToken getToken() {
-//		return token;
-//	}
-//
-//	public void setToken(PasswordResetToken token) {
-//		this.token = token;
-//	}
 
 	public boolean isNew() {
 		return (this.id == null);

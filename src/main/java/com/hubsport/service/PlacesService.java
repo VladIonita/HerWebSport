@@ -3,14 +3,13 @@ package com.hubsport.service;
 import java.util.List;
 
 import com.hubsport.domain.Places;
+import com.hubsport.domain.Towns;
 
 public interface PlacesService {
 	
     Places findById(Integer id);
     
-    void savePlace(Places places);
-     
-    void updatePlace(Places places);
+    void saveOrUpdate(Places places);
      
     void deletePlacesById(Integer id);
  
@@ -18,7 +17,7 @@ public interface PlacesService {
     
     List<Places> findPlaces(Integer start, Integer lenght); 
     
-    List<Places> findPlaces(String district, Integer start, Integer lenght);
+    List<Places> findPlaces(Integer id, Integer start, Integer lenght);
     
     Long countGet();
     

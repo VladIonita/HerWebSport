@@ -12,7 +12,7 @@ public interface PlacesDao {
 	Places findbyid(Integer id);
 	
 	void save(Places places);
-
+	
 	void deleteById(Integer id);
 
 	List<Places> findAllPlaces();
@@ -23,5 +23,5 @@ public interface PlacesDao {
 
 	List<Places> findPlaces(Integer start, Integer lenght);
 	
-	List<Places> findPlaces(String district, Integer start, Integer lenght);
+	List<Places> findPlaces(Integer id, Integer start, Integer lenght);
 }

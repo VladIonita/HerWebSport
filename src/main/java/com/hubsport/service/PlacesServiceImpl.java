@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hubsport.dao.PlacesDao;
 import com.hubsport.domain.Places;
+import com.hubsport.domain.Towns;
 import com.hubsport.domain.Users;
 
 @Service("placesService")
@@ -23,22 +24,21 @@ public class PlacesServiceImpl implements PlacesService {
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public void savePlace(Places places) {
-		placeDao.save(places);
-	}
-
-	
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public void updatePlace(Places places) {
-		Places entity = placeDao.findbyid(places.getid());
-		if(entity!=null) {
-			entity.setid(places.getid());
-			entity.setAddress(places.getAddress());
-			entity.setNamePlaces(places.getNamePlaces());
-			entity.setTowns(places.getTowns());
+	public void saveOrUpdate(Places places) {
+		if (findById(places.getid()) == null) {
+			placeDao.save(places);
+			
+		} else {
+			Places entity = placeDao.findbyid(places.getid());
+			if (entity != null) {
+				entity.setid(places.getid());
+				entity.setAddress(places.getAddress());
+				entity.setNamePlaces(places.getNamePlaces());
+				entity.setTowns(places.getTowns());
+			}
 		}
 	}
-
+	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void deletePlacesById(Integer id) {
 		placeDao.deleteById(id);
@@ -59,8 +59,8 @@ public class PlacesServiceImpl implements PlacesService {
 	}
 
 	@Override
-	public List<Places> findPlaces(String district, Integer start, Integer lenght) {
-		return placeDao.findPlaces(district, start, lenght);
+	public List<Places> findPlaces(Integer id, Integer start, Integer lenght) {
+		return placeDao.findPlaces(id, start, lenght);
 	}
 	
 	

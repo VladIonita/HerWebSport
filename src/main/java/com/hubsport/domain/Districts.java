@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,14 +19,14 @@ public class Districts implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column(name = "NAME")
 	private String nameDistrict;
 	
-	@OneToMany(mappedBy = "districts", cascade = CascadeType.ALL)
-	private Set<Towns> towns;
+//	@OneToMany(mappedBy = "districts", cascade = CascadeType.ALL)
+//	private Set<Towns> towns;
 
 	public Integer getid() {
 		return id;
@@ -43,13 +44,16 @@ public class Districts implements Serializable {
 		this.nameDistrict = nameDistrict;
 	}
 
-	public Set<Towns> getTowns() {
-		return towns;
-	}
+//	public Set<Towns> getTowns() {
+//		return towns;
+//	}
+//
+//	public void setTowns(Set<Towns> towns) {
+//		this.towns = towns;
+//	}
 
-	public void setTowns(Set<Towns> towns) {
-		this.towns = towns;
+	public boolean isNew() {
+		return (this.id == null);
 	}
-
 
 }

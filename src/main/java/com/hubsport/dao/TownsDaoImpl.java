@@ -36,6 +36,22 @@ public class TownsDaoImpl implements TownsDao{
 		}
 		return towns;
 	}
+	
+	
+
+	@Override
+	public Towns findbyName(String nameTowns) {
+		logger.info("nameTowns : {}", nameTowns);
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Towns.class);
+		crit.add(Restrictions.eq("nameTowns", nameTowns));
+		Towns towns= (Towns) crit.uniqueResult();
+		if (towns != null) {
+			Hibernate.initialize(towns);
+		}
+		return towns;
+	}
+
+
 
 	//save user
 	@Override
@@ -75,6 +91,22 @@ public class TownsDaoImpl implements TownsDao{
 		List<Towns> towns = crit.list();
 		return towns;
 	}
+
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Towns> findAllTowns(String query) {
+		String sql = "SELECT t.id as id, t.name as townName, d.name as district FROM towns as t, districts as d where t.districts_id=d.id and t.name LIKE :query";
+		SQLQuery querylist = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		querylist.setParameter("query", query+"%");
+		querylist.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+        List<Towns> towns = (List<Towns>) querylist.list();
+        logger.info("towns : {}", towns);
+        return towns;
+	}
+	
+	
 	
 	
 
