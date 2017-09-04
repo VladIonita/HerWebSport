@@ -38,27 +38,32 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Address</label>
 				<div class="col-sm-10">
-					<form:input path="address"  class="form-control"
-						id="address" placeholder="Address" />
+					<form:input path="address" class="form-control" id="address"
+						placeholder="Address" />
 					<form:errors path="address" class="control-label" />
 				</div>
 			</div>
 		</spring:bind>
 
-		<spring:bind path="towns.nameTowns">
-			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="control-label col-sm-2">Town</label>
-				<div class="col-sm-10">
-					<form:select path="towns.nameTowns" itemValue="id" class="form-control" id="districtAndTowns" >
-						<!-- <option value=""></option>
-					<c:forEach var="townAndDistr" items="${townList}">
-						<option value="${townAndDistr.id}">${townAndDistr.nameTowns}
-							(${townAndDistr.districts.nameDistrict})</option>
-					</c:forEach> -->
+		<div class="form-group ${status.error ? 'has-error' : ''}">
+			<label class="control-label col-sm-2">Town</label>
+			<div class="col-sm-10">
+				<c:choose>
+					<c:when test="${placeForm['new']}">
+						<form:select path="towns.id" itemValue="id"
+					itemLabel="towns.nameTowns" class="form-control"
+					id="districtAndTowns">
 					</</form:select>
-				</div>
+					</c:when>
+					<c:otherwise>
+						<h1>Update Place</h1>
+					</c:otherwise>
+				</c:choose>
+				<br />
+
+				
 			</div>
-		</spring:bind>
+		</div>
 
 
 		<div class="form-group">
