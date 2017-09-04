@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hubsport.dao.PlacesDao;
 import com.hubsport.domain.Places;
-import com.hubsport.domain.Towns;
-import com.hubsport.domain.Users;
 
 @Service("placesService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

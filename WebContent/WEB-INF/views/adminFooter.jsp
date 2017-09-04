@@ -72,6 +72,37 @@
 							},
 						} ]
 					});
+	
+	$('#mydataEventsJson')
+	.DataTable(
+			{
+				serverSide : true,
+				searching : false,
+				ajax : '${pageContext.request.contextPath}/${jsonLink}',
+				columns : [
+						{
+							data : 'time'
+						},
+						{
+							data : 'eventsName'
+						},
+						{
+							data : 'categories',
+							"className" : "left",
+							"render" : function(data, type, full, meta) {
+								return full.placesName + ', ' + full.tonwsName + ' ('
+										+ full.district + ')';
+							}
+						} ],
+				"columnDefs" : [ {
+					"targets" : 3,
+					"data" : "id",
+					"render" : function(data, type, row) {
+						console.log(data, type, row);
+						return '<a href="<c:url value="/admin/events/update/'+data+'"/>" class="btn btn-success btn-sm">edit</a> <a href="<c:url value="/admin/events/delete/'+data+'"/>" class="btn btn-danger btn-sm">delete</a>';
+					},
+				} ]
+			});
 
 	$('#district').selectize({
 		selectOnTab : true,

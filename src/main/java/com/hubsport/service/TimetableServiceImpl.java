@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hubsport.dao.PlacesDao;
 import com.hubsport.dao.TimetableDao;
 import com.hubsport.dao.TownsDao;
+import com.hubsport.domain.Events;
+import com.hubsport.domain.Places;
 import com.hubsport.domain.Timetable;
 import com.hubsport.domain.Towns;
 
@@ -39,5 +41,22 @@ public class TimetableServiceImpl implements TimetableService {
 		return timetableDao.findAllTimetableHibernate();
 	}
  
+	@Override
+	public List<Events> findTimetable(Integer start, Integer lenght) {
+		return timetableDao.findTimetable(start, lenght);
+	}
+	
+	@Override
+	public Long countGet() {
+		return timetableDao.countTimetable();
+	}
+
+	@Override
+	public List<Timetable> findTimetable(Integer id, Integer start, Integer lenght) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 	
 }

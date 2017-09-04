@@ -29,7 +29,7 @@ public class Timetable implements Serializable {
 	private int fullday = 0;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "EVENTS_ID", nullable = false)
+	@JoinColumn(name = "events_id", nullable = false)
 	private Events events;
 
 	public Timetable() {

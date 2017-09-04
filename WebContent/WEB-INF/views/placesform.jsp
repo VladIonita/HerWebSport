@@ -18,7 +18,7 @@
 
 	<spring:url value="/admin/places/add" var="placesActionUrl" />
 
-	<form:form class="form-horizontal" method="post" id="form"
+	<form:form class="form-horizontal" method="post"
 		modelAttribute="placeForm" action="${placesActionUrl}">
 
 		<form:hidden path="id" />
@@ -49,12 +49,7 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="control-label col-sm-2">Town</label>
 				<div class="col-sm-10">
-					<form:select path="towns.nameTowns" itemValue="id" class="form-control" id="districtAndTowns" >
-						<!-- <option value=""></option>
-					<c:forEach var="townAndDistr" items="${townList}">
-						<option value="${townAndDistr.id}">${townAndDistr.nameTowns}
-							(${townAndDistr.districts.nameDistrict})</option>
-					</c:forEach> -->
+					<form:select path="towns.id" itemValue="${id}" class="form-control" id="districtAndTowns" >
 					</</form:select>
 				</div>
 			</div>
