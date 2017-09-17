@@ -20,7 +20,7 @@ public class CurrentTimeFormated {
 	}
 
 	
-	public String getTime(Date date) {
+	public final String getTime(Date date) {
 		String timeStamp = new SimpleDateFormat("EEEE , dd MM YYYY").format(date);
 		return timeStamp;
 	}

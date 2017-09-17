@@ -1,4 +1,6 @@
 
+<%@page import="java.util.Date"%>
+<%@page import="com.hubsport.service.CurrentTimeFormated"%>
 <footer class="footer">
 	<div class="container">
 		<p class="text-muted">Footer content.</p>
@@ -57,7 +59,6 @@
 								},
 								{
 									data : 'townName',
-									"className" : "left",
 									"render" : function(data, type, full, meta) {
 										return full.townName + ' ('
 												+ full.district + ')';
@@ -73,51 +74,101 @@
 						} ]
 					});
 
+	$('#mydataEventsJson')
+			.DataTable(
+					{
+						"drawCallback": function ( settings ) {
+				            var api = this.api();
+				            var rows = api.rows( {page:'current'} ).nodes();
+				            var last=null;
+				 
+				            api.column(0, {page:'current'} ).data().each( function ( group, i ) {
+				                if ( last !== group ) {
+				                    $(rows).eq( i ).before(
+				                        '<tr class="group"><td colspan="5"><strong>'+group+'</strong></td></tr>'
+				                    );
+				 
+				                    last = group;
+				                }
+				            } );
+				        },
+						serverSide : true,
+						searching : false,
+						ajax : '${pageContext.request.contextPath}/${jsonLink}',
+						columns : [ {
+							data : 'time',
+						}, {
+							data : 'eventsName',
+							"className" : "left",
+							"render" : function(data, type, full, meta) {
+								return '<p>'+full.eventsName+'</p>' + 
+								'<p>'+'('+ '<font color="blue">'+full.categoriesName+'</font>' +
+								') ' + full.placeName+","+full.townName+'('+full.districtName+') | '+full.hour+' | '+full.broadName+'</p>';}
+						}],
+						"columnDefs" : [
+							{"targets" : 0 , "visible" : false},
+							{
+							"targets" : 2,
+							"data" : "id",
+							"render" : function(data, type, row) {
+								console.log(data, type, row);
+								return '<a href="<c:url value="/admin/events/update/'+data+'"/>" class="btn btn-success btn-sm">edit</a> <a href="<c:url value="/admin/events/delete/'+data+'"/>" class="btn btn-danger btn-sm">delete</a>';
+							},
+						} ]
+					});
+
 	$('#district').selectize({
 		selectOnTab : true,
 		placeholder : 'All Towns'
 
 	});
-	$('#districtAndTowns').selectize({
-		selectOnTab : true,
-		placeholder : 'All Towns',
-		valueField: 'id',
-        labelField: 'townName',
-        searchField: ['townName'],
-        create: false,
-        onType: function(str) {
-            this.clearOptions();
-        },
-        onDropdownClose: function(items) {
-            if (!this.items.length) {
-                this.clearOptions();
-            }
-        },
-        render: {
-            option: function(item, escape) {
-                return '<div>' + escape(item.townName) + " (" + escape(item.district) + ")" + '</div>';
-            }
-        },
-        score: function(search) {
-            return function(item) {
-                return 1;
-            };
-        },
-        load: function(query, callback) {
-            if (!query.length || query.length < 3) return callback();
-            $.ajax({
-                url: '${pageContext.request.contextPath}/admin/places/towns/' + encodeURIComponent(query),
-                type: 'GET',
-                dataType: 'json',
-                error: function() {
-                    callback();
-                },
-                success: function(res) {
-                    callback(res);
-                }
-            });
-        }
-	});
+	$('#districtAndTowns')
+			.selectize(
+					{
+						selectOnTab : true,
+						placeholder : 'All Towns',
+						valueField : 'id',
+						labelField : 'townName',
+						searchField : [ 'townName' ],
+						create : false,
+						onType : function(str) {
+							this.clearOptions();
+						},
+						onDropdownClose : function(items) {
+							if (!this.items.length) {
+								this.clearOptions();
+							}
+						},
+						render : {
+							option : function(item, escape) {
+								return '<div>' + escape(item.townName) + " ("
+										+ escape(item.district) + ")"
+										+ '</div>';
+							}
+						},
+						score : function(search) {
+							return function(item) {
+								return 1;
+							};
+						},
+						load : function(query, callback) {
+							if (!query.length || query.length < 3)
+								return callback();
+							$
+									.ajax({
+										url : '${pageContext.request.contextPath}/admin/places/towns/'
+												+ encodeURIComponent(query),
+										type : 'GET',
+										dataType : 'json',
+										error : function() {
+											callback();
+										},
+										success : function(res) {
+											callback(res);
+										}
+									});
+						}
+					});
 </script>
 
 <script type="text/javascript" charset="utf-8">

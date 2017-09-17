@@ -52,6 +52,7 @@ public class UserDaoImpl implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Users> findUsers(Integer start, Integer lenght) {
+		logger.info("Get all Users");
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Users.class)
 						  .setProjection(Projections.projectionList()
 								  .add(Projections.property("id"), "id")

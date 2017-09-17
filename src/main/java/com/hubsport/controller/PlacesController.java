@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hubsport.domain.Districts;
 import com.hubsport.domain.Places;
@@ -77,11 +78,18 @@ public class PlacesController {
 	// save  place
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveOrUpdatePlaces(@ModelAttribute("placeForm") @Validated Places places,
-			BindingResult result, Model model) {
+			BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			model.addAttribute("partial", "placesform");
 			return "index";
 		}
+		redirectAttributes.addFlashAttribute("css", "success");
+		if (places.isNew()) {
+			redirectAttributes.addFlashAttribute("msg", "Places added successfully!");
+		} else {
+			redirectAttributes.addFlashAttribute("msg", "Places updated successfully!");
+		}
+		
 		placesService.saveOrUpdate(places);
 		return "redirect:/admin/places";
 	}
@@ -92,6 +100,7 @@ public class PlacesController {
 		Places places = placesService.findById(id);
 		Towns towns = townsService.findById(places.getTowns().getid());
 		System.out.println("id ul orasului este " + places.getTowns().getid());
+		model.addAttribute("id", places.getTowns().getid());
 		model.addAttribute("placeForm", places);
 		model.addAttribute("townsForm", towns);
 		model.addAttribute("partial", "placesform");

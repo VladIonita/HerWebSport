@@ -17,7 +17,7 @@
 			<strong>${msg}</strong>
 		</div>
 	</c:if>
-
+	<a style="color:blue; "></a>
 	<sec:authorize access="hasRole('ADMIN')">
 		<p style="text-align: right">
 			<a href="<c:url value="/admin/users/add" />"
