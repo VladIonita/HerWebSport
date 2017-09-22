@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TIMETABLE")
+@Table(name = "timetable")
 public class Timetable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,8 +28,8 @@ public class Timetable implements Serializable {
 
 	private int fullday = 0;
 
-	@ManyToOne
-	@JoinColumn(name = "events_id")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "events_id", nullable = false)
 	private Events events;
 
 	public Timetable() {

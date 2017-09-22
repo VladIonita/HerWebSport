@@ -22,7 +22,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan({ "com.hubsport.config" })
 @PropertySource(value = { "classpath:application.properties" })
 public class HibernateConfiguration {
-
+	// Ultimul save
+	
 	@Autowired
 	private Environment environment;
 	

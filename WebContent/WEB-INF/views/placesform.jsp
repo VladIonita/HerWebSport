@@ -38,40 +38,57 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Address</label>
 				<div class="col-sm-10">
-					<form:input path="address"  class="form-control"
-						id="address" placeholder="Address" />
+					<form:input path="address" class="form-control" id="address"
+						placeholder="Address" />
 					<form:errors path="address" class="control-label" />
 				</div>
 			</div>
 		</spring:bind>
 
-		<spring:bind path="towns.nameTowns">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="control-label col-sm-2">Town</label>
 				<div class="col-sm-10">
-					<form:select path="towns.id" itemValue="${id}" class="form-control" id="districtAndTowns" >
-					</</form:select>
+					<form:select path="towns.id" itemValue="${id}" class="form-control"
+						id="districtAndTowns">
+						<div class="form-group ${status.error ? 'has-error' : ''}">
+							<label class="control-label col-sm-2">Town</label>
+							<div class="col-sm-10">
+								<c:choose>
+									<c:when test="${placeForm['new']}">
+										<form:select path="towns.id" itemValue="id"
+											itemLabel="towns.nameTowns" class="form-control"
+											id="districtAndTowns">
+										</form:select>
+									</c:when>
+									<c:otherwise>
+										<h1>Update Place</h1>
+									</c:otherwise>
+								</c:choose>
+								<br />
+					</form:select>
 				</div>
 			</div>
-		</spring:bind>
+</div>
+
+</div>
+</div>
 
 
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
-				<c:choose>
-					<c:when test="${placeForm['new']}">
-						<input type="submit" value="Register"
-							class="btn btn-primary btn-sm" /> or <a
-							href="<c:url value='/admin/places' />">Cancel</a>
-					</c:when>
-					<c:otherwise>
-						<input type="submit" value="Update" class="btn btn-primary btn-sm" /> or <a
-							href="<c:url value='/admin/places' />">Cancel</a>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
-	</form:form>
+<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+		<c:choose>
+			<c:when test="${placeForm['new']}">
+				<input type="submit" value="Register" class="btn btn-primary btn-sm" /> or <a
+					href="<c:url value='/admin/places' />">Cancel</a>
+			</c:when>
+			<c:otherwise>
+				<input type="submit" value="Update" class="btn btn-primary btn-sm" /> or <a
+					href="<c:url value='/admin/places' />">Cancel</a>
+			</c:otherwise>
+		</c:choose>
+	</div>
+</div>
+</form:form>
 
 </div>
 
