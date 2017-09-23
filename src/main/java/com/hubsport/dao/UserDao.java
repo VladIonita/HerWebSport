@@ -6,19 +6,18 @@ import com.hubsport.domain.Users;
 
 public interface UserDao {
 
-	Users findbyid(Integer id);
-	
-	Users findbyemail(String email);
-	
-	
-	void save(Users users);
-	
-	void update(Users users);
-	
-	void deleteId(Integer id);
-	
+	Users findUserById(Integer id);
+
+	Users findUserByEmail(String email);
+
+	void saveUser(Users users);
+
+	void updateUser(Users users);
+
+	void deleteUserById(Integer id);
+
 	Long countUsers();
 
-	List<Users> findUsers(Integer start, Integer lenght);
+	List<Users> findUsersForJson(Integer start, Integer lenght);
 
 }

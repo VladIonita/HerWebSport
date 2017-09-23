@@ -21,10 +21,10 @@ public class Categories {
 
 	@Column(name = "NAME")
 	private String nameCat;
-	
+
 	@OneToMany(mappedBy = "categories", cascade = CascadeType.ALL)
 	private Set<Events> events;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -48,8 +48,5 @@ public class Categories {
 	public void setEvents(Set<Events> events) {
 		this.events = events;
 	}
-	
-	
-
 
 }

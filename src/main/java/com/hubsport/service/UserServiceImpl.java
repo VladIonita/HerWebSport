@@ -29,25 +29,25 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder passwordEncoder;
 
 	public Users findById(Integer id) {
-		return userDao.findbyid(id);
+		return userDao.findUserById(id);
 	}
 
 	public Users findByEmail(String email) {
-		Users users = userDao.findbyemail(email);
+		Users users = userDao.findUserByEmail(email);
 		return users;
 	}
 
 	public void deleteBID(Integer id) {
-		userDao.deleteId(id);
+		userDao.deleteUserById(id);
 	}
 
 	@Override
 	public void saveOrUpdate(Users users) {
 		if (findById(users.getId()) == null) {
 			users.setPassword(passwordEncoder.encode(users.getPassword()));
-			userDao.save(users);
+			userDao.saveUser(users);
 		} else {
-			Users entity = userDao.findbyid(users.getId());
+			Users entity = userDao.findUserById(users.getId());
 			if (entity != null) {
 				entity.setFirstName(users.getFirstName());
 				entity.setLastName(users.getLastName());
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 	public void updatePass(Integer userTokenId, String pass) {
 
 		
-		Users entity = userDao.findbyid(userTokenId);
+		Users entity = userDao.findUserById(userTokenId);
 		if (entity != null) {
 			entity.setPassword(passwordEncoder.encode(pass));
 			passwordTokenDao.deleteId(userTokenId);
@@ -71,13 +71,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean isUserEmailUnique(Integer id, String email) {
-		Users users = userDao.findbyemail(email);
+		Users users = userDao.findUserByEmail(email);
 		return (users == null || ((id != null) && (users.getId() == id)));
 	}
 
 	@Override
 	public List<Users> findUsers(Integer start, Integer lenght) {
-		return userDao.findUsers(start, lenght);
+		return userDao.findUsersForJson(start, lenght);
 	}
 
 	@Override

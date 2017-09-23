@@ -43,16 +43,13 @@ public class UserController {
 	@Autowired
 	MessageSource messageSource;
 
-	// list all users
 	@RequestMapping
-	public String usersPage(ModelMap model) {
-		// model.addAttribute("userList", userService.findAllUsers());
+	public String userPage(ModelMap model) {
 		model.addAttribute("pageTitle", "Users");
 		model.addAttribute("partial", "users");
 		return "index";
 	}
 
-	// show add user form
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showAddUserForm(Model model) {
 		Users users = new Users();
@@ -61,11 +58,9 @@ public class UserController {
 		return "index";
 	}
 
-	// save or update user
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated Users users, BindingResult result,
 			Model model, final RedirectAttributes redirectAttributes) {
-
 		if (result.hasErrors()) {
 			model.addAttribute("partial", "userform");
 			return "index";
@@ -76,16 +71,11 @@ public class UserController {
 			} else {
 				redirectAttributes.addFlashAttribute("msg", "User updated successfully!");
 			}
-
 			userService.saveOrUpdate(users);
-
 			return "redirect:/admin/users";
-
 		}
-
 	}
 
-	// show update form
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String showUpdateUserForm(@PathVariable("id") int id, Model model) {
 		Users users = userService.findById(id);
@@ -94,29 +84,24 @@ public class UserController {
 		return "index";
 	}
 
-	// delete user
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable("id") int id) {
 		userService.deleteBID(id);
 		return "redirect:/admin/users";
 	}
-	
-	// request by json
-	@RequestMapping(path="/all", method=RequestMethod.GET, produces = "application/json")
+
+	@RequestMapping(path = "/all", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public Map<String, Object> getAllUsers( @RequestParam("length") int length,@RequestParam("draw") int draw, @RequestParam("start") int start) {
-		
+	public Map<String, Object> getAllUsers(@RequestParam("length") int length, @RequestParam("draw") int draw,
+			@RequestParam("start") int start) {
 		List<Users> usersList = userService.findUsers(start, length);
 		Long count = userService.countGet();
-		
 		Map<String, Object> data = new HashMap<>();
-		data.put("draw",draw);
+		data.put("draw", draw);
 		data.put("recordsTotal", count);
 		data.put("recordsFiltered", count);
-		data.put("data",usersList);
-	    
-	    return data;
-	    
+		data.put("data", usersList);
+		return data;
 	}
 
 }

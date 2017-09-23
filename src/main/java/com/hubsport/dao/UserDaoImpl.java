@@ -24,77 +24,60 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	// find user by id
-	public Users findbyid(Integer id) {
+	public Users findUserById(Integer id) {
 		logger.info("id : {}", id);
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Users.class);
-		crit.add(Restrictions.eq("id", id));
-		Users users = (Users) crit.uniqueResult();
+		Users users = (Users) createCritera().add(Restrictions.eq("id", id)).uniqueResult();
 		if (users != null) {
-			Hibernate.initialize(users.getEmail());
+			Hibernate.initialize(users);
 		}
 		return users;
 	}
 
-	// find user by email
-	public Users findbyemail(String email) {
+	public Users findUserByEmail(String email) {
 		logger.info("email : {}", email);
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Users.class);
-		crit.add(Restrictions.eq("email", email));
-		Users users = (Users) crit.uniqueResult();
+		Users users = (Users) createCritera().add(Restrictions.eq("email", email)).uniqueResult();
 		if (users != null) {
-			Hibernate.initialize(users.getEmail());
+			Hibernate.initialize(users);
 		}
 		return users;
 	}
 
-	// find all users
 	@SuppressWarnings("unchecked")
-	@Override
-	public List<Users> findUsers(Integer start, Integer lenght) {
-		logger.info("Get all Users");
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Users.class)
-						  .setProjection(Projections.projectionList()
-								  .add(Projections.property("id"), "id")
-								  .add(Projections.property("email"), "email")
-								  .add(Projections.property("firstName"), "firstName")
-								  .add(Projections.property("lastName"), "lastName"))
-								  .setResultTransformer(Transformers.aliasToBean(Users.class))
-								  .addOrder(Order.asc("firstName"))
-								  .setMaxResults(lenght)
-								  .setFirstResult(start);
-		
-		
-		List<Users> users = (List<Users>) criteria.list();
-		return users;
-	}
- 
-	public Long countUsers() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Users.class);
-		 criteria.setProjection(Projections.rowCount());
-		 Long resultCount = (Long)criteria.uniqueResult();
-		return resultCount;
-	}
-	
-	// save user
-	
-	@Override
-	public void save(Users users) {
-		logger.info("user : {}", users);
-		sessionFactory.getCurrentSession().persist(users);
-	}
-	
-	
-	//update user
-	public void update(Users users) {
-		sessionFactory.getCurrentSession().update(users);
+	public List<Users> findUsersForJson(Integer start, Integer lenght) {
+		logger.info("Get all Users for Json");
+		Criteria criteria = createCritera()
+				.setProjection(Projections.projectionList().add(Projections.property("id"), "id")
+						.add(Projections.property("email"), "email").add(Projections.property("firstName"), "firstName")
+						.add(Projections.property("lastName"), "lastName"))
+				.setResultTransformer(Transformers.aliasToBean(Users.class)).addOrder(Order.asc("firstName"))
+				.setMaxResults(lenght).setFirstResult(start);
+		return (List<Users>) criteria.list();
 	}
 
-	@Override
-	public void deleteId(Integer id) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Users.class);
-		crit.add(Restrictions.eq("id", id));
-		Users users = (Users) crit.uniqueResult();
-		sessionFactory.getCurrentSession().delete(users);
+	public Long countUsers() {
+		logger.info("Count Users");
+		Criteria criteria = createCritera();
+		criteria.setProjection(Projections.rowCount());
+		return (Long) criteria.uniqueResult();
+	}
+
+	public void saveUser(Users user) {
+		logger.info("user : {}", user);
+		sessionFactory.getCurrentSession().persist(user);
+	}
+
+	public void updateUser(Users user) {
+		logger.info("user : {}", user);
+		sessionFactory.getCurrentSession().update(user);
+	}
+
+	public void deleteUserById(Integer id) {
+		logger.info("id : {}", id);
+		Criteria crit = createCritera().add(Restrictions.eq("id", id));
+		sessionFactory.getCurrentSession().delete(crit.uniqueResult());
+	}
+
+	private Criteria createCritera() {
+		return sessionFactory.getCurrentSession().createCriteria(Users.class);
 	}
 }

@@ -3,16 +3,15 @@ package com.hubsport.dao;
 import java.util.List;
 
 import com.hubsport.domain.Categories;
-import com.hubsport.domain.Districts;
 
 public interface CategoriesDao {
 
-	Categories findbyid(Integer id);
-	
-	void save(Categories categories);
+	Categories findCategoriesById(Integer id);
 
-	void deleteById(Integer id);
+	void saveCategories(Categories categories);
 
-	List<Categories> findAllCategoriesHibernate();
-	
+	void deleteCategoriesById(Integer id);
+
+	List<Categories> findAllCategories();
+
 }

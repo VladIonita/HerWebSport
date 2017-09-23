@@ -7,14 +7,6 @@ public class Token {
 	private String created;
 	private Users users;
 
-	public Users getUsers() {
-		return users;
-	}
-
-	public void setUsers(Users users) {
-		this.users = users;
-	}
-
 	public Token() {
 	}
 
@@ -48,10 +40,12 @@ public class Token {
 		this.created = created;
 	}
 
-	@Override
-	public String toString() {
-		return "Token [token=" + token + ", status=" + status + ", created=" + created + ", users=" + users + "]";
+	public Users getUsers() {
+		return users;
 	}
 
+	public void setUsers(Users users) {
+		this.users = users;
+	}
 
 }

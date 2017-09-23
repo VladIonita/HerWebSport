@@ -30,7 +30,7 @@ public class Events implements Serializable {
 	@Column(name = "NAME", nullable = false)
 	private String nameEvents;
 
-	@OneToMany(fetch = FetchType.EAGER,mappedBy = "events", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "events", cascade = CascadeType.ALL)
 	private Set<Timetable> timetable;
 
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -40,10 +40,6 @@ public class Events implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "CATEGORIES_ID", nullable = false)
 	private Categories categories;
-	
-	// @ManyToOne(cascade = CascadeType.ALL)
-	// @JoinColumn(name = "BROADCASTERS_ID")
-	// private Broadcasters broadcasters;
 
 	public Integer getId() {
 		return id;
@@ -92,5 +88,5 @@ public class Events implements Serializable {
 	public void setPlaces(Places places) {
 		this.places = places;
 	}
-	
+
 }

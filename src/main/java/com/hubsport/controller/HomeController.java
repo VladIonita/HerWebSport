@@ -19,17 +19,15 @@ public class HomeController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	MessageSource messageSource;
 
-	// handling 404 error
 	@RequestMapping(value = "*", method = { RequestMethod.GET, RequestMethod.POST })
-	public String fallback() {
-		return "fallback";
+	public String handleHttpError() {
+		return "errorHandler";
 	}
-	
-	// handling logout
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -38,16 +36,14 @@ public class HomeController {
 		}
 		return "redirect:/admin/login";
 	}
-	
-	// handling access to login
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
-	return "redirect:/admin/login";
+		return "redirect:/admin/login";
 	}
 
-	// handling access to admin
-	@RequestMapping(value = "admin" , method = RequestMethod.GET)
+	@RequestMapping(value = "admin", method = RequestMethod.GET)
 	public String adminPage() {
-	return "redirect:/admin/";
+		return "redirect:/admin/";
 	}
 }
