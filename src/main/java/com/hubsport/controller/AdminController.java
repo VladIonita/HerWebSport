@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hubsport.domain.Users;
-import com.hubsport.service.CurrentTimeFormated;
+import com.hubsport.service.CurrentTimeFormatedService;
 import com.hubsport.service.MailService;
 import com.hubsport.service.UserService;
 
@@ -33,7 +33,7 @@ import javassist.NotFoundException;
 public class AdminController {
 
 	@Autowired
-	CurrentTimeFormated timeService;
+	CurrentTimeFormatedService timeService;
 
 	@Autowired
 	UserService userService;
@@ -43,8 +43,6 @@ public class AdminController {
 
 	@Autowired
 	MessageSource messageSource;
-
-	String link = System.getenv("PT_MAIL_LINK");
 
 	@RequestMapping(value = "/*", method = { RequestMethod.GET, RequestMethod.POST })
 	public String handleHttpError() {
@@ -67,8 +65,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/password/recover", method = RequestMethod.GET)
 	public String forgotPassword(Model model) {
-		Users user = new Users();
-		model.addAttribute("userForm", user);
+		model.addAttribute("userForm", new Users());
 		return "recover";
 	}
 
@@ -76,7 +73,7 @@ public class AdminController {
 	public String processForgotPasswordForm(Model model, HttpServletRequest request,
 			@RequestParam("email") String userEmail, final RedirectAttributes redirectAttributes)
 			throws NotFoundException {
-		Users user = userService.findByEmail(userEmail);
+		Users user = userService.findUserByEmail(userEmail);
 		if (user == null) {
 			redirectAttributes.addFlashAttribute("css", "success");
 			redirectAttributes.addFlashAttribute("msg", "Check your inbox for the next steps."
@@ -120,14 +117,13 @@ public class AdminController {
 		}
 	}
 
-	// save or update user
 	@RequestMapping(value = "/password/reset/{token}", method = RequestMethod.POST)
 	public String saveOrUpdateUserPassword(@PathVariable("token") String token,
 			@ModelAttribute("userPasswordForm") Users users, BindingResult result, Model model,
 			final RedirectAttributes redirectAttributes) {
 		model.addAttribute("token", token);
 		Users usersToken = userService.findUserByResetToken(token);
-		userService.updatePass(usersToken.getId(), users.getPassword());
+		userService.updatePassword(usersToken.getId(), users.getPassword());
 		return "passUpdateSuccess";
 	}
 
@@ -135,7 +131,6 @@ public class AdminController {
 	private String getPrincipal() {
 		String userName = null;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
 		if (principal instanceof UserDetails) {
 			userName = ((UserDetails) principal).getUsername();
 		} else {

@@ -16,40 +16,31 @@ public class UserFormValidator implements Validator {
 	@Autowired
 	@Qualifier("emailValidator")
 	EmailValidator emailValidator;
-	
+
 	@Autowired
 	UserService userService;
-	
-	@Override
+
 	public boolean supports(Class<?> clazz) {
 		return Users.class.equals(clazz);
 	}
 
-	@Override
 	public void validate(Object target, Errors errors) {
-
 		Users user = (Users) target;
-		
-		if(user.getId() == null) {
+		if (user.getId() == null) {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.userForm.firstName");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.userForm.lastName");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.userForm.email");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.userForm.password");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "retypePassword", "NotEmpty.userForm.retypePassword");
-
-			if(!emailValidator.valid(user.getEmail())){
+			if (!emailValidator.valid(user.getEmail())) {
 				errors.rejectValue("email", "Pattern.userForm.email");
 			}
-			
-			 if(!userService.isUserEmailUnique(user.getId(), user.getEmail())){
-				 errors.rejectValue("email", "Valid.userForm.email");
-			 }
+			if (!userService.isUserEmailUnique(user.getId(), user.getEmail())) {
+				errors.rejectValue("email", "Valid.userForm.email");
+			}
 		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.userForm.firstName");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.userForm.lastName");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.userForm.email");
-
-
 	}
-
 }

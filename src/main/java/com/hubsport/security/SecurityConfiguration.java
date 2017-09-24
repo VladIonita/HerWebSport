@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 @Configuration
-@EnableWebSecurity(debug = false) // to show logger
+@EnableWebSecurity(debug = false)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -41,8 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/","/admin/login", "/admin/json/all","/admin/password/recover", "/admin/password/reset/**").permitAll().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-				.and().formLogin().loginPage("/admin/login").failureUrl("/admin/login?error=true").successHandler(successHandler)
+		http.authorizeRequests()
+				.antMatchers("/", "/admin/login", "/admin/json/all", "/admin/password/recover",
+						"/admin/password/reset/**")
+				.permitAll().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')").and().formLogin()
+				.loginPage("/admin/login").failureUrl("/admin/login?error=true").successHandler(successHandler)
 				.usernameParameter("email").passwordParameter("password").and().rememberMe()
 				.rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository())
 				.tokenValiditySeconds(9000).and().csrf().and().exceptionHandling().accessDeniedPage("/accessDenied");
@@ -54,7 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		tokenRepositoryImpl.setDataSource(dataSource);
 		return tokenRepositoryImpl;
 	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -67,7 +70,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		authenticationProvider.setPasswordEncoder(passwordEncoder());
 		return authenticationProvider;
 	}
-
 
 	@Bean
 	public AuthenticationTrustResolver getAuthenticationTrustResolver() {

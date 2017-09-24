@@ -6,12 +6,6 @@ import com.hubsport.domain.Districts;
 
 public interface DistrictsDao {
 
-	Districts findbyid(Integer id);
-	
-	void save(Districts districts);
+	List<Districts> findAllDistricts();
 
-	void deleteById(Integer id);
-
-	List<Districts> findAllDistrictsHibernate();
-	
 }

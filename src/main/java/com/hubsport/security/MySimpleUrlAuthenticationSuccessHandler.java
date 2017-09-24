@@ -19,8 +19,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-	// this class redirects authentication to another page beside home page
-
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Override
@@ -29,17 +27,16 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		authorities.forEach(authority -> {
-			 if (authority.getAuthority().equals("ROLE_ADMIN")) {
+			if (authority.getAuthority().equals("ROLE_ADMIN")) {
 				try {
 					redirectStrategy.sendRedirect(request, response, "/admin/");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} 
-			
+			}
+
 		});
 		clearAuthenticationAttributes(request);
-
 	}
 
 	protected void clearAuthenticationAttributes(HttpServletRequest request) {

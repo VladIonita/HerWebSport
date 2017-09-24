@@ -6,21 +6,21 @@ import com.hubsport.domain.Users;
 
 public interface UserService {
 	
-    Users findById(Integer id);
+    Users findUserById(Integer id);
     
-    Users findByEmail(String email);
+    Users findUserByEmail(String email);
     
-    List<Users> findUsers(Integer start, Integer lenght); 
+    List<Users> findUsersForJson(Integer start, Integer lenght); 
     
-    void saveOrUpdate(Users users);
+    void saveOrUpdateUser(Users users);
     
-    void updatePass(Integer userTokenId, String pass);
+    void updatePassword(Integer userTokenId, String password);
     
-    void deleteBID(Integer id);
+    void deleteUserById(Integer id);
  
     boolean isUserEmailUnique(Integer id,String email);
     
-    void saveToken(String token, Users users);
+	void saveToken(String token, Users user);
     
     Users findUserByResetToken(String token);
     

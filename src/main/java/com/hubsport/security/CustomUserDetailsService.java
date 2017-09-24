@@ -1,7 +1,5 @@
 package com.hubsport.security;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,35 +17,30 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hubsport.domain.Users;
 import com.hubsport.service.UserService;
 
-
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
-	
-	
+
 	static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
-	
+
 	@Autowired
 	UserService userService;
-	
-	// admin vs user, it shows status
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Users users = userService.findByEmail(email);
-		logger.info("Email : {}",email);
-		if(users==null) {
-			logger.info("User de negasit");
-			throw new UsernameNotFoundException("Username not found poate ca [plm");
+		logger.info("Email : {}", email);
+		Users users = userService.findUserByEmail(email);
+		if (users == null) {
+			throw new UsernameNotFoundException("Username not found");
 		}
-		return new org.springframework.security.core.userdetails.User(users.getEmail(), users.getPassword(),true, true, true, true, getGrantedAuthorities(users));
+		return new org.springframework.security.core.userdetails.User(users.getEmail(), users.getPassword(), true, true,
+				true, true, getGrantedAuthorities(users));
 	}
-	
-    private List<GrantedAuthority> getGrantedAuthorities(Users users){
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-            	authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        logger.info("authorities : {}", authorities);
-        return authorities;
-    }
 
+	private List<GrantedAuthority> getGrantedAuthorities(Users users) {
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		logger.info("authorities : {}", authorities);
+		return authorities;
+	}
 
 }

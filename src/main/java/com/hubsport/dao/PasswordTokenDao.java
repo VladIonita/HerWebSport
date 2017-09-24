@@ -10,9 +10,9 @@ public interface PasswordTokenDao {
 
 	PasswordResetToken findTokenById(Integer id);
 	
-	PasswordResetToken findbyToken(String token);
+	PasswordResetToken findPasswordResetTokenByToken(String token);
 	
-	void deleteId(Integer id);
+	void deleteTokenWithId(Integer id);
 	
 	void save(PasswordResetToken token);
 

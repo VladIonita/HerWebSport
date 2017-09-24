@@ -1,6 +1,6 @@
 
 <%@page import="java.util.Date"%>
-<%@page import="com.hubsport.service.CurrentTimeFormated"%>
+<%@page import="com.hubsport.service.CurrentTimeFormatedService"%>
 <footer class="footer">
 	<div class="container">
 		<p class="text-muted">Footer content.</p>

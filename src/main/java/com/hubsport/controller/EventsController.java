@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hubsport.domain.Timetable;
-import com.hubsport.service.CurrentTimeFormated;
+import com.hubsport.service.CurrentTimeFormatedService;
 import com.hubsport.service.EventsService;
 import com.hubsport.service.TimetableService;
 
@@ -29,7 +29,7 @@ public class EventsController {
 	EventsService eventsService;
 
 	@Autowired
-	CurrentTimeFormated timeService;
+	CurrentTimeFormatedService timeService;
 
 	@Autowired
 	MessageSource messageSource;

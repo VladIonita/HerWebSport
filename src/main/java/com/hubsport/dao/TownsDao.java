@@ -6,17 +6,15 @@ import com.hubsport.domain.Towns;
 
 public interface TownsDao {
 
-	Towns findbyid(Integer id);
+	Towns findTownById(Integer id);
 	
-	Towns findbyName(String name);
+	Towns findTownByName(String name);
 	
-	void save(Towns towns);
+	void saveTown(Towns towns);
 
-	void deleteById(Integer id);
+	void deleteTownById(Integer id);
 
 	List<Towns> findAllTowns();
-	
-	List<Towns> findAllTownsHibernate();
 	
 	List<Towns> findAllTowns(String query);
 	

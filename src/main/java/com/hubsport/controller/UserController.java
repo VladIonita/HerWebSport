@@ -71,14 +71,14 @@ public class UserController {
 			} else {
 				redirectAttributes.addFlashAttribute("msg", "User updated successfully!");
 			}
-			userService.saveOrUpdate(users);
+			userService.saveOrUpdateUser(users);
 			return "redirect:/admin/users";
 		}
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String showUpdateUserForm(@PathVariable("id") int id, Model model) {
-		Users users = userService.findById(id);
+		Users users = userService.findUserById(id);
 		model.addAttribute("userForm", users);
 		model.addAttribute("partial", "userform");
 		return "index";
@@ -86,7 +86,7 @@ public class UserController {
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable("id") int id) {
-		userService.deleteBID(id);
+		userService.deleteUserById(id);
 		return "redirect:/admin/users";
 	}
 
@@ -94,7 +94,7 @@ public class UserController {
 	@ResponseBody
 	public Map<String, Object> getAllUsers(@RequestParam("length") int length, @RequestParam("draw") int draw,
 			@RequestParam("start") int start) {
-		List<Users> usersList = userService.findUsers(start, length);
+		List<Users> usersList = userService.findUsersForJson(start, length);
 		Long count = userService.countGet();
 		Map<String, Object> data = new HashMap<>();
 		data.put("draw", draw);
